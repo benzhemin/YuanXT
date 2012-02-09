@@ -16,7 +16,7 @@
 {
 	if (self = [super initWithRootViewController:rootViewController]) 
 	{
-		[self.navigationBar setBarStyle:UIBarStyleBlackOpaque];
+		[self.navigationBar setBarStyle:UIBarStyleDefault];
 	}
 	return self;
 }
