@@ -13,17 +13,32 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
-		CE7E3C3B14E35876001C716F /* YXTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7E3C3A14E35876001C716F /* YXTTabBarController.m */; };
-		CE7E3C4E14E35B08001C716F /* YXTFilmTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7E3C4D14E35B08001C716F /* YXTFilmTabController.m */; };
-		CE7E3C5114E35B30001C716F /* YXTCinimaTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7E3C5014E35B30001C716F /* YXTCinimaTabController.m */; };
-		CE7E3C5414E35B47001C716F /* YXTHelpTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7E3C5314E35B47001C716F /* YXTHelpTabController.m */; };
-		CE7E41BA14E36001001C716F /* YXTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7E41B914E36001001C716F /* YXTNavigationController.m */; };
-		CE8236E014E3981300412576 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8236D514E3981300412576 /* NSObject+SBJSON.m */; };
-		CE8236E114E3981300412576 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8236D714E3981300412576 /* NSString+SBJSON.m */; };
-		CE8236E214E3981300412576 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8236D914E3981300412576 /* SBJSON.m */; };
-		CE8236E314E3981300412576 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8236DB14E3981300412576 /* SBJsonBase.m */; };
-		CE8236E414E3981300412576 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8236DD14E3981300412576 /* SBJsonParser.m */; };
-		CE8236E514E3981300412576 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8236DF14E3981300412576 /* SBJsonWriter.m */; };
+		CE82370414E39B7000412576 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370314E39B7000412576 /* QuartzCore.framework */; };
+		CE82370814E39B7E00412576 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370714E39B7E00412576 /* CoreLocation.framework */; };
+		CE82370C14E39B8700412576 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370B14E39B8700412576 /* MapKit.framework */; };
+		CE82371014E39B9800412576 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370F14E39B9800412576 /* CFNetwork.framework */; };
+		CE82371214E39BA200412576 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82371114E39BA200412576 /* SystemConfiguration.framework */; };
+		CE82371414E39BAA00412576 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82371314E39BAA00412576 /* MobileCoreServices.framework */; };
+		CE82371614E39BBB00412576 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82371514E39BBB00412576 /* libz.1.2.3.dylib */; };
+		CE82377114E39CE800412576 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375114E39CE800412576 /* ASIAuthenticationDialog.m */; };
+		CE82377214E39CE800412576 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375314E39CE800412576 /* ASIFormDataRequest.m */; };
+		CE82377314E39CE800412576 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375514E39CE800412576 /* ASIHTTPRequest.m */; };
+		CE82377414E39CE800412576 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375914E39CE800412576 /* ASIInputStream.m */; };
+		CE82377514E39CE800412576 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375B14E39CE800412576 /* ASINetworkQueue.m */; };
+		CE82377614E39CE800412576 /* ASINSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375D14E39CE800412576 /* ASINSStringAdditions.m */; };
+		CE82377714E39CE800412576 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376014E39CE800412576 /* Reachability.m */; };
+		CE82377814E39CE800412576 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376414E39CE800412576 /* NSObject+SBJSON.m */; };
+		CE82377914E39CE800412576 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376614E39CE800412576 /* NSString+SBJSON.m */; };
+		CE82377A14E39CE800412576 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376814E39CE800412576 /* SBJSON.m */; };
+		CE82377B14E39CE800412576 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376A14E39CE800412576 /* SBJsonBase.m */; };
+		CE82377C14E39CE800412576 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376C14E39CE800412576 /* SBJsonParser.m */; };
+		CE82377D14E39CE800412576 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376E14E39CE800412576 /* SBJsonWriter.m */; };
+		CE82377E14E39CE800412576 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82377014E39CE800412576 /* RegexKitLite.m */; };
+		CE82379014E39DDC00412576 /* YXTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378314E39DDC00412576 /* YXTNavigationController.m */; };
+		CE82379114E39DDC00412576 /* YXTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378614E39DDC00412576 /* YXTTabBarController.m */; };
+		CE82379214E39DDC00412576 /* YXTCinimaTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378914E39DDC00412576 /* YXTCinimaTabController.m */; };
+		CE82379314E39DDC00412576 /* YXTFilmTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378C14E39DDC00412576 /* YXTFilmTabController.m */; };
+		CE82379414E39DDC00412576 /* YXTHelpTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378F14E39DDC00412576 /* YXTHelpTabController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,29 +52,55 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* YuanXT_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuanXT_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* YuanXT-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "YuanXT-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		CE7E3C3914E35876001C716F /* YXTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTTabBarController.h; sourceTree = "<group>"; };
-		CE7E3C3A14E35876001C716F /* YXTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTTabBarController.m; sourceTree = "<group>"; };
-		CE7E3C4C14E35B08001C716F /* YXTFilmTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTFilmTabController.h; sourceTree = "<group>"; };
-		CE7E3C4D14E35B08001C716F /* YXTFilmTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTFilmTabController.m; sourceTree = "<group>"; };
-		CE7E3C4F14E35B30001C716F /* YXTCinimaTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTCinimaTabController.h; sourceTree = "<group>"; };
-		CE7E3C5014E35B30001C716F /* YXTCinimaTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTCinimaTabController.m; sourceTree = "<group>"; };
-		CE7E3C5214E35B47001C716F /* YXTHelpTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTHelpTabController.h; sourceTree = "<group>"; };
-		CE7E3C5314E35B47001C716F /* YXTHelpTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTHelpTabController.m; sourceTree = "<group>"; };
-		CE7E41B814E36001001C716F /* YXTNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTNavigationController.h; sourceTree = "<group>"; };
-		CE7E41B914E36001001C716F /* YXTNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTNavigationController.m; sourceTree = "<group>"; };
-		CE8236D314E3981300412576 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		CE8236D414E3981300412576 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		CE8236D514E3981300412576 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		CE8236D614E3981300412576 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
-		CE8236D714E3981300412576 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
-		CE8236D814E3981300412576 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
-		CE8236D914E3981300412576 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
-		CE8236DA14E3981300412576 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
-		CE8236DB14E3981300412576 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
-		CE8236DC14E3981300412576 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		CE8236DD14E3981300412576 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		CE8236DE14E3981300412576 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		CE8236DF14E3981300412576 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		CE82370314E39B7000412576 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CE82370714E39B7E00412576 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CE82370B14E39B8700412576 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CE82370F14E39B9800412576 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		CE82371114E39BA200412576 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CE82371314E39BAA00412576 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		CE82371514E39BBB00412576 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
+		CE82375014E39CE800412576 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
+		CE82375114E39CE800412576 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
+		CE82375214E39CE800412576 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
+		CE82375314E39CE800412576 /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
+		CE82375414E39CE800412576 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
+		CE82375514E39CE800412576 /* ASIHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIHTTPRequest.m; sourceTree = "<group>"; };
+		CE82375614E39CE800412576 /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
+		CE82375714E39CE800412576 /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
+		CE82375814E39CE800412576 /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIInputStream.h; sourceTree = "<group>"; };
+		CE82375914E39CE800412576 /* ASIInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIInputStream.m; sourceTree = "<group>"; };
+		CE82375A14E39CE800412576 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
+		CE82375B14E39CE800412576 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
+		CE82375C14E39CE800412576 /* ASINSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINSStringAdditions.h; sourceTree = "<group>"; };
+		CE82375D14E39CE800412576 /* ASINSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINSStringAdditions.m; sourceTree = "<group>"; };
+		CE82375E14E39CE800412576 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
+		CE82375F14E39CE800412576 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		CE82376014E39CE800412576 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		CE82376214E39CE800412576 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		CE82376314E39CE800412576 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		CE82376414E39CE800412576 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		CE82376514E39CE800412576 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		CE82376614E39CE800412576 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		CE82376714E39CE800412576 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		CE82376814E39CE800412576 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		CE82376914E39CE800412576 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		CE82376A14E39CE800412576 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		CE82376B14E39CE800412576 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		CE82376C14E39CE800412576 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		CE82376D14E39CE800412576 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		CE82376E14E39CE800412576 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		CE82376F14E39CE800412576 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		CE82377014E39CE800412576 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		CE82378214E39DDC00412576 /* YXTNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTNavigationController.h; sourceTree = "<group>"; };
+		CE82378314E39DDC00412576 /* YXTNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTNavigationController.m; sourceTree = "<group>"; };
+		CE82378514E39DDC00412576 /* YXTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTTabBarController.h; sourceTree = "<group>"; };
+		CE82378614E39DDC00412576 /* YXTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTTabBarController.m; sourceTree = "<group>"; };
+		CE82378814E39DDC00412576 /* YXTCinimaTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTCinimaTabController.h; sourceTree = "<group>"; };
+		CE82378914E39DDC00412576 /* YXTCinimaTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTCinimaTabController.m; sourceTree = "<group>"; };
+		CE82378B14E39DDC00412576 /* YXTFilmTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTFilmTabController.h; sourceTree = "<group>"; };
+		CE82378C14E39DDC00412576 /* YXTFilmTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTFilmTabController.m; sourceTree = "<group>"; };
+		CE82378E14E39DDC00412576 /* YXTHelpTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTHelpTabController.h; sourceTree = "<group>"; };
+		CE82378F14E39DDC00412576 /* YXTHelpTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTHelpTabController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +111,13 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				CE82370414E39B7000412576 /* QuartzCore.framework in Frameworks */,
+				CE82370814E39B7E00412576 /* CoreLocation.framework in Frameworks */,
+				CE82370C14E39B8700412576 /* MapKit.framework in Frameworks */,
+				CE82371014E39B9800412576 /* CFNetwork.framework in Frameworks */,
+				CE82371214E39BA200412576 /* SystemConfiguration.framework in Frameworks */,
+				CE82371414E39BAA00412576 /* MobileCoreServices.framework in Frameworks */,
+				CE82371614E39BBB00412576 /* libz.1.2.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +127,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CE82378014E39DDC00412576 /* Controllers */,
 				1D3623240D0F684500981E51 /* YuanXTAppDelegate.h */,
 				1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */,
 			);
@@ -96,10 +145,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				CE8236D214E3981300412576 /* JSON */,
-				CE7E3C3714E35806001C716F /* Controllers */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				CE82374E14E39CE800412576 /* ThirdPart */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -131,85 +179,127 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				CE82370314E39B7000412576 /* QuartzCore.framework */,
+				CE82370714E39B7E00412576 /* CoreLocation.framework */,
+				CE82370B14E39B8700412576 /* MapKit.framework */,
+				CE82370F14E39B9800412576 /* CFNetwork.framework */,
+				CE82371114E39BA200412576 /* SystemConfiguration.framework */,
+				CE82371314E39BAA00412576 /* MobileCoreServices.framework */,
+				CE82371514E39BBB00412576 /* libz.1.2.3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CE7E3C3714E35806001C716F /* Controllers */ = {
+		CE82374E14E39CE800412576 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
-				CE7E3C3D14E35AA7001C716F /* YXTFilm */,
-				CE7E3C3E14E35AC7001C716F /* YXTCinima */,
-				CE7E3C4B14E35AD7001C716F /* YXTHelp */,
-				CE7E3C5914E35DFD001C716F /* Navigation */,
-				CE7E3C3C14E35A74001C716F /* TabBar */,
+				CE82374F14E39CE800412576 /* ASIHTTPRequest */,
+				CE82376114E39CE800412576 /* JSON */,
+				CE82376F14E39CE800412576 /* RegexKitLite.h */,
+				CE82377014E39CE800412576 /* RegexKitLite.m */,
 			);
-			name = Controllers;
+			path = ThirdPart;
 			sourceTree = "<group>";
 		};
-		CE7E3C3C14E35A74001C716F /* TabBar */ = {
+		CE82374F14E39CE800412576 /* ASIHTTPRequest */ = {
 			isa = PBXGroup;
 			children = (
-				CE7E3C3914E35876001C716F /* YXTTabBarController.h */,
-				CE7E3C3A14E35876001C716F /* YXTTabBarController.m */,
+				CE82375014E39CE800412576 /* ASIAuthenticationDialog.h */,
+				CE82375114E39CE800412576 /* ASIAuthenticationDialog.m */,
+				CE82375214E39CE800412576 /* ASIFormDataRequest.h */,
+				CE82375314E39CE800412576 /* ASIFormDataRequest.m */,
+				CE82375414E39CE800412576 /* ASIHTTPRequest.h */,
+				CE82375514E39CE800412576 /* ASIHTTPRequest.m */,
+				CE82375614E39CE800412576 /* ASIHTTPRequestConfig.h */,
+				CE82375714E39CE800412576 /* ASIHTTPRequestDelegate.h */,
+				CE82375814E39CE800412576 /* ASIInputStream.h */,
+				CE82375914E39CE800412576 /* ASIInputStream.m */,
+				CE82375A14E39CE800412576 /* ASINetworkQueue.h */,
+				CE82375B14E39CE800412576 /* ASINetworkQueue.m */,
+				CE82375C14E39CE800412576 /* ASINSStringAdditions.h */,
+				CE82375D14E39CE800412576 /* ASINSStringAdditions.m */,
+				CE82375E14E39CE800412576 /* ASIProgressDelegate.h */,
+				CE82375F14E39CE800412576 /* Reachability.h */,
+				CE82376014E39CE800412576 /* Reachability.m */,
 			);
-			name = TabBar;
+			path = ASIHTTPRequest;
 			sourceTree = "<group>";
 		};
-		CE7E3C3D14E35AA7001C716F /* YXTFilm */ = {
+		CE82376114E39CE800412576 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				CE7E3C4C14E35B08001C716F /* YXTFilmTabController.h */,
-				CE7E3C4D14E35B08001C716F /* YXTFilmTabController.m */,
-			);
-			name = YXTFilm;
-			sourceTree = "<group>";
-		};
-		CE7E3C3E14E35AC7001C716F /* YXTCinima */ = {
-			isa = PBXGroup;
-			children = (
-				CE7E3C4F14E35B30001C716F /* YXTCinimaTabController.h */,
-				CE7E3C5014E35B30001C716F /* YXTCinimaTabController.m */,
-			);
-			name = YXTCinima;
-			sourceTree = "<group>";
-		};
-		CE7E3C4B14E35AD7001C716F /* YXTHelp */ = {
-			isa = PBXGroup;
-			children = (
-				CE7E3C5214E35B47001C716F /* YXTHelpTabController.h */,
-				CE7E3C5314E35B47001C716F /* YXTHelpTabController.m */,
-			);
-			name = YXTHelp;
-			sourceTree = "<group>";
-		};
-		CE7E3C5914E35DFD001C716F /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				CE7E41B814E36001001C716F /* YXTNavigationController.h */,
-				CE7E41B914E36001001C716F /* YXTNavigationController.m */,
-			);
-			name = Navigation;
-			sourceTree = "<group>";
-		};
-		CE8236D214E3981300412576 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				CE8236D314E3981300412576 /* JSON.h */,
-				CE8236D414E3981300412576 /* NSObject+SBJSON.h */,
-				CE8236D514E3981300412576 /* NSObject+SBJSON.m */,
-				CE8236D614E3981300412576 /* NSString+SBJSON.h */,
-				CE8236D714E3981300412576 /* NSString+SBJSON.m */,
-				CE8236D814E3981300412576 /* SBJSON.h */,
-				CE8236D914E3981300412576 /* SBJSON.m */,
-				CE8236DA14E3981300412576 /* SBJsonBase.h */,
-				CE8236DB14E3981300412576 /* SBJsonBase.m */,
-				CE8236DC14E3981300412576 /* SBJsonParser.h */,
-				CE8236DD14E3981300412576 /* SBJsonParser.m */,
-				CE8236DE14E3981300412576 /* SBJsonWriter.h */,
-				CE8236DF14E3981300412576 /* SBJsonWriter.m */,
+				CE82376214E39CE800412576 /* JSON.h */,
+				CE82376314E39CE800412576 /* NSObject+SBJSON.h */,
+				CE82376414E39CE800412576 /* NSObject+SBJSON.m */,
+				CE82376514E39CE800412576 /* NSString+SBJSON.h */,
+				CE82376614E39CE800412576 /* NSString+SBJSON.m */,
+				CE82376714E39CE800412576 /* SBJSON.h */,
+				CE82376814E39CE800412576 /* SBJSON.m */,
+				CE82376914E39CE800412576 /* SBJsonBase.h */,
+				CE82376A14E39CE800412576 /* SBJsonBase.m */,
+				CE82376B14E39CE800412576 /* SBJsonParser.h */,
+				CE82376C14E39CE800412576 /* SBJsonParser.m */,
+				CE82376D14E39CE800412576 /* SBJsonWriter.h */,
+				CE82376E14E39CE800412576 /* SBJsonWriter.m */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		CE82378014E39DDC00412576 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE82378A14E39DDC00412576 /* YXTFilm */,
+				CE82378714E39DDC00412576 /* YXTCinima */,
+				CE82378D14E39DDC00412576 /* YXTHelp */,
+				CE82378114E39DDC00412576 /* Navigation */,
+				CE82378414E39DDC00412576 /* TabBar */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE82378114E39DDC00412576 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				CE82378214E39DDC00412576 /* YXTNavigationController.h */,
+				CE82378314E39DDC00412576 /* YXTNavigationController.m */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		CE82378414E39DDC00412576 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CE82378514E39DDC00412576 /* YXTTabBarController.h */,
+				CE82378614E39DDC00412576 /* YXTTabBarController.m */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		CE82378714E39DDC00412576 /* YXTCinima */ = {
+			isa = PBXGroup;
+			children = (
+				CE82378814E39DDC00412576 /* YXTCinimaTabController.h */,
+				CE82378914E39DDC00412576 /* YXTCinimaTabController.m */,
+			);
+			path = YXTCinima;
+			sourceTree = "<group>";
+		};
+		CE82378A14E39DDC00412576 /* YXTFilm */ = {
+			isa = PBXGroup;
+			children = (
+				CE82378B14E39DDC00412576 /* YXTFilmTabController.h */,
+				CE82378C14E39DDC00412576 /* YXTFilmTabController.m */,
+			);
+			path = YXTFilm;
+			sourceTree = "<group>";
+		};
+		CE82378D14E39DDC00412576 /* YXTHelp */ = {
+			isa = PBXGroup;
+			children = (
+				CE82378E14E39DDC00412576 /* YXTHelpTabController.h */,
+				CE82378F14E39DDC00412576 /* YXTHelpTabController.m */,
+			);
+			path = YXTHelp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,17 +364,25 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* YuanXTAppDelegate.m in Sources */,
-				CE7E3C3B14E35876001C716F /* YXTTabBarController.m in Sources */,
-				CE7E3C4E14E35B08001C716F /* YXTFilmTabController.m in Sources */,
-				CE7E3C5114E35B30001C716F /* YXTCinimaTabController.m in Sources */,
-				CE7E3C5414E35B47001C716F /* YXTHelpTabController.m in Sources */,
-				CE7E41BA14E36001001C716F /* YXTNavigationController.m in Sources */,
-				CE8236E014E3981300412576 /* NSObject+SBJSON.m in Sources */,
-				CE8236E114E3981300412576 /* NSString+SBJSON.m in Sources */,
-				CE8236E214E3981300412576 /* SBJSON.m in Sources */,
-				CE8236E314E3981300412576 /* SBJsonBase.m in Sources */,
-				CE8236E414E3981300412576 /* SBJsonParser.m in Sources */,
-				CE8236E514E3981300412576 /* SBJsonWriter.m in Sources */,
+				CE82377114E39CE800412576 /* ASIAuthenticationDialog.m in Sources */,
+				CE82377214E39CE800412576 /* ASIFormDataRequest.m in Sources */,
+				CE82377314E39CE800412576 /* ASIHTTPRequest.m in Sources */,
+				CE82377414E39CE800412576 /* ASIInputStream.m in Sources */,
+				CE82377514E39CE800412576 /* ASINetworkQueue.m in Sources */,
+				CE82377614E39CE800412576 /* ASINSStringAdditions.m in Sources */,
+				CE82377714E39CE800412576 /* Reachability.m in Sources */,
+				CE82377814E39CE800412576 /* NSObject+SBJSON.m in Sources */,
+				CE82377914E39CE800412576 /* NSString+SBJSON.m in Sources */,
+				CE82377A14E39CE800412576 /* SBJSON.m in Sources */,
+				CE82377B14E39CE800412576 /* SBJsonBase.m in Sources */,
+				CE82377C14E39CE800412576 /* SBJsonParser.m in Sources */,
+				CE82377D14E39CE800412576 /* SBJsonWriter.m in Sources */,
+				CE82377E14E39CE800412576 /* RegexKitLite.m in Sources */,
+				CE82379014E39DDC00412576 /* YXTNavigationController.m in Sources */,
+				CE82379114E39DDC00412576 /* YXTTabBarController.m in Sources */,
+				CE82379214E39DDC00412576 /* YXTCinimaTabController.m in Sources */,
+				CE82379314E39DDC00412576 /* YXTFilmTabController.m in Sources */,
+				CE82379414E39DDC00412576 /* YXTHelpTabController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
