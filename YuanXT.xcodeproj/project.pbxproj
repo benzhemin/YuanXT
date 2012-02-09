@@ -33,12 +33,12 @@
 		CE82377B14E39CE800412576 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376A14E39CE800412576 /* SBJsonBase.m */; };
 		CE82377C14E39CE800412576 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376C14E39CE800412576 /* SBJsonParser.m */; };
 		CE82377D14E39CE800412576 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376E14E39CE800412576 /* SBJsonWriter.m */; };
-		CE82377E14E39CE800412576 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82377014E39CE800412576 /* RegexKitLite.m */; };
 		CE82379014E39DDC00412576 /* YXTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378314E39DDC00412576 /* YXTNavigationController.m */; };
 		CE82379114E39DDC00412576 /* YXTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378614E39DDC00412576 /* YXTTabBarController.m */; };
 		CE82379214E39DDC00412576 /* YXTCinimaTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378914E39DDC00412576 /* YXTCinimaTabController.m */; };
 		CE82379314E39DDC00412576 /* YXTFilmTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378C14E39DDC00412576 /* YXTFilmTabController.m */; };
 		CE82379414E39DDC00412576 /* YXTHelpTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378F14E39DDC00412576 /* YXTHelpTabController.m */; };
+		CE82379914E39FCA00412576 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82379814E39FCA00412576 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,8 +89,6 @@
 		CE82376C14E39CE800412576 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		CE82376D14E39CE800412576 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		CE82376E14E39CE800412576 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		CE82376F14E39CE800412576 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		CE82377014E39CE800412576 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		CE82378214E39DDC00412576 /* YXTNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTNavigationController.h; sourceTree = "<group>"; };
 		CE82378314E39DDC00412576 /* YXTNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTNavigationController.m; sourceTree = "<group>"; };
 		CE82378514E39DDC00412576 /* YXTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTTabBarController.h; sourceTree = "<group>"; };
@@ -101,6 +99,7 @@
 		CE82378C14E39DDC00412576 /* YXTFilmTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTFilmTabController.m; sourceTree = "<group>"; };
 		CE82378E14E39DDC00412576 /* YXTHelpTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTHelpTabController.h; sourceTree = "<group>"; };
 		CE82378F14E39DDC00412576 /* YXTHelpTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTHelpTabController.m; sourceTree = "<group>"; };
+		CE82379814E39FCA00412576 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +117,7 @@
 				CE82371214E39BA200412576 /* SystemConfiguration.framework in Frameworks */,
 				CE82371414E39BAA00412576 /* MobileCoreServices.framework in Frameworks */,
 				CE82371614E39BBB00412576 /* libz.1.2.3.dylib in Frameworks */,
+				CE82379914E39FCA00412576 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +186,7 @@
 				CE82371114E39BA200412576 /* SystemConfiguration.framework */,
 				CE82371314E39BAA00412576 /* MobileCoreServices.framework */,
 				CE82371514E39BBB00412576 /* libz.1.2.3.dylib */,
+				CE82379814E39FCA00412576 /* Security.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -195,8 +196,6 @@
 			children = (
 				CE82374F14E39CE800412576 /* ASIHTTPRequest */,
 				CE82376114E39CE800412576 /* JSON */,
-				CE82376F14E39CE800412576 /* RegexKitLite.h */,
-				CE82377014E39CE800412576 /* RegexKitLite.m */,
 			);
 			path = ThirdPart;
 			sourceTree = "<group>";
@@ -377,7 +376,6 @@
 				CE82377B14E39CE800412576 /* SBJsonBase.m in Sources */,
 				CE82377C14E39CE800412576 /* SBJsonParser.m in Sources */,
 				CE82377D14E39CE800412576 /* SBJsonWriter.m in Sources */,
-				CE82377E14E39CE800412576 /* RegexKitLite.m in Sources */,
 				CE82379014E39DDC00412576 /* YXTNavigationController.m in Sources */,
 				CE82379114E39DDC00412576 /* YXTTabBarController.m in Sources */,
 				CE82379214E39DDC00412576 /* YXTCinimaTabController.m in Sources */,
