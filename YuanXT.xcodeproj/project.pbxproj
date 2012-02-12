@@ -23,6 +23,8 @@
 		0F2E9CE714E7687300F091A4 /* OFXPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9CE614E7687300F091A4 /* OFXPRequest.m */; };
 		0F2E9DF014E7AF4800F091A4 /* YXTLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */; };
 		0F2EA02414E7DF9C00F091A4 /* NSNotificationCenter+OF.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2EA02314E7DF9C00F091A4 /* NSNotificationCenter+OF.m */; };
+		0F2EA25614E7F67000F091A4 /* YXTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2EA25314E7F67000F091A4 /* YXTActionSheet.m */; };
+		0F2EA25714E7F67000F091A4 /* YXTPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2EA25514E7F67000F091A4 /* YXTPickerDelegate.m */; };
 		1D3623260D0F684500981E51 /* YuanXTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -81,6 +83,10 @@
 		0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTLocation.m; sourceTree = "<group>"; };
 		0F2EA02214E7DF9C00F091A4 /* NSNotificationCenter+OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OF.h"; sourceTree = "<group>"; };
 		0F2EA02314E7DF9C00F091A4 /* NSNotificationCenter+OF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+OF.m"; sourceTree = "<group>"; };
+		0F2EA25214E7F67000F091A4 /* YXTActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTActionSheet.h; sourceTree = "<group>"; };
+		0F2EA25314E7F67000F091A4 /* YXTActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTActionSheet.m; sourceTree = "<group>"; };
+		0F2EA25414E7F67000F091A4 /* YXTPickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTPickerDelegate.h; sourceTree = "<group>"; };
+		0F2EA25514E7F67000F091A4 /* YXTPickerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTPickerDelegate.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* YuanXTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuanXTAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YuanXTAppDelegate.m; sourceTree = "<group>"; };
@@ -243,6 +249,17 @@
 			path = YXTFilm;
 			sourceTree = "<group>";
 		};
+		0F2EA25114E7F67000F091A4 /* ActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				0F2EA25214E7F67000F091A4 /* YXTActionSheet.h */,
+				0F2EA25314E7F67000F091A4 /* YXTActionSheet.m */,
+				0F2EA25414E7F67000F091A4 /* YXTPickerDelegate.h */,
+				0F2EA25514E7F67000F091A4 /* YXTPickerDelegate.m */,
+			);
+			path = ActionSheet;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +383,7 @@
 				CE82378D14E39DDC00412576 /* YXTHelp */,
 				CE82378114E39DDC00412576 /* Navigation */,
 				CE82378414E39DDC00412576 /* TabBar */,
+				0F2EA25114E7F67000F091A4 /* ActionSheet */,
 				0F2E9A0014E652C500F091A4 /* YXTBasicViewController.h */,
 				0F2E9A0114E652C500F091A4 /* YXTBasicViewController.m */,
 			);
@@ -515,6 +533,8 @@
 				0F2E9CE714E7687300F091A4 /* OFXPRequest.m in Sources */,
 				0F2E9DF014E7AF4800F091A4 /* YXTLocation.m in Sources */,
 				0F2EA02414E7DF9C00F091A4 /* NSNotificationCenter+OF.m in Sources */,
+				0F2EA25614E7F67000F091A4 /* YXTActionSheet.m in Sources */,
+				0F2EA25714E7F67000F091A4 /* YXTPickerDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

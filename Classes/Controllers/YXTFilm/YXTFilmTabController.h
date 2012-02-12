@@ -11,7 +11,6 @@
 #import "OFXPRequest.h"
 
 @interface YXTFilmTabController : YXTBasicTabController{
-
 }
 
 @end

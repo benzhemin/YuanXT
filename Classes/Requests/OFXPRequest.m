@@ -10,6 +10,7 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "YXTSettings.h"
+#import "JSON.h"
 
 @interface OFXPRequest ()
 
@@ -445,7 +446,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 	// same for json...
 	if (mResponseJSON)
 	{
-		//self.responseAsJson = [OFJsonCoder decodeJson:mResponseAsString];
+		self.responseAsJson = [mResponseAsString JSONValue];
 	}
 	
 	// same for data.

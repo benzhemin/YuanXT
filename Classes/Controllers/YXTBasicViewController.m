@@ -30,6 +30,10 @@
 												 selector:@selector(startFadeOutWaitingView) 
 													 name:START_FADEOUT_WAITING
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(setWaitingViewNetWorkError) 
+													 name:START_FADEIN_NETWORK_ERROR
+												   object:nil];
 	}
 	return self;
 }
@@ -39,7 +43,7 @@
 	
 	waitingView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 200, 60)] ;
 	waitingView.backgroundColor = [UIColor colorWithWhite: 0.0 alpha: 0.8];
-	waitingView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
+	waitingView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2 - 45);
 	waitingView.alpha = 0.0;
 	waitingView.clipsToBounds = YES;
 	if ([waitingView.layer respondsToSelector: @selector(setCornerRadius:)]) [(id) waitingView.layer setCornerRadius: 10];
@@ -80,6 +84,13 @@
 	[UIView setAnimationDuration:GROW_ANIMATION_FINISHLOAD_DURATION_SECONDS];
 	waitingView.alpha = 0.0;
 	[UIView commitAnimations];
+}
+
+-(void)setWaitingViewNetWorkError{
+	waitingLabel.text = @"网络错误，请检查网络";
+	
+	[self startFadeInWaitingView];
+	waitingView.alpha = 0.0;
 }
 
 

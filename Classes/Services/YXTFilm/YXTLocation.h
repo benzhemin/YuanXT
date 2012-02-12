@@ -8,9 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "OFXPRequest.h"
+#import "YXTBasicViewController.h"
 
 @interface YXTLocation : NSObject <OFXPResponseJSON>{
-	
+	YXTBasicViewController *delegateFilm;
+	OFXPRequest *mReq;
 }
+
+@property (nonatomic, assign) YXTBasicViewController *delegateFilm;
+
+-(void)startToFetchCityList;
 
 @end

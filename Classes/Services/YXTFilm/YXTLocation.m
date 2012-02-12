@@ -11,9 +11,18 @@
 #import "NSNotificationCenter+OF.h"
 #import "YXTBasicViewController.h"
 #import "OFXPRequest.h"
+#import "YXTSettings.h"
 
 @implementation YXTLocation
 	
+@synthesize delegateFilm;
+
+
+-(void)dealloc{
+	[mReq release];
+	[super dealloc];
+}
+
 -(id)init{
 	if (self=[super init]) {
 		
@@ -22,16 +31,32 @@
 }
 
 -(void)startToFetchCityList{
-	[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:START_FADEIN_WAITING object:nil];
-	
 	if ([OFReachability isConnectedToInternet]) {
+		[delegateFilm setWaitingMessage:@"正在获取城市信息"];
+		[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:START_FADEIN_WAITING object:nil];
 		
+		NSString* url = [NSString stringWithFormat:@"%@", @"/MTBM/httppost"];
+		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+		[dict setValue:@"miscinfo" forKey:@"METHOD"];
+		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
+		[dict setValue:[[YXTSettings instance] getSetting:@"sign-code"] forKey:@"SIGN"];
+
+		
+		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andQuery:dict andBody:nil];
+		[req onRespondJSON:self];
+		[req execute];
+		
+		mReq = [req retain];
+	}else {
+		[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:START_FADEIN_NETWORK_ERROR object:nil];
 	}
 }
 
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
-    //OFSafeRelease(mCurrentRequest);
-    if(responseCode == 200){
+    OFSafeRelease(mReq);
+    NSLog(@"%@", body);
+	if(responseCode == 200){
         
     }
     else{

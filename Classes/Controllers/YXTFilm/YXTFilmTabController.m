@@ -7,6 +7,7 @@
 //
 
 #import "YXTFilmTabController.h"
+#import "YXTLocation.h"
 
 enum REQUEST_TYPE {
 	city_request = 0
@@ -61,6 +62,10 @@ enum REQUEST_TYPE {
 
 
 -(void)pressCitySwitchBtn{
+	YXTLocation *location = [[YXTLocation alloc] init];
+	[location setDelegateFilm:self];
+	
+	[location startToFetchCityList];
 	
 }
 
