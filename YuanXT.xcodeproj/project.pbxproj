@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F2E945214E4CE6E00F091A4 /* OFReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945114E4CE6E00F091A4 /* OFReachability.m */; };
+		0F2E945B14E4CEF000F091A4 /* YXTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945A14E4CEF000F091A4 /* YXTSettings.m */; };
+		0F2E967914E50D5500F091A4 /* YXTBasicTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E967814E50D5500F091A4 /* YXTBasicTabController.m */; };
+		0F2E970C14E522FD00F091A4 /* bg_titlearea.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E970414E522FD00F091A4 /* bg_titlearea.png */; };
+		0F2E970D14E522FD00F091A4 /* icon_help.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E970614E522FD00F091A4 /* icon_help.png */; };
+		0F2E970E14E522FD00F091A4 /* icon_help_xuanzhong.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E970714E522FD00F091A4 /* icon_help_xuanzhong.png */; };
+		0F2E970F14E522FD00F091A4 /* icon_yingpian.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E970814E522FD00F091A4 /* icon_yingpian.png */; };
+		0F2E971014E522FD00F091A4 /* icon_yingpian_xuanzhong.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E970914E522FD00F091A4 /* icon_yingpian_xuanzhong.png */; };
+		0F2E971114E522FD00F091A4 /* icon_yingyuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E970A14E522FD00F091A4 /* icon_yingyuan.png */; };
+		0F2E971214E522FD00F091A4 /* icon_yingyuan_xuanzhong.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E970B14E522FD00F091A4 /* icon_yingyuan_xuanzhong.png */; };
+		0F2E976914E5340500F091A4 /* btn_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E976714E5340500F091A4 /* btn_back.png */; };
+		0F2E976A14E5340500F091A4 /* dropselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E976814E5340500F091A4 /* dropselect.png */; };
+		0F2E9A0214E652C500F091A4 /* YXTBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9A0114E652C500F091A4 /* YXTBasicViewController.m */; };
+		0F2E9CE714E7687300F091A4 /* OFXPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9CE614E7687300F091A4 /* OFXPRequest.m */; };
+		0F2E9DF014E7AF4800F091A4 /* YXTLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */; };
+		0F2EA02414E7DF9C00F091A4 /* NSNotificationCenter+OF.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2EA02314E7DF9C00F091A4 /* NSNotificationCenter+OF.m */; };
 		1D3623260D0F684500981E51 /* YuanXTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -42,6 +58,29 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F2E945014E4CE6E00F091A4 /* OFReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFReachability.h; sourceTree = "<group>"; };
+		0F2E945114E4CE6E00F091A4 /* OFReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OFReachability.m; sourceTree = "<group>"; };
+		0F2E945914E4CEF000F091A4 /* YXTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSettings.h; sourceTree = "<group>"; };
+		0F2E945A14E4CEF000F091A4 /* YXTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTSettings.m; sourceTree = "<group>"; };
+		0F2E967714E50D5500F091A4 /* YXTBasicTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTBasicTabController.h; sourceTree = "<group>"; };
+		0F2E967814E50D5500F091A4 /* YXTBasicTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTBasicTabController.m; sourceTree = "<group>"; };
+		0F2E970414E522FD00F091A4 /* bg_titlearea.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_titlearea.png; sourceTree = "<group>"; };
+		0F2E970614E522FD00F091A4 /* icon_help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_help.png; sourceTree = "<group>"; };
+		0F2E970714E522FD00F091A4 /* icon_help_xuanzhong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_help_xuanzhong.png; sourceTree = "<group>"; };
+		0F2E970814E522FD00F091A4 /* icon_yingpian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_yingpian.png; sourceTree = "<group>"; };
+		0F2E970914E522FD00F091A4 /* icon_yingpian_xuanzhong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_yingpian_xuanzhong.png; sourceTree = "<group>"; };
+		0F2E970A14E522FD00F091A4 /* icon_yingyuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_yingyuan.png; sourceTree = "<group>"; };
+		0F2E970B14E522FD00F091A4 /* icon_yingyuan_xuanzhong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_yingyuan_xuanzhong.png; sourceTree = "<group>"; };
+		0F2E976714E5340500F091A4 /* btn_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_back.png; sourceTree = "<group>"; };
+		0F2E976814E5340500F091A4 /* dropselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropselect.png; sourceTree = "<group>"; };
+		0F2E9A0014E652C500F091A4 /* YXTBasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTBasicViewController.h; sourceTree = "<group>"; };
+		0F2E9A0114E652C500F091A4 /* YXTBasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTBasicViewController.m; sourceTree = "<group>"; };
+		0F2E9CE514E7687300F091A4 /* OFXPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFXPRequest.h; sourceTree = "<group>"; };
+		0F2E9CE614E7687300F091A4 /* OFXPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OFXPRequest.m; sourceTree = "<group>"; };
+		0F2E9DEE14E7AF4800F091A4 /* YXTLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTLocation.h; sourceTree = "<group>"; };
+		0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTLocation.m; sourceTree = "<group>"; };
+		0F2EA02214E7DF9C00F091A4 /* NSNotificationCenter+OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OF.h"; sourceTree = "<group>"; };
+		0F2EA02314E7DF9C00F091A4 /* NSNotificationCenter+OF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+OF.m"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* YuanXTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuanXTAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YuanXTAppDelegate.m; sourceTree = "<group>"; };
@@ -130,8 +169,78 @@
 				CE82378014E39DDC00412576 /* Controllers */,
 				1D3623240D0F684500981E51 /* YuanXTAppDelegate.h */,
 				1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */,
+				0F2E9DEC14E7AEED00F091A4 /* Services */,
+				0F2E9CE414E7685F00F091A4 /* Requests */,
+				0F2E945814E4CEDA00F091A4 /* Settings */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		0F2E945814E4CEDA00F091A4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0F2E945914E4CEF000F091A4 /* YXTSettings.h */,
+				0F2E945A14E4CEF000F091A4 /* YXTSettings.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0F2E966F14E50C4C00F091A4 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				0F2E970314E522FD00F091A4 /* navigation */,
+				0F2E970514E522FD00F091A4 /* tab */,
+			);
+			path = image;
+			sourceTree = "<group>";
+		};
+		0F2E970314E522FD00F091A4 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				0F2E976714E5340500F091A4 /* btn_back.png */,
+				0F2E976814E5340500F091A4 /* dropselect.png */,
+				0F2E970414E522FD00F091A4 /* bg_titlearea.png */,
+			);
+			path = navigation;
+			sourceTree = "<group>";
+		};
+		0F2E970514E522FD00F091A4 /* tab */ = {
+			isa = PBXGroup;
+			children = (
+				0F2E970614E522FD00F091A4 /* icon_help.png */,
+				0F2E970714E522FD00F091A4 /* icon_help_xuanzhong.png */,
+				0F2E970814E522FD00F091A4 /* icon_yingpian.png */,
+				0F2E970914E522FD00F091A4 /* icon_yingpian_xuanzhong.png */,
+				0F2E970A14E522FD00F091A4 /* icon_yingyuan.png */,
+				0F2E970B14E522FD00F091A4 /* icon_yingyuan_xuanzhong.png */,
+			);
+			path = tab;
+			sourceTree = "<group>";
+		};
+		0F2E9CE414E7685F00F091A4 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				0F2E9CE514E7687300F091A4 /* OFXPRequest.h */,
+				0F2E9CE614E7687300F091A4 /* OFXPRequest.m */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		0F2E9DEC14E7AEED00F091A4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0F2E9DED14E7AF2E00F091A4 /* YXTFilm */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0F2E9DED14E7AF2E00F091A4 /* YXTFilm */ = {
+			isa = PBXGroup;
+			children = (
+				0F2E9DEE14E7AF4800F091A4 /* YXTLocation.h */,
+				0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */,
+			);
+			path = YXTFilm;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -167,6 +276,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F2E966F14E50C4C00F091A4 /* image */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* YuanXT-Info.plist */,
 			);
@@ -195,6 +305,10 @@
 			isa = PBXGroup;
 			children = (
 				CE82374F14E39CE800412576 /* ASIHTTPRequest */,
+				0F2E945014E4CE6E00F091A4 /* OFReachability.h */,
+				0F2E945114E4CE6E00F091A4 /* OFReachability.m */,
+				0F2EA02214E7DF9C00F091A4 /* NSNotificationCenter+OF.h */,
+				0F2EA02314E7DF9C00F091A4 /* NSNotificationCenter+OF.m */,
 				CE82376114E39CE800412576 /* JSON */,
 			);
 			path = ThirdPart;
@@ -252,6 +366,8 @@
 				CE82378D14E39DDC00412576 /* YXTHelp */,
 				CE82378114E39DDC00412576 /* Navigation */,
 				CE82378414E39DDC00412576 /* TabBar */,
+				0F2E9A0014E652C500F091A4 /* YXTBasicViewController.h */,
+				0F2E9A0114E652C500F091A4 /* YXTBasicViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -270,6 +386,8 @@
 			children = (
 				CE82378514E39DDC00412576 /* YXTTabBarController.h */,
 				CE82378614E39DDC00412576 /* YXTTabBarController.m */,
+				0F2E967714E50D5500F091A4 /* YXTBasicTabController.h */,
+				0F2E967814E50D5500F091A4 /* YXTBasicTabController.m */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -351,6 +469,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				0F2E970C14E522FD00F091A4 /* bg_titlearea.png in Resources */,
+				0F2E970D14E522FD00F091A4 /* icon_help.png in Resources */,
+				0F2E970E14E522FD00F091A4 /* icon_help_xuanzhong.png in Resources */,
+				0F2E970F14E522FD00F091A4 /* icon_yingpian.png in Resources */,
+				0F2E971014E522FD00F091A4 /* icon_yingpian_xuanzhong.png in Resources */,
+				0F2E971114E522FD00F091A4 /* icon_yingyuan.png in Resources */,
+				0F2E971214E522FD00F091A4 /* icon_yingyuan_xuanzhong.png in Resources */,
+				0F2E976914E5340500F091A4 /* btn_back.png in Resources */,
+				0F2E976A14E5340500F091A4 /* dropselect.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +508,13 @@
 				CE82379214E39DDC00412576 /* YXTCinimaTabController.m in Sources */,
 				CE82379314E39DDC00412576 /* YXTFilmTabController.m in Sources */,
 				CE82379414E39DDC00412576 /* YXTHelpTabController.m in Sources */,
+				0F2E945214E4CE6E00F091A4 /* OFReachability.m in Sources */,
+				0F2E945B14E4CEF000F091A4 /* YXTSettings.m in Sources */,
+				0F2E967914E50D5500F091A4 /* YXTBasicTabController.m in Sources */,
+				0F2E9A0214E652C500F091A4 /* YXTBasicViewController.m in Sources */,
+				0F2E9CE714E7687300F091A4 /* OFXPRequest.m in Sources */,
+				0F2E9DF014E7AF4800F091A4 /* YXTLocation.m in Sources */,
+				0F2EA02414E7DF9C00F091A4 /* NSNotificationCenter+OF.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

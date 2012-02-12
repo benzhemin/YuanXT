@@ -11,6 +11,13 @@
 
 @implementation YXTTabBarController
 
+-(id)init{
+	if (self = [super init]) {
+		
+	}
+	return self;
+}
+
 - (void)dealloc {
     [super dealloc];
 }
@@ -43,10 +50,13 @@
 	switch (item.tag) 
 	{
 		case 1:
+			NSLog(@"tab 1");
 			break;
 		case 2:
+			NSLog(@"tab 2");
 			break;
 		case 3:
+			NSLog(@"tab 3");
 			break;
 	}
 }

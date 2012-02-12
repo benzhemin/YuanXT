@@ -14,5 +14,7 @@
 }
 
 - (void) addNavigationBarImage:(UIImage *)backgroundImage;
+- (void)addTitleLabelToViewController:(UIViewController*)viewController;
+-(void)addBackBtnToViewController:(UIViewController *)viewController;
 
 @end

@@ -8,46 +8,45 @@
 
 #import "YXTFilmTabController.h"
 
+enum REQUEST_TYPE {
+	city_request = 0
+};
 
 @implementation YXTFilmTabController
 
-// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization.
-    }
-    return self;
+- (void)dealloc {
+    [super dealloc];
 }
-*/
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
+-(id)init{
+	if (self = [super init]) {
+		
+		
+	}
+	return self;
 }
-*/
 
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-*/
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
-
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc. that aren't in use.
+-(void)viewDidLoad{
+	
+	UIButton *cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+	[cityBtn setBackgroundColor:[UIColor clearColor]];
+	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
+	[cityBtn setFrame:CGRectMake(0, 0, cityImg.size.width+15.0, cityImg.size.height+8.0)];
+	[cityBtn setBackgroundImage:cityImg forState:UIControlStateNormal];
+	[cityBtn addTarget:self action:@selector(pressCitySwitchBtn) forControlEvents:UIControlEventTouchUpInside];
+	[[cityBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:14.0f]];
+	
+	[cityBtn setTitleEdgeInsets:UIEdgeInsetsMake(-2.0, -11.0, 0.0, 0.0)];
+	[cityBtn setTitle:@"上海市" forState:UIControlStateNormal];
+	
+	
+	UIBarButtonItem *cityBarItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];	
+	self.navigationItem.rightBarButtonItem = cityBarItem;
+	//viewController.navigationItem.backBarButtonItem = backBar;
+	
+	[cityBarItem release];
+	
+	[super viewDidLoad];
 }
 
 - (void)viewDidUnload {
@@ -56,10 +55,19 @@
     // e.g. self.myOutlet = nil;
 }
 
-
-- (void)dealloc {
-    [super dealloc];
+-(void)viewWillAppear:(BOOL)animated{
+	
 }
 
+
+-(void)pressCitySwitchBtn{
+	
+}
+
+
+-(NSString *)getNavTitle{ return @"正在热映";}
+-(NSString *)getTabTitle{ return @"影片"; }
+-(NSString *)getTabImage{ return @"icon_yingpian_xuanzhong.png";}
+-(int) getTabTag{ return 1;}
 
 @end

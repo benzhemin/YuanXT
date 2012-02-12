@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YXTBasicTabController.h"
 
-
-@interface YXTHelpTabController : UIViewController {
+@interface YXTHelpTabController : YXTBasicTabController {
 	
 }
 

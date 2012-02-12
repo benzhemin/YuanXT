@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YXTBasicTabController.h"
+#import "OFXPRequest.h"
 
-
-@interface YXTFilmTabController : UIViewController {
+@interface YXTFilmTabController : YXTBasicTabController{
 
 }
 
