@@ -72,7 +72,7 @@ enum REQUEST_TYPE {
 
 -(NSString *)getNavTitle{ return @"正在热映";}
 -(NSString *)getTabTitle{ return @"影片"; }
--(NSString *)getTabImage{ return @"icon_yingpian_xuanzhong.png";}
+-(NSString *)getTabImage{ return @"icon_yingpian.png";}
 -(int) getTabTag{ return 1;}
 
 @end
