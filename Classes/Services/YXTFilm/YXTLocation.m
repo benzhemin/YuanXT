@@ -55,7 +55,6 @@
 
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
     OFSafeRelease(mReq);
-    NSLog(@"%@", body);
 	if(responseCode == 200){
         
     }
