@@ -11,6 +11,9 @@
 
 @implementation YXTBasicViewController
 
+@synthesize useBezelStyle, useKeyboardStyle, waitingMessage, showKeyboard, coverNavBar, useNetworkActivity;
+
+
 -(void)dealloc{
 	[waitingView release];
 	[waitingLabel release];
