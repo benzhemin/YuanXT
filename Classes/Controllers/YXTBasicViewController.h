@@ -16,7 +16,21 @@
 @interface YXTBasicViewController : UIViewController {
 	UIView *waitingView;
 	UILabel *waitingLabel;
+	
+	NSString *waitingMessage;
+	BOOL useBezelStyle;
+    BOOL useKeyboardStyle;
+    BOOL showKeyboard;
+    BOOL coverNavBar;
+    BOOL useNetworkActivity;	
 }
+
+@property (nonatomic, retain) NSString *waitingMessage;
+@property (nonatomic) BOOL useBezelStyle;
+@property (nonatomic) BOOL useKeyboardStyle;
+@property (nonatomic) BOOL showKeyboard;
+@property (nonatomic) BOOL coverNavBar;
+@property (nonatomic) BOOL useNetworkActivity;
 
 -(BOOL) showNavigationBackButton;
 

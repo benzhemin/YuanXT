@@ -15,6 +15,8 @@ enum REQUEST_TYPE {
 
 @implementation YXTFilmTabController
 
+@synthesize location;
+
 - (void)dealloc {
     [super dealloc];
 }
@@ -62,17 +64,19 @@ enum REQUEST_TYPE {
 
 
 -(void)pressCitySwitchBtn{
-	YXTLocation *location = [[YXTLocation alloc] init];
+	location = [[YXTLocation alloc] init];
 	[location setDelegateFilm:self];
-	
 	[location startToFetchCityList];
+}
+
+-(void)popUpCityChangePicker:(NSArray *)array{
 	
 }
 
 
 -(NSString *)getNavTitle{ return @"正在热映";}
 -(NSString *)getTabTitle{ return @"影片"; }
--(NSString *)getTabImage{ return @"icon_yingpian_xuanzhong.png";}
+-(NSString *)getTabImage{ return @"icon_yingpian.png";}
 -(int) getTabTag{ return 1;}
 
 @end

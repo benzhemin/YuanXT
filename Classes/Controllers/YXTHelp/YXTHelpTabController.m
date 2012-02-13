@@ -17,17 +17,9 @@
 	return self;
 }
 
--(NSString *)getTabTitle{
-	return @"帮助";
-}
-
--(NSString *)getTabImage{
-	return @"icon_help_xuanzhong.png";
-}
-
--(int) getTabTag{
-	return 3;
-}
+-(NSString *)getTabTitle{ return @"帮助"; }
+-(NSString *)getTabImage{ return @"icon_help.png"; }
+-(int) getTabTag{ return 3; }
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
