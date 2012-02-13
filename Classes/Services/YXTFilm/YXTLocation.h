@@ -13,10 +13,26 @@
 @interface YXTLocation : NSObject <OFXPResponseJSON>{
 	YXTBasicViewController *delegateFilm;
 	OFXPRequest *mReq;
+	NSMutableArray *cityList;
 }
 
 @property (nonatomic, assign) YXTBasicViewController *delegateFilm;
+@property (nonatomic, retain) NSMutableArray *cityList;
 
 -(void)startToFetchCityList;
+
+@end
+
+
+@interface YXTCityInfo : NSObject{
+	NSString *provinceId;
+	NSString *cityId;
+	NSString *cityName;
+}
+
+@property (nonatomic, copy) NSString *provinceId;
+@property (nonatomic, copy) NSString *cityId;
+@property (nonatomic, copy) NSString *cityName;
+
 
 @end

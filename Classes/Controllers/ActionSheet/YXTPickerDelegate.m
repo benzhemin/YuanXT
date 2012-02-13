@@ -13,6 +13,12 @@
 
 @synthesize pickerDataArray;
 
+-(void)dealloc{
+	[pickerDataArray release];
+	[super dealloc];
+}
+
+
 #pragma mark -
 #pragma mark Picker Data Source Methods
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {

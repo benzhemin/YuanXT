@@ -421,6 +421,10 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 	//[mResponseText onResponseText:asString withResponseCode:responseCode];
 	//[mResponseData onResponseData:[asString dataUsingEncoding:NSUTF8StringEncoding] withResponseCode:responseCode];
 	//[mResponseJSON onResponseJSON:exc withResponseCode:responseCode];
+	NSLog(@"server encounter with error");
+	[mResponseText onResponseText:mResponseAsString withResponseCode:mRequest.responseStatusCode];
+	[mResponseData onResponseData:mResponseAsData withResponseCode:mRequest.responseStatusCode];
+	[mResponseJSON onResponseJSON:mResponseAsJSON withResponseCode:mRequest.responseStatusCode];
 }
 
 - (void)forceFailure:(unsigned int)responseCode{

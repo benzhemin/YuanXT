@@ -8,93 +8,90 @@
 
 #import "YXTBasicViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DSActivityView.h"
 
 @implementation YXTBasicViewController
 
-@synthesize useBezelStyle, useKeyboardStyle, waitingMessage, showKeyboard, coverNavBar, useNetworkActivity;
+@synthesize useBezelStyle, useKeyboardStyle, waitingMessage, waitingWidth;
+@synthesize showKeyboard, coverNavBar, useNetworkActivity;
 
 
 -(void)dealloc{
-	[waitingView release];
-	[waitingLabel release];
+	[waitingMessage release];
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	//[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[super dealloc];
 }
 
 -(id)init{
 	if (self = [super init]) {
+		[self setUseNetworkActivity:YES];
+		self.useBezelStyle = YES;
+		self.coverNavBar = YES;
+		self.waitingWidth = 150.0;
+		
+		
+		/*
 		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(startFadeInWaitingView) 
-													 name:START_FADEIN_WAITING
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(startFadeOutWaitingView) 
-													 name:START_FADEOUT_WAITING
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(setWaitingViewNetWorkError) 
+												 selector:@selector(displayNetWorkErrorActivityView) 
 													 name:START_FADEIN_NETWORK_ERROR
 												   object:nil];
+		*/
 	}
 	return self;
 }
 
 -(void)viewDidLoad{
 	[super viewDidLoad];
-	
-	waitingView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 200, 60)] ;
-	waitingView.backgroundColor = [UIColor colorWithWhite: 0.0 alpha: 0.8];
-	waitingView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2 - 45);
-	waitingView.alpha = 0.0;
-	waitingView.clipsToBounds = YES;
-	if ([waitingView.layer respondsToSelector: @selector(setCornerRadius:)]) [(id) waitingView.layer setCornerRadius: 10];
-	
-	waitingLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, 5, waitingView.bounds.size.width, 15)];
-	waitingLabel.backgroundColor = [UIColor clearColor];
-	waitingLabel.textColor = [UIColor whiteColor];
-	waitingLabel.textAlignment = UITextAlignmentCenter;
-	waitingLabel.font = [UIFont boldSystemFontOfSize: 15];
-	[waitingView addSubview:waitingLabel];
-	
-	UIActivityIndicatorView	*spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite] autorelease];
-	spinner.center = CGPointMake(waitingView.bounds.size.width / 2, waitingView.bounds.size.height / 2 + 10);
-	[waitingView addSubview: spinner];
-	[self.view addSubview: waitingView];
-	[spinner startAnimating];
 }
 
 -(BOOL) showNavigationBackButton{
 	return YES;
 }
 
--(void)setWaitingMessage:(NSString *)message{
-	waitingLabel.text = message;
-}
-
-#define GROW_ANIMATION_STARTLOAD_DURATION_SECONDS 1.5
--(void)startFadeInWaitingView{
-	[UIView beginAnimations: nil context: nil];
-	[UIView setAnimationDuration:GROW_ANIMATION_STARTLOAD_DURATION_SECONDS];
-	waitingView.alpha = 1.0;
-	[UIView commitAnimations];
-}
-
-#define GROW_ANIMATION_FINISHLOAD_DURATION_SECONDS 1.5
--(void)startFadeOutWaitingView{
-	[UIView beginAnimations: nil context: nil];
-	[UIView setAnimationDuration:GROW_ANIMATION_FINISHLOAD_DURATION_SECONDS];
-	waitingView.alpha = 0.0;
-	[UIView commitAnimations];
-}
-
--(void)setWaitingViewNetWorkError{
-	waitingLabel.text = @"网络错误，请检查网络";
+-(void)displayNetWorkErrorActivityView{
+	self.waitingMessage = @"网络错误，请检查网络";
 	
-	[self startFadeInWaitingView];
-	waitingView.alpha = 0.0;
+	self.useBezelStyle = YES;
+	self.coverNavBar = YES;
+	
+	[self performSelector:@selector(displayActivityView)];
+	[self performSelector:@selector(removeActivityView) withObject:nil afterDelay:2.0];
 }
+
+-(void)displayActivityView{
+	UIView *viewToUse = self.view;
+    
+    // Perhaps not the best way to find a suitable view to cover the navigation bar as well as the content?
+    if (self.coverNavBar)
+        viewToUse = self.navigationController.navigationBar.superview;
+
+	// Display the appropriate activity style, with custom label text.  The width can be omitted or zero to use the text's width:
+	if (self.useKeyboardStyle)
+		[DSKeyboardActivityView newActivityViewWithLabel:self.waitingMessage];
+	else if (self.useBezelStyle)
+		[DSBezelActivityView newActivityViewForView:viewToUse withLabel:self.waitingMessage width:self.waitingWidth];
+	else
+		[DSActivityView newActivityViewForView:viewToUse withLabel:self.waitingMessage width:self.waitingWidth];
+
+	// If this is YES, the network activity indicator in the status bar is shown, and automatically hidden when the activity view is removed.  This property can be toggled on and off as needed:
+    if (self.useNetworkActivity)
+        [DSActivityView currentActivityView].showNetworkActivityIndicator = YES;	
+}
+
+
+- (void)removeActivityView;
+{
+    // Remove the activity view, with animation for the two styles that support it:
+    if (self.useKeyboardStyle)
+        [DSKeyboardActivityView removeViewAnimated:YES];
+    else if (self.useBezelStyle)
+        [DSBezelActivityView removeViewAnimated:YES];
+    else
+        [DSActivityView removeView];
+}
+
 
 
 - (void)didReceiveMemoryWarning {

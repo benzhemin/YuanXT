@@ -1,4 +1,4 @@
-    //
+//
 //  YXTFileTabController.m
 //  YuanXT
 //
@@ -8,6 +8,8 @@
 
 #import "YXTFilmTabController.h"
 #import "YXTLocation.h"
+#import "YXTActionSheet.h"
+#import "YXTPickerDelegate.h"
 
 enum REQUEST_TYPE {
 	city_request = 0
@@ -17,7 +19,15 @@ enum REQUEST_TYPE {
 
 @synthesize location;
 
+@synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
+
 - (void)dealloc {
+	[location release];
+	
+	[cityBtn release];
+	[citySheet release];
+	[cityPicker release];
+	[cityPickerDelegate release];
     [super dealloc];
 }
 
@@ -31,7 +41,7 @@ enum REQUEST_TYPE {
 
 -(void)viewDidLoad{
 	
-	UIButton *cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 	[cityBtn setBackgroundColor:[UIColor clearColor]];
 	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
 	[cityBtn setFrame:CGRectMake(0, 0, cityImg.size.width+15.0, cityImg.size.height+8.0)];
@@ -64,14 +74,42 @@ enum REQUEST_TYPE {
 
 
 -(void)pressCitySwitchBtn{
-	location = [[YXTLocation alloc] init];
+	self.location = [[YXTLocation alloc] init];
 	[location setDelegateFilm:self];
 	[location startToFetchCityList];
 }
 
--(void)popUpCityChangePicker:(NSArray *)array{
+-(void)popUpCityChangePicker:(NSMutableArray *)array{
+	self.citySheet = [[YXTActionSheet alloc] initWithHeight:234.0f WithSheetTitle:@"" delegateClass:self 
+											   confirm:@selector(selectCityConfirm:) cancel:@selector(selectCityCancel:)];
 	
+	self.cityPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 200, 225)];
+	
+	cityPicker.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+	cityPicker.showsSelectionIndicator = YES;	// note this is default to NO
+	
+	self.cityPickerDelegate = [[YXTPickerDelegate alloc] init];
+	cityPickerDelegate.pickerDataArray = array;
+	cityPicker.dataSource = cityPickerDelegate;
+	cityPicker.delegate = cityPickerDelegate;
+	
+	[citySheet.view addSubview:cityPicker];
+	
+	
+	[citySheet showInView:[self.view superview]];
 }
+
+-(IBAction)selectCityConfirm:(id)sender{
+	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
+	NSInteger row = [cityPicker selectedRowInComponent:0];
+    NSString *selected = [[cityPickerDelegate pickerDataArray] objectAtIndex:row];
+	[cityBtn setTitle:selected forState:UIControlStateNormal];
+}
+
+-(IBAction)selectCityCancel:(id)sender{
+	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
+}
+
 
 
 -(NSString *)getNavTitle{ return @"正在热映";}

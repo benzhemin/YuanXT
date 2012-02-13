@@ -13,19 +13,35 @@
 #import "OFXPRequest.h"
 #import "YXTSettings.h"
 
+
+@implementation YXTCityInfo
+
+@synthesize provinceId, cityId, cityName;
+
+-(void)dealloc{
+	[provinceId release];
+	[cityId release];
+	[cityName release];
+	[super dealloc];
+}
+
+@end
+
+
 @implementation YXTLocation
 	
-@synthesize delegateFilm;
+@synthesize delegateFilm, cityList;
 
 
 -(void)dealloc{
 	[mReq release];
+	self.cityList = nil;
 	[super dealloc];
 }
 
 -(id)init{
 	if (self=[super init]) {
-		
+		self.cityList = [[NSMutableArray alloc] initWithCapacity:20];
 	}
 	return self;
 }
@@ -33,7 +49,7 @@
 -(void)startToFetchCityList{
 	if ([OFReachability isConnectedToInternet]) {
 		[delegateFilm setWaitingMessage:@"正在获取城市信息"];
-		[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:START_FADEIN_WAITING object:nil];
+		[delegateFilm displayActivityView];
 		
 		NSString* url = [NSString stringWithFormat:@"%@", @"/MTBM/httppost"];
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -49,18 +65,41 @@
 		
 		mReq = [req retain];
 	}else {
-		[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadName:START_FADEIN_NETWORK_ERROR object:nil];
+		[delegateFilm displayNetWorkErrorActivityView];
 	}
 }
 
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
+	
     OFSafeRelease(mReq);
-	if(responseCode == 200){
-        
+	
+	NSDictionary *bodyDict = (NSDictionary *)body;
+	NSString *errorCode = [bodyDict objectForKey:@"ERRORCODE"];
+	
+	if(responseCode == 200 && [errorCode isEqualToString:@"000000"]){
+		
+        NSArray *cityListBody = [bodyDict objectForKey:@"CITYLIST"];
+		//NSLog(@"%@", cityListBody);
+		
+		for (NSDictionary *cityDict in cityListBody) {
+			YXTCityInfo *cityInfo = [[YXTCityInfo alloc] init];
+			cityInfo.provinceId = [cityDict objectForKey:@"PROVINCEID"];
+			cityInfo.cityId = [cityDict objectForKey:@"CITYID"];
+			cityInfo.cityName = [cityDict objectForKey:@"CITYNAME"];
+
+			[cityList addObject:cityInfo];
+			[cityInfo release];
+		}
+		
+		NSLog(@"citylist count:%d", [cityList count]);
+		[delegateFilm performSelectorOnMainThread:@selector(popUpCityChangePicker:) withObject:cityList waitUntilDone:NO];
     }
     else{
 		
 	}
+	
+	
+	[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
 }
 
 @end

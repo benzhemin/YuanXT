@@ -14,10 +14,10 @@
 #define START_FADEIN_NETWORK_ERROR @"START_FADEIN_NETWORK_ERROR"
 
 @interface YXTBasicViewController : UIViewController {
-	UIView *waitingView;
-	UILabel *waitingLabel;
 	
 	NSString *waitingMessage;
+	NSUInteger waitingWidth;
+	
 	BOOL useBezelStyle;
     BOOL useKeyboardStyle;
     BOOL showKeyboard;
@@ -25,7 +25,8 @@
     BOOL useNetworkActivity;	
 }
 
-@property (nonatomic, retain) NSString *waitingMessage;
+@property (nonatomic, copy) NSString *waitingMessage;
+@property (nonatomic) NSUInteger waitingWidth;
 @property (nonatomic) BOOL useBezelStyle;
 @property (nonatomic) BOOL useKeyboardStyle;
 @property (nonatomic) BOOL showKeyboard;
@@ -34,10 +35,9 @@
 
 -(BOOL) showNavigationBackButton;
 
--(void)setWaitingMessage:(NSString *)message;
-
--(void)startFadeInWaitingView;
--(void)startFadeOutWaitingView;
+-(void)displayNetWorkErrorActivityView;
+-(void)displayActivityView;
+-(void)removeActivityView;
 
 @end
 

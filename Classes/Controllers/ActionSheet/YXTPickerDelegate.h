@@ -10,9 +10,9 @@
 
 
 @interface YXTPickerDelegate : NSObject <UIPickerViewDataSource, UIPickerViewDelegate>{
-	NSArray	*pickerDataArray;
+	NSMutableArray *pickerDataArray;
 }
 
-@property (nonatomic, retain) NSArray *pickerDataArray;
+@property (nonatomic, retain) NSMutableArray *pickerDataArray;
 
 @end

@@ -12,6 +12,13 @@
 @implementation YXTActionSheet
 @synthesize view;
 @synthesize toolBar;
+
+-(void)dealloc{
+	[toolBar release];
+	[view release];
+	[super dealloc];
+}
+
 -(id)initWithHeight:(float)height WithSheetTitle:(NSString*)title delegateClass:(id)delegate confirm:(SEL)selectDone cancel:(SEL)selectCancel{
 	//height = 84, 134, 184, 234, 284, 334, 384, 434, 484
 	self = [super init];
@@ -38,8 +45,8 @@
 		//[toolBar setOpaque:YES];
 		
 		//[titleButton release];
-		[leftButton  release];
 		[rightButton release];
+		[leftButton  release];
 		[fixedButton release];
 		[array       release];
 		
@@ -57,11 +64,6 @@
 -(void)docancel
 {
 	[self dismissWithClickedButtonIndex:0 animated:YES];
-}
--(void)dealloc
-{
-	[view release];
-	[super dealloc];
 }
 
 @end
