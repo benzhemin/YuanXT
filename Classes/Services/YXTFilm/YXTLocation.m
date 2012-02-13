@@ -43,7 +43,7 @@
 		[dict setValue:[[YXTSettings instance] getSetting:@"sign-code"] forKey:@"SIGN"];
 
 		
-		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andQuery:dict andBody:nil];
+		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];
 		[req execute];
 		
@@ -55,7 +55,6 @@
 
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
     OFSafeRelease(mReq);
-    NSLog(@"%@", body);
 	if(responseCode == 200){
         
     }

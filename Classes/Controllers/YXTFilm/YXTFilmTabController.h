@@ -10,7 +10,12 @@
 #import "YXTBasicTabController.h"
 #import "OFXPRequest.h"
 
+@class YXTLocation;
+
 @interface YXTFilmTabController : YXTBasicTabController{
+	YXTLocation *location;
 }
+
+@property (nonatomic, retain) YXTLocation *location;
 
 @end

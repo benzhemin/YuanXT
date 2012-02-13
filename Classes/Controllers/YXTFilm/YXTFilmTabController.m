@@ -15,6 +15,8 @@ enum REQUEST_TYPE {
 
 @implementation YXTFilmTabController
 
+@synthesize location;
+
 - (void)dealloc {
     [super dealloc];
 }
@@ -62,10 +64,12 @@ enum REQUEST_TYPE {
 
 
 -(void)pressCitySwitchBtn{
-	YXTLocation *location = [[YXTLocation alloc] init];
+	location = [[YXTLocation alloc] init];
 	[location setDelegateFilm:self];
-	
 	[location startToFetchCityList];
+}
+
+-(void)popUpCityChangePicker:(NSArray *)array{
 	
 }
 

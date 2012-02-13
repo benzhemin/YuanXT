@@ -34,6 +34,7 @@
 		CE1CFDD714E8E6B700E1AE6F /* bg_titlearea@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFDD414E8E6B700E1AE6F /* bg_titlearea@2x.png */; };
 		CE1CFDD814E8E6B700E1AE6F /* btn_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFDD514E8E6B700E1AE6F /* btn_back@2x.png */; };
 		CE1CFDD914E8E6B700E1AE6F /* dropselect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFDD614E8E6B700E1AE6F /* dropselect@2x.png */; };
+		CE1CFE5314E909ED00E1AE6F /* DSActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1CFE5214E909ED00E1AE6F /* DSActivityView.m */; };
 		CE82370414E39B7000412576 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370314E39B7000412576 /* QuartzCore.framework */; };
 		CE82370814E39B7E00412576 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370714E39B7E00412576 /* CoreLocation.framework */; };
 		CE82370C14E39B8700412576 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370B14E39B8700412576 /* MapKit.framework */; };
@@ -103,6 +104,8 @@
 		CE1CFDD414E8E6B700E1AE6F /* bg_titlearea@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_titlearea@2x.png"; sourceTree = "<group>"; };
 		CE1CFDD514E8E6B700E1AE6F /* btn_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back@2x.png"; sourceTree = "<group>"; };
 		CE1CFDD614E8E6B700E1AE6F /* dropselect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropselect@2x.png"; sourceTree = "<group>"; };
+		CE1CFE5114E909ED00E1AE6F /* DSActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSActivityView.h; sourceTree = "<group>"; };
+		CE1CFE5214E909ED00E1AE6F /* DSActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSActivityView.m; sourceTree = "<group>"; };
 		CE82370314E39B7000412576 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CE82370714E39B7E00412576 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CE82370B14E39B8700412576 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -327,9 +330,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CE1CFE5014E909ED00E1AE6F /* DSActivityView */ = {
+			isa = PBXGroup;
+			children = (
+				CE1CFE5114E909ED00E1AE6F /* DSActivityView.h */,
+				CE1CFE5214E909ED00E1AE6F /* DSActivityView.m */,
+			);
+			path = DSActivityView;
+			sourceTree = "<group>";
+		};
 		CE82374E14E39CE800412576 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				CE1CFE5014E909ED00E1AE6F /* DSActivityView */,
 				CE82374F14E39CE800412576 /* ASIHTTPRequest */,
 				0F2E945014E4CE6E00F091A4 /* OFReachability.h */,
 				0F2E945114E4CE6E00F091A4 /* OFReachability.m */,
@@ -547,6 +560,7 @@
 				0F2EA02414E7DF9C00F091A4 /* NSNotificationCenter+OF.m in Sources */,
 				0F2EA25614E7F67000F091A4 /* YXTActionSheet.m in Sources */,
 				0F2EA25714E7F67000F091A4 /* YXTPickerDelegate.m in Sources */,
+				CE1CFE5314E909ED00E1AE6F /* DSActivityView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
