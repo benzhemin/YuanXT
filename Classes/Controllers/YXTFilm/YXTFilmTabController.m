@@ -18,7 +18,7 @@ enum REQUEST_TYPE {
 
 @implementation YXTFilmTabController
 
-@synthesize location, cityInfo;
+@synthesize location, cityInfo, hotFilm;
 
 @synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
 
@@ -36,6 +36,7 @@ enum REQUEST_TYPE {
 
 -(id)init{
 	if (self = [super init]) {
+		
 	}
 	return self;
 }
@@ -83,7 +84,11 @@ enum REQUEST_TYPE {
 
 
 -(void)refreshHotFilmView{
+	self.hotFilm = [[YXTHotFilm alloc] init];
+	[hotFilm setDelegateFilm:self];
+	[hotFilm setCityInfo:cityInfo];
 	
+	[hotFilm startToFetchFilmList];
 }
 
 

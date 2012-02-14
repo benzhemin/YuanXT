@@ -31,6 +31,7 @@
 
 @property (nonatomic, retain) YXTLocation *location;
 @property (nonatomic, retain) YXTCityInfo *cityInfo;
+@property (nonatomic, retain) YXTHotFilm *hotFilm;
 
 @property (nonatomic, retain) UIButton *cityBtn;
 @property (nonatomic, retain) YXTActionSheet *citySheet;

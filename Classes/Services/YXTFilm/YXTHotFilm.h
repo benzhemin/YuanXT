@@ -9,12 +9,23 @@
 #import <Foundation/Foundation.h>
 #import "OFXPRequest.h"
 
+@class YXTCityInfo;
+@class YXTBasicViewController;
 
 @interface YXTHotFilm : NSObject<OFXPResponseJSON> {
+	YXTBasicViewController *delegateFilm;
+	YXTCityInfo *cityInfo;
+	
+	OFXPRequest *mReq;
 	NSMutableArray *filmList;
 }
 
+@property (nonatomic, assign) YXTBasicViewController *delegateFilm;
 @property (nonatomic, retain) NSMutableArray *filmList;
+
+@property (nonatomic, retain) YXTCityInfo *cityInfo;
+
+-(void)startToFetchFilmList;
 
 @end
 
@@ -27,6 +38,7 @@
 	NSString *mainPerformer;
 	NSString *webPoster;
 	NSString *webPoster2;
+	NSString *ycTime;
 	NSString *filmClass;
 	NSString *area;
 	NSString *description;
@@ -42,6 +54,7 @@
 @property (nonatomic, copy) NSString *mainPerformer;
 @property (nonatomic, copy) NSString *webPoster;
 @property (nonatomic, copy) NSString *webPoster2;
+@property (nonatomic, copy) NSString *ycTime;
 @property (nonatomic, copy) NSString *filmClass;
 @property (nonatomic, copy) NSString *area;
 @property (nonatomic, copy) NSString *description;
