@@ -50,6 +50,16 @@
 	return YES;
 }
 
+-(void)displayServerErrorActivityView{
+	self.waitingMessage = @"服务端出错，请稍候重试";
+	
+	self.useBezelStyle = YES;
+	self.coverNavBar = YES;
+	
+	[self performSelector:@selector(displayActivityView)];
+	[self performSelector:@selector(removeActivityView) withObject:nil afterDelay:2.0];
+}
+
 -(void)displayNetWorkErrorActivityView{
 	self.waitingMessage = @"网络错误，请检查网络";
 	

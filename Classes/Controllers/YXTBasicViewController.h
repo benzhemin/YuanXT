@@ -35,6 +35,8 @@
 
 -(BOOL) showNavigationBackButton;
 
+
+-(void)displayServerErrorActivityView;
 -(void)displayNetWorkErrorActivityView;
 -(void)displayActivityView;
 -(void)removeActivityView;

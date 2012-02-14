@@ -28,13 +28,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 	[OFReachability initializeReachability];
 	
-	if ([OFReachability isConnectedToInternet]) {
-		NSLog(@"can reach");
-	}else {
-		NSLog(@"can't reach");
-	}
-
-	
     // Add the view controller's view to the window and display.
 	_tabBarController = [[YXTTabBarController alloc] init];
 	//[[_tabBarController tabBar] setBackgroundColor:[UIColor clearColor]];

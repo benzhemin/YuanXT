@@ -8,6 +8,7 @@
 
 #import "YXTFilmTabController.h"
 #import "YXTLocation.h"
+#import "YXTHotFilm.h"
 #import "YXTActionSheet.h"
 #import "YXTPickerDelegate.h"
 
@@ -17,12 +18,14 @@ enum REQUEST_TYPE {
 
 @implementation YXTFilmTabController
 
-@synthesize location;
+@synthesize location, cityInfo;
 
 @synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
 
 - (void)dealloc {
 	[location release];
+	[cityInfo release];
+	[hotFilm release];
 	
 	[cityBtn release];
 	[citySheet release];
@@ -33,13 +36,17 @@ enum REQUEST_TYPE {
 
 -(id)init{
 	if (self = [super init]) {
-		
-		
 	}
 	return self;
 }
 
 -(void)viewDidLoad{
+	self.cityInfo = [[YXTCityInfo alloc] init];
+	[cityInfo setProvinceId:@"310000"];
+	[cityInfo setCityId:@"310000"];
+	[cityInfo setCityName:@"上海市"];
+	
+	NSLog(@"self.view bounds:%f, %f", self.view.bounds.size.width, self.view.bounds.size.height);
 	
 	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 	[cityBtn setBackgroundColor:[UIColor clearColor]];
@@ -50,7 +57,8 @@ enum REQUEST_TYPE {
 	[[cityBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:14.0f]];
 	
 	[cityBtn setTitleEdgeInsets:UIEdgeInsetsMake(-2.0, -11.0, 0.0, 0.0)];
-	[cityBtn setTitle:@"上海市" forState:UIControlStateNormal];
+	
+	[cityBtn setTitle:[cityInfo cityName] forState:UIControlStateNormal];
 	
 	
 	UIBarButtonItem *cityBarItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];	
@@ -69,6 +77,12 @@ enum REQUEST_TYPE {
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+	[self refreshHotFilmView];
+	[super viewWillAppear:animated];
+}
+
+
+-(void)refreshHotFilmView{
 	
 }
 
@@ -102,8 +116,9 @@ enum REQUEST_TYPE {
 -(IBAction)selectCityConfirm:(id)sender{
 	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
 	NSInteger row = [cityPicker selectedRowInComponent:0];
-    NSString *selected = [[cityPickerDelegate pickerDataArray] objectAtIndex:row];
-	[cityBtn setTitle:selected forState:UIControlStateNormal];
+	self.cityInfo = [[cityPickerDelegate pickerDataArray] objectAtIndex:row];
+    NSString *cityName = [cityInfo infoDescription];
+	[cityBtn setTitle:cityName forState:UIControlStateNormal];
 }
 
 -(IBAction)selectCityCancel:(id)sender{

@@ -18,6 +18,10 @@
 
 @synthesize provinceId, cityId, cityName;
 
+-(NSString *)infoDescription{
+	return cityName;
+}
+
 -(void)dealloc{
 	[provinceId release];
 	[cityId release];
@@ -91,13 +95,11 @@
 			[cityInfo release];
 		}
 		
-		NSLog(@"citylist count:%d", [cityList count]);
 		[delegateFilm performSelectorOnMainThread:@selector(popUpCityChangePicker:) withObject:cityList waitUntilDone:NO];
     }
     else{
-		
+		[delegateFilm performSelectorOnMainThread:@selector(displayServerErrorActivityView) withObject:nil waitUntilDone:NO];
 	}
-	
 	
 	[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
 }

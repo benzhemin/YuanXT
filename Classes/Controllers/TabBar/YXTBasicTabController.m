@@ -20,7 +20,6 @@
 																tag:[self getTabTag]];
 		self.tabBarItem = barItem;
 		[barItem release];		
-		self.view.backgroundColor = [UIColor grayColor];
 	}
 	return self;
 }

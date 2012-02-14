@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OFXPRequest.h"
 #import "YXTBasicViewController.h"
+#import "BasicInfo.h"
 
 @interface YXTLocation : NSObject <OFXPResponseJSON>{
 	YXTBasicViewController *delegateFilm;
@@ -24,7 +25,7 @@
 @end
 
 
-@interface YXTCityInfo : NSObject{
+@interface YXTCityInfo : NSObject<BasicInfo>{
 	NSString *provinceId;
 	NSString *cityId;
 	NSString *cityName;

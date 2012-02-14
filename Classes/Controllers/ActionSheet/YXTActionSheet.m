@@ -51,7 +51,7 @@
 		[array       release];
 		
 		[self addSubview:toolBar];
-		view = [[UIView alloc] initWithFrame:CGRectMake(0, 44, 320, height-44)];
+		self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 44, 320, height-44)];
 		view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 		[self addSubview:view];
     }

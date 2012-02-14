@@ -7,7 +7,7 @@
 //
 
 #import "YXTPickerDelegate.h"
-
+#import "BasicInfo.h"
 
 @implementation YXTPickerDelegate
 
@@ -40,7 +40,7 @@
 
 #pragma mark Picker Delegate Methods
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [pickerDataArray objectAtIndex:row];
+    return [(id<BasicInfo>)[pickerDataArray objectAtIndex:row] infoDescription];
 }
 
 @end

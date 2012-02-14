@@ -11,11 +11,17 @@
 #import "OFXPRequest.h"
 
 @class YXTLocation;
+@class YXTCityInfo;
+@class YXTHotFilm;
+
 @class YXTActionSheet;
 @class YXTPickerDelegate;
 
+
 @interface YXTFilmTabController : YXTBasicTabController{
 	YXTLocation *location;
+	YXTCityInfo *cityInfo;
+	YXTHotFilm *hotFilm;
 	
 	UIButton *cityBtn;
 	YXTActionSheet *citySheet;
@@ -24,10 +30,13 @@
 }
 
 @property (nonatomic, retain) YXTLocation *location;
+@property (nonatomic, retain) YXTCityInfo *cityInfo;
 
 @property (nonatomic, retain) UIButton *cityBtn;
 @property (nonatomic, retain) YXTActionSheet *citySheet;
 @property (nonatomic, retain) UIPickerView *cityPicker;
 @property (nonatomic, retain) YXTPickerDelegate *cityPickerDelegate;
+
+-(void)refreshHotFilmView;
 
 @end

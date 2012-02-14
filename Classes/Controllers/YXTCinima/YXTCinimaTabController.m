@@ -17,6 +17,12 @@
 	return self;
 }
 
+-(void)viewDidLoad{
+	NSLog(@"self.view bounds:%f, %f", self.view.bounds.size.width, self.view.bounds.size.height);
+	
+	[super viewDidLoad];
+}
+
 -(NSString *)getTabTitle{ return @"影院"; }
 -(NSString *)getTabImage{ return @"icon_yingyuan.png"; }
 -(int) getTabTag{ return 2; }
