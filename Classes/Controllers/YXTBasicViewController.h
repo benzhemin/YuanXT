@@ -17,6 +17,7 @@
 	
 	NSString *waitingMessage;
 	NSUInteger waitingWidth;
+	NSString *responseMessage;
 	
 	BOOL useBezelStyle;
     BOOL useKeyboardStyle;
@@ -27,6 +28,7 @@
 
 @property (nonatomic, copy) NSString *waitingMessage;
 @property (nonatomic) NSUInteger waitingWidth;
+@property (nonatomic, copy) NSString *responseMessage;
 @property (nonatomic) BOOL useBezelStyle;
 @property (nonatomic) BOOL useKeyboardStyle;
 @property (nonatomic) BOOL showKeyboard;
@@ -39,6 +41,7 @@
 -(void)displayServerErrorActivityView;
 -(void)displayNetWorkErrorActivityView;
 -(void)displayActivityView;
+- (void)displayChangeActivityView;
 -(void)removeActivityView;
 
 @end

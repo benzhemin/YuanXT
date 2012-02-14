@@ -12,13 +12,14 @@
 
 @implementation YXTBasicViewController
 
-@synthesize useBezelStyle, useKeyboardStyle, waitingMessage, waitingWidth;
+@synthesize useBezelStyle, useKeyboardStyle;
+@synthesize responseMessage, waitingMessage, waitingWidth;
 @synthesize showKeyboard, coverNavBar, useNetworkActivity;
 
 
 -(void)dealloc{
 	[waitingMessage release];
-	
+	[responseMessage release];
 	//[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[super dealloc];
@@ -90,6 +91,17 @@
         [DSActivityView currentActivityView].showNetworkActivityIndicator = YES;	
 }
 
+
+- (void)displayChangeActivityView{
+    // Change the label text for the currently displayed activity view:
+    [DSActivityView currentActivityView].activityLabel.text = self.responseMessage;
+    
+    // Disable the network activity indicator in the status bar, e.g. after downloading data and starting parsing it (don't have to disable it if simply removing the view):
+    if (self.useNetworkActivity)
+        [DSActivityView currentActivityView].showNetworkActivityIndicator = NO;
+    
+    [self performSelector:@selector(removeActivityView) withObject:nil afterDelay:2.0];
+}
 
 - (void)removeActivityView;
 {

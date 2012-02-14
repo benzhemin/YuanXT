@@ -33,9 +33,11 @@
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 		
 		[dict setValue:@"hotfilm" forKey:@"METHOD"];
+		
+		[cityInfo setCityId:@"320300"];
 		[dict setValue:[cityInfo cityId] forKey:@"CITYID"];
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
-		[dict setValue:[[YXTSettings instance] getSetting:@"sign-code"] forKey:@"SIGN"];
+		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
 		
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
@@ -50,6 +52,10 @@
 
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
 	OFSafeRelease(mReq);
+	NSLog(@"%@", body);
+	
+	
+	[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
 }
 
 @end

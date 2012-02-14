@@ -82,26 +82,30 @@
 	
 	if(responseCode == 200 && [errorCode isEqualToString:@"000000"]){
 		
+		int recordCount = [[bodyDict objectForKey:@"RECORDAMOUNT"] intValue];
         NSArray *cityListBody = [bodyDict objectForKey:@"CITYLIST"];
 		//NSLog(@"%@", cityListBody);
 		
-		for (NSDictionary *cityDict in cityListBody) {
-			YXTCityInfo *cityInfo = [[YXTCityInfo alloc] init];
-			cityInfo.provinceId = [cityDict objectForKey:@"PROVINCEID"];
-			cityInfo.cityId = [cityDict objectForKey:@"CITYID"];
-			cityInfo.cityName = [cityDict objectForKey:@"CITYNAME"];
-
-			[cityList addObject:cityInfo];
-			[cityInfo release];
+		if ([cityListBody count] != 0 && recordCount != 0) {
+			for (NSDictionary *cityDict in cityListBody) {
+				YXTCityInfo *cityInfo = [[YXTCityInfo alloc] init];
+				cityInfo.provinceId = [cityDict objectForKey:@"PROVINCEID"];
+				cityInfo.cityId = [cityDict objectForKey:@"CITYID"];
+				cityInfo.cityName = [cityDict objectForKey:@"CITYNAME"];
+				
+				[cityList addObject:cityInfo];
+				[cityInfo release];
+			}
+			[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
+			[delegateFilm performSelectorOnMainThread:@selector(popUpCityChangePicker:) withObject:cityList waitUntilDone:NO];
+		}else {
+			[delegateFilm setResponseMessage:@"目前暂无数据"];
+			[delegateFilm performSelectorOnMainThread:@selector(displayChangeActivityView) withObject:nil waitUntilDone:NO];
 		}
-		
-		[delegateFilm performSelectorOnMainThread:@selector(popUpCityChangePicker:) withObject:cityList waitUntilDone:NO];
-    }
+	}
     else{
 		[delegateFilm performSelectorOnMainThread:@selector(displayServerErrorActivityView) withObject:nil waitUntilDone:NO];
 	}
-	
-	[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
 }
 
 @end

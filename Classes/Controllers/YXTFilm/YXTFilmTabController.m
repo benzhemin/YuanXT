@@ -47,8 +47,6 @@ enum REQUEST_TYPE {
 	[cityInfo setCityId:@"310000"];
 	[cityInfo setCityName:@"上海市"];
 	
-	NSLog(@"self.view bounds:%f, %f", self.view.bounds.size.width, self.view.bounds.size.height);
-	
 	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 	[cityBtn setBackgroundColor:[UIColor clearColor]];
 	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
