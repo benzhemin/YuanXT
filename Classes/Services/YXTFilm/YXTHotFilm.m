@@ -23,6 +23,13 @@
 	[super dealloc];
 }
 
+-(id)init{
+	if (self=[super init]) {
+		self.filmList = [[NSMutableArray alloc] initWithCapacity:20];
+	}
+	return self;
+}
+
 
 -(void)startToFetchFilmList{
 	if ([OFReachability isConnectedToInternet]) {
@@ -52,10 +59,48 @@
 
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
 	OFSafeRelease(mReq);
-	NSLog(@"%@", body);
 	
+	NSDictionary *bodyDict = (NSDictionary *)body;
+	NSString *errorCode = [bodyDict objectForKey:@"ERRORCODE"];
 	
-	[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
+	if(responseCode == 200 && [errorCode isEqualToString:@"000000"]){
+		
+		int recordCount = [[bodyDict objectForKey:@"RECORDAMOUNT"] intValue];
+        NSArray *filmListBody = [bodyDict objectForKey:@"HOTFILMLIST"];
+		
+		if ([filmListBody count] != 0 && recordCount != 0) {
+			NSLog(@"%@", filmListBody);
+			
+			for (NSDictionary *filmDict in filmListBody) {
+				YXTFilmInfo *filmInfo = [[YXTFilmInfo alloc] init];
+				filmInfo.filmId = [filmDict objectForKey:@"FILMID"];
+				filmInfo.filmName = [filmDict objectForKey:@"FILMNAME"];
+				filmInfo.duration = [filmDict objectForKey:@"DURATION"];
+				filmInfo.director = [filmDict objectForKey:@"DIRECTOR"];
+				filmInfo.mainPerformer = [filmDict objectForKey:@"MAINPERFORMER"];
+				filmInfo.webPoster = [filmDict objectForKey:@"WEBPOSTER"];
+				filmInfo.webPoster2 = [filmDict objectForKey:@"WEBPOSTER2"];
+				filmInfo.ycTime = [filmDict objectForKey:@"YCTIME"];
+				filmInfo.filmClass = [filmDict objectForKey:@"FILMCLASS"];
+				filmInfo.area = [filmDict objectForKey:@"AREA"];
+				filmInfo.description = [filmDict objectForKey:@"DESCRIPTION"];
+				filmInfo.trailer = [filmDict objectForKey:@"TRAILER"];
+				filmInfo.attention = [filmDict objectForKey:@"ATTENTION"];
+				filmInfo.showCount = [filmDict objectForKey:@"SHOWCOUNT"];
+				
+				[self.filmList addObject:filmInfo];
+				[filmInfo release];
+			}
+			
+			[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
+		}else {
+			[delegateFilm setResponseMessage:@"目前暂无数据"];
+			[delegateFilm performSelectorOnMainThread:@selector(displayChangeActivityView) withObject:nil waitUntilDone:NO];
+		}
+	}
+    else{
+		[delegateFilm performSelectorOnMainThread:@selector(displayServerErrorActivityView) withObject:nil waitUntilDone:NO];
+	}
 }
 
 @end

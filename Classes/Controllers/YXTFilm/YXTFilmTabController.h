@@ -23,6 +23,8 @@
 	YXTCityInfo *cityInfo;
 	YXTHotFilm *hotFilm;
 	
+	NSMutableArray *filmList;
+	
 	UIButton *cityBtn;
 	YXTActionSheet *citySheet;
 	UIPickerView *cityPicker;
@@ -32,6 +34,8 @@
 @property (nonatomic, retain) YXTLocation *location;
 @property (nonatomic, retain) YXTCityInfo *cityInfo;
 @property (nonatomic, retain) YXTHotFilm *hotFilm;
+
+@property (nonatomic, retain) NSMutableArray *filmList;
 
 @property (nonatomic, retain) UIButton *cityBtn;
 @property (nonatomic, retain) YXTActionSheet *citySheet;

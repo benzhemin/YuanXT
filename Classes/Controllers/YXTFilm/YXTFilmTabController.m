@@ -18,7 +18,7 @@ enum REQUEST_TYPE {
 
 @implementation YXTFilmTabController
 
-@synthesize location, cityInfo, hotFilm;
+@synthesize location, cityInfo, hotFilm, filmList;
 
 @synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
 
@@ -26,6 +26,8 @@ enum REQUEST_TYPE {
 	[location release];
 	[cityInfo release];
 	[hotFilm release];
+	
+	[filmList release];
 	
 	[cityBtn release];
 	[citySheet release];
@@ -122,6 +124,8 @@ enum REQUEST_TYPE {
 	self.cityInfo = [[cityPickerDelegate pickerDataArray] objectAtIndex:row];
     NSString *cityName = [cityInfo infoDescription];
 	[cityBtn setTitle:cityName forState:UIControlStateNormal];
+	
+	[self refreshHotFilmView];
 }
 
 -(IBAction)selectCityCancel:(id)sender{
