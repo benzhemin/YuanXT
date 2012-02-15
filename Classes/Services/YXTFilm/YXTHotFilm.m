@@ -91,7 +91,6 @@
 				[self.filmList addObject:filmInfo];
 				[filmInfo release];
 			}
-			
 			[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
 		}else {
 			[delegateFilm setResponseMessage:@"目前暂无数据"];

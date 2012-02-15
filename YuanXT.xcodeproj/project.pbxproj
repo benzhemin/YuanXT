@@ -31,6 +31,8 @@
 		CE1C042514EA290C00E1AE6F /* YXTFilmTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE1C042414EA290C00E1AE6F /* YXTFilmTabController.xib */; };
 		CE1C071714EA415B00E1AE6F /* btn_goumaiyingpiao.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1C071514EA415B00E1AE6F /* btn_goumaiyingpiao.png */; };
 		CE1C071814EA415B00E1AE6F /* btn_goumaiyingpiao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1C071614EA415B00E1AE6F /* btn_goumaiyingpiao@2x.png */; };
+		CE1C075A14EB50D600E1AE6F /* bg_movie.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1C075814EB50D600E1AE6F /* bg_movie.png */; };
+		CE1C075B14EB50D600E1AE6F /* bg_movie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1C075914EB50D600E1AE6F /* bg_movie@2x.png */; };
 		CE1CFD9014E8DD9600E1AE6F /* icon_help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFD8F14E8DD9600E1AE6F /* icon_help@2x.png */; };
 		CE1CFD9214E8DD9A00E1AE6F /* icon_yingpian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFD9114E8DD9A00E1AE6F /* icon_yingpian@2x.png */; };
 		CE1CFD9414E8DD9E00E1AE6F /* icon_yingyuan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFD9314E8DD9E00E1AE6F /* icon_yingyuan@2x.png */; };
@@ -105,6 +107,8 @@
 		CE1C042414EA290C00E1AE6F /* YXTFilmTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTFilmTabController.xib; sourceTree = "<group>"; };
 		CE1C071514EA415B00E1AE6F /* btn_goumaiyingpiao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_goumaiyingpiao.png; sourceTree = "<group>"; };
 		CE1C071614EA415B00E1AE6F /* btn_goumaiyingpiao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_goumaiyingpiao@2x.png"; sourceTree = "<group>"; };
+		CE1C075814EB50D600E1AE6F /* bg_movie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_movie.png; sourceTree = "<group>"; };
+		CE1C075914EB50D600E1AE6F /* bg_movie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_movie@2x.png"; sourceTree = "<group>"; };
 		CE1CFD8F14E8DD9600E1AE6F /* icon_help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_help@2x.png"; sourceTree = "<group>"; };
 		CE1CFD9114E8DD9A00E1AE6F /* icon_yingpian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_yingpian@2x.png"; sourceTree = "<group>"; };
 		CE1CFD9314E8DD9E00E1AE6F /* icon_yingyuan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_yingyuan@2x.png"; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 			children = (
 				0F2E970314E522FD00F091A4 /* navigation */,
 				0F2E970514E522FD00F091A4 /* tab */,
+				CE1C071414EA415B00E1AE6F /* film */,
 			);
 			path = image;
 			sourceTree = "<group>";
@@ -319,7 +324,6 @@
 			isa = PBXGroup;
 			children = (
 				0F2E966F14E50C4C00F091A4 /* image */,
-				CE1C071414EA415B00E1AE6F /* film */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* YuanXT-Info.plist */,
 			);
@@ -347,11 +351,12 @@
 		CE1C071414EA415B00E1AE6F /* film */ = {
 			isa = PBXGroup;
 			children = (
+				CE1C075814EB50D600E1AE6F /* bg_movie.png */,
+				CE1C075914EB50D600E1AE6F /* bg_movie@2x.png */,
 				CE1C071514EA415B00E1AE6F /* btn_goumaiyingpiao.png */,
 				CE1C071614EA415B00E1AE6F /* btn_goumaiyingpiao@2x.png */,
 			);
-			name = film;
-			path = image/film;
+			path = film;
 			sourceTree = "<group>";
 		};
 		CE1CFE5014E909ED00E1AE6F /* DSActivityView */ = {
@@ -549,6 +554,8 @@
 				CE1C042514EA290C00E1AE6F /* YXTFilmTabController.xib in Resources */,
 				CE1C071714EA415B00E1AE6F /* btn_goumaiyingpiao.png in Resources */,
 				CE1C071814EA415B00E1AE6F /* btn_goumaiyingpiao@2x.png in Resources */,
+				CE1C075A14EB50D600E1AE6F /* bg_movie.png in Resources */,
+				CE1C075B14EB50D600E1AE6F /* bg_movie@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

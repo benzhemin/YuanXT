@@ -11,6 +11,8 @@
 #import "ASIFormDataRequest.h"
 #import "YXTSettings.h"
 #import "JSON.h"
+#import "YXTBasicViewController.h"
+#import "NSNotificationCenter+OF.h"
 
 @interface OFXPRequest ()
 
@@ -476,8 +478,8 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request{
-	
-	
+	NSLog(@"request failed!");
+	[[NSNotificationCenter defaultCenter] postNotificationName:START_SHOW_REQUEST_FAILED_ERROR object:nil userInfo:nil];
 	// we're done here
 	self.request = nil;
 }

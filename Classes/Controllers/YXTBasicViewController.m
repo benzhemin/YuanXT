@@ -20,7 +20,7 @@
 -(void)dealloc{
 	[waitingMessage release];
 	[responseMessage release];
-	//[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[super dealloc];
 }
@@ -33,12 +33,12 @@
 		self.waitingWidth = 150.0;
 		
 		
-		/*
+	
 		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(displayNetWorkErrorActivityView) 
-													 name:START_FADEIN_NETWORK_ERROR
+												 selector:@selector(displayRequestFailedActivityView) 
+													 name:START_SHOW_REQUEST_FAILED_ERROR
 												   object:nil];
-		*/
+		
 	}
 	return self;
 }
@@ -69,6 +69,11 @@
 	
 	[self performSelector:@selector(displayActivityView)];
 	[self performSelector:@selector(removeActivityView) withObject:nil afterDelay:2.0];
+}
+
+-(void)displayRequestFailedActivityView{
+	self.responseMessage = @"请求失败";
+	[self displayChangeActivityView];
 }
 
 -(void)displayActivityView{
@@ -113,7 +118,6 @@
     else
         [DSActivityView removeView];
 }
-
 
 
 - (void)didReceiveMemoryWarning {

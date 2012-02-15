@@ -12,6 +12,7 @@
 #define START_FADEIN_WAITING @"START_FADEIN_WAITING"
 #define START_FADEOUT_WAITING @"START_FADEOUT_WAITING"
 #define START_FADEIN_NETWORK_ERROR @"START_FADEIN_NETWORK_ERROR"
+#define START_SHOW_REQUEST_FAILED_ERROR @"START_SHOW_REQUEST_FAILED_ERROR"
 
 @interface YXTBasicViewController : UIViewController {
 	
@@ -40,6 +41,7 @@
 
 -(void)displayServerErrorActivityView;
 -(void)displayNetWorkErrorActivityView;
+-(void)displayRequestFailedActivityView;
 -(void)displayActivityView;
 - (void)displayChangeActivityView;
 -(void)removeActivityView;
