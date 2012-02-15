@@ -18,7 +18,7 @@
 @class YXTPickerDelegate;
 
 
-@interface YXTFilmTabController : YXTBasicTabController{
+@interface YXTFilmTabController : YXTBasicTabController<UIScrollViewDelegate>{
 	YXTLocation *location;
 	YXTCityInfo *cityInfo;
 	YXTHotFilm *hotFilm;
@@ -29,6 +29,16 @@
 	YXTActionSheet *citySheet;
 	UIPickerView *cityPicker;
 	YXTPickerDelegate *cityPickerDelegate;
+	
+	UIScrollView *filmScrollView;
+	NSMutableArray *filmViewArray;
+	
+	UILabel *filmNameLabel;
+	UILabel *directorLabel;
+	UILabel *mainPerformerLabel;
+	UILabel *filmClassLabel;
+	UILabel *areaLabel;
+	UILabel *ycTimeLabel;
 }
 
 @property (nonatomic, retain) YXTLocation *location;
@@ -41,6 +51,15 @@
 @property (nonatomic, retain) YXTActionSheet *citySheet;
 @property (nonatomic, retain) UIPickerView *cityPicker;
 @property (nonatomic, retain) YXTPickerDelegate *cityPickerDelegate;
+
+@property (nonatomic, retain) IBOutlet UIScrollView *filmScrollView;
+
+@property (nonatomic, retain) IBOutlet UILabel *filmNameLabel;
+@property (nonatomic, retain) IBOutlet UILabel *directorLabel;
+@property (nonatomic, retain) IBOutlet UILabel *mainPerformerLabel;
+@property (nonatomic, retain) IBOutlet UILabel *filmClassLabel;
+@property (nonatomic, retain) IBOutlet UILabel *areaLabel;
+@property (nonatomic, retain) IBOutlet UILabel *ycTimeLabel;
 
 -(void)refreshHotFilmView;
 

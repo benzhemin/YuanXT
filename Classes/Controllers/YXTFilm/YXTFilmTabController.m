@@ -22,6 +22,10 @@ enum REQUEST_TYPE {
 
 @synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
 
+@synthesize filmScrollView;
+@synthesize filmNameLabel, directorLabel, mainPerformerLabel;
+@synthesize filmClassLabel, areaLabel, ycTimeLabel;
+
 - (void)dealloc {
 	[location release];
 	[cityInfo release];
@@ -33,6 +37,15 @@ enum REQUEST_TYPE {
 	[citySheet release];
 	[cityPicker release];
 	[cityPickerDelegate release];
+	
+	
+	[filmScrollView release];
+	[filmNameLabel release];
+	[directorLabel release];
+	[mainPerformerLabel release];
+	[filmClassLabel release];
+	[areaLabel release];
+	[ycTimeLabel release];
     [super dealloc];
 }
 
@@ -49,6 +62,8 @@ enum REQUEST_TYPE {
 	[cityInfo setCityId:@"310000"];
 	[cityInfo setCityName:@"上海市"];
 	
+	
+	// set uibaritem
 	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 	[cityBtn setBackgroundColor:[UIColor clearColor]];
 	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
@@ -58,18 +73,70 @@ enum REQUEST_TYPE {
 	[[cityBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:14.0f]];
 	
 	[cityBtn setTitleEdgeInsets:UIEdgeInsetsMake(-2.0, -11.0, 0.0, 0.0)];
-	
 	[cityBtn setTitle:[cityInfo cityName] forState:UIControlStateNormal];
-	
 	
 	UIBarButtonItem *cityBarItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];	
 	self.navigationItem.rightBarButtonItem = cityBarItem;
-	//viewController.navigationItem.backBarButtonItem = backBar;
-	
 	[cityBarItem release];
+	
+	
+	
+	//set filmscroll
+	//首先假设一共有15张图片，为了保证一次滑动不拖到底。
+	int filmnum = 46;
+	
+	CGFloat startX = 5;
+	CGFloat width = 101;
+	CGFloat height = 145;
+	CGFloat span = 10;
+	
+	filmViewArray = [[[NSMutableArray alloc] initWithCapacity:20] autorelease];
+	
+	for (int i=1; i<=filmnum; i++) {
+		int index = 0;
+		if (i % 6 == 0) {
+			index = 6;
+		}else {
+			index = i % 6;
+		}
+
+		
+		NSString *imgName = [NSString stringWithFormat:@"large_%d.png", index];
+		UIImage *imageFilm = [UIImage imageNamed:imgName];
+		UIImageView *imageView = [[[UIImageView alloc] initWithImage:imageFilm] autorelease];
+		[imageView setBackgroundColor:[UIColor lightGrayColor]];
+		[imageView setFrame:CGRectMake(startX+(i-1)*width+(i-1)*span, 0, 101, 145)];
+		[filmViewArray addObject:imageView];
+		[filmScrollView addSubview:imageView];
+	}
+	filmScrollView.delegate = self;
+	filmScrollView.pagingEnabled = NO;
+	filmScrollView.showsHorizontalScrollIndicator = NO;
+	filmScrollView.contentSize = CGSizeMake(startX + filmnum*width + (filmnum-1)*span + startX, height);
+
+	UIImageView *imgView = [filmViewArray objectAtIndex:((filmnum/2 + 1)-1-1)];
+	CGPoint centerfilm = CGPointZero;
+	centerfilm.x = imgView.frame.origin.x;
+	NSLog(@"center:%f", centerfilm.x);
+	[filmScrollView setContentOffset:centerfilm animated:NO];
 	
 	[super viewDidLoad];
 }
+
+// any offset changes
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+	NSLog(@"scrollview offset:%f", scrollView.contentOffset.x);
+	
+	if (scrollView.contentOffset.x < 101*7 || scrollView.contentOffset.x > 101*40) {
+		[scrollView scrollRectToVisible:CGRectMake(101*22, 0, 101, 145) animated:NO];
+	}
+}
+
+// called when scroll view grinds to a halt
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+	NSLog(@"end decelerating");
+}
+
 
 - (void)viewDidUnload {
     [super viewDidUnload];

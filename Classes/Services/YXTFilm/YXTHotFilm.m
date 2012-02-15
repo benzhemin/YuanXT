@@ -69,7 +69,7 @@
         NSArray *filmListBody = [bodyDict objectForKey:@"HOTFILMLIST"];
 		
 		if ([filmListBody count] != 0 && recordCount != 0) {
-			NSLog(@"%@", filmListBody);
+			//NSLog(@"%@", filmListBody);
 			
 			for (NSDictionary *filmDict in filmListBody) {
 				YXTFilmInfo *filmInfo = [[YXTFilmInfo alloc] init];
