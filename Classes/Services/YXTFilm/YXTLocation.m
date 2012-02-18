@@ -84,7 +84,6 @@
 		
 		int recordCount = [[bodyDict objectForKey:@"RECORDAMOUNT"] intValue];
         NSArray *cityListBody = [bodyDict objectForKey:@"CITYLIST"];
-		//NSLog(@"%@", cityListBody);
 		
 		if ([cityListBody count] != 0 && recordCount != 0) {
 			for (NSDictionary *cityDict in cityListBody) {

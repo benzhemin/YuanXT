@@ -11,18 +11,25 @@
 #import "YXTHotFilm.h"
 #import "YXTActionSheet.h"
 #import "YXTPickerDelegate.h"
+#import "ImageDownLoader.h"
 
 enum REQUEST_TYPE {
 	city_request = 0
 };
 
+static const CGFloat startX = 0;
+static const CGFloat width = 101;
+static const CGFloat height = 145;
+static const CGFloat span = 8;
+
 @implementation YXTFilmTabController
 
-@synthesize location, cityInfo, hotFilm, filmList;
+@synthesize location, cityInfo, hotFilm, filmList, imageQueue, filmImageList;
 
 @synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
 
-@synthesize filmScrollView;
+@synthesize filmScrollView, filmImageViewList;
+
 @synthesize filmNameLabel, directorLabel, mainPerformerLabel;
 @synthesize filmClassLabel, areaLabel, ycTimeLabel;
 
@@ -32,6 +39,8 @@ enum REQUEST_TYPE {
 	[hotFilm release];
 	
 	[filmList release];
+	[imageQueue release];
+	[filmImageList release];
 	
 	[cityBtn release];
 	[citySheet release];
@@ -40,6 +49,9 @@ enum REQUEST_TYPE {
 	
 	
 	[filmScrollView release];
+	[filmImageViewList release];
+	
+	
 	[filmNameLabel release];
 	[directorLabel release];
 	[mainPerformerLabel release];
@@ -62,33 +74,32 @@ enum REQUEST_TYPE {
 	[cityInfo setCityId:@"310000"];
 	[cityInfo setCityName:@"上海市"];
 	
-	
-	// set uibaritem
-	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-	[cityBtn setBackgroundColor:[UIColor clearColor]];
-	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
-	[cityBtn setFrame:CGRectMake(0, 0, cityImg.size.width+15.0, cityImg.size.height+8.0)];
-	[cityBtn setBackgroundImage:cityImg forState:UIControlStateNormal];
-	[cityBtn addTarget:self action:@selector(pressCitySwitchBtn) forControlEvents:UIControlEventTouchUpInside];
-	[[cityBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:14.0f]];
-	
-	[cityBtn setTitleEdgeInsets:UIEdgeInsetsMake(-2.0, -11.0, 0.0, 0.0)];
-	[cityBtn setTitle:[cityInfo cityName] forState:UIControlStateNormal];
-	
-	UIBarButtonItem *cityBarItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];	
-	self.navigationItem.rightBarButtonItem = cityBarItem;
-	[cityBarItem release];
+	[self setUpUINavigationBarItem];
 	
 	
+	//viewDidLoad时，初始化3张图片，等获取到所有图片再重新layout
+	int film_init_image = 3;
+	
+	filmScrollView.delegate = self;
+	filmScrollView.pagingEnabled = NO;
+	filmScrollView.showsHorizontalScrollIndicator = NO;
+	filmScrollView.contentSize = CGSizeMake(startX + film_init_image*width + (film_init_image-1)*span + startX, height);	
+	
+	NSString *loadingImgName = [NSString stringWithFormat:@"bg_movie.png"];
+	UIImage *loadingImg = [UIImage imageNamed:loadingImgName];
+	for (int i=0; i<film_init_image; i++) {
+		YXTUIImageView *loadingImageView = [[YXTUIImageView alloc] initWithImage:loadingImg];
+		[loadingImageView addAnimateLoadingImage];
+		[loadingImageView setFrame:CGRectMake(startX+i*width+i*span, 0, loadingImg.size.width, loadingImg.size.height)];
+		[loadingImageView startAnimateLoadingImage];
+		[filmScrollView addSubview:loadingImageView];
+		[loadingImageView release];
+	}
 	
 	//set filmscroll
 	//首先假设一共有15张图片，为了保证一次滑动不拖到底。
+	/*
 	int filmnum = 46;
-	
-	CGFloat startX = 5;
-	CGFloat width = 101;
-	CGFloat height = 145;
-	CGFloat span = 10;
 	
 	filmViewArray = [[[NSMutableArray alloc] initWithCapacity:20] autorelease];
 	
@@ -103,7 +114,7 @@ enum REQUEST_TYPE {
 		
 		NSString *imgName = [NSString stringWithFormat:@"large_%d.png", index];
 		UIImage *imageFilm = [UIImage imageNamed:imgName];
-		UIImageView *imageView = [[[UIImageView alloc] initWithImage:imageFilm] autorelease];
+		YXTUIImageView *imageView = [[[YXTUIImageView alloc] initWithImage:imageFilm] autorelease];
 		[imageView setBackgroundColor:[UIColor lightGrayColor]];
 		[imageView setFrame:CGRectMake(startX+(i-1)*width+(i-1)*span, 0, 101, 145)];
 		[filmViewArray addObject:imageView];
@@ -119,13 +130,76 @@ enum REQUEST_TYPE {
 	centerfilm.x = imgView.frame.origin.x;
 	NSLog(@"center:%f", centerfilm.x);
 	[filmScrollView setContentOffset:centerfilm animated:NO];
-	
+	*/
 	[super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+	[self refreshHotFilmView];
+	[super viewWillAppear:animated];
+}
+
+-(void)refreshHotFilmView{
+	self.hotFilm = [[YXTHotFilm alloc] init];
+	[hotFilm setDelegateFilm:self];
+	[hotFilm setCityInfo:cityInfo];
+	
+	[hotFilm startToFetchFilmList];
+}
+
+-(void)fetchFilmListSucceed:(NSMutableArray *)filmListArray {
+	self.filmList = filmListArray;
+
+	[self performSelectorOnMainThread:@selector(updateFilmInfo) withObject:nil waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(layoutFilmScroll) withObject:nil waitUntilDone:NO];
+	
+	if (imageQueue) {
+		[imageQueue cancelAllOperations];
+	}
+	self.imageQueue = [[ASINetworkQueue alloc] init];
+	self.filmImageList = [[NSMutableArray alloc] initWithCapacity:20];
+	
+	for (YXTFilmInfo *filmInfo in filmList) {
+		if (filmInfo.webPoster2 != nil) {
+			ImageDownLoader *imgLoader = [ImageDownLoader requestWithURL:[NSURL URLWithString:filmInfo.webPoster2]];
+			[self.imageQueue addOperation:imgLoader];
+			[self.filmImageList addObject:imgLoader];
+			[imgLoader release];
+		}
+	}
+	[imageQueue go];
+}
+
+-(void)layoutFilmScroll{
+	for (UIView *view in [self.filmScrollView subviews]) {
+		[view removeFromSuperview];
+	}
+	
+	//为了有循环滑动效果，设置scrollview的宽度为3倍内容
+	int film_init_image = [self.filmList count] * 3;
+	self.filmImageViewList = [[NSMutableArray alloc] initWithCapacity:[self.filmList count]];
+	filmScrollView.contentSize = CGSizeMake(startX + film_init_image*width + (film_init_image-1)*span + startX, height);	
+	
+	NSString *loadingImgName = [NSString stringWithFormat:@"bg_movie.png"];
+	UIImage *loadingImg = [UIImage imageNamed:loadingImgName];
+	for (int i=0; i<film_init_image; i++) {
+		YXTUIImageView *loadingImageView = [[YXTUIImageView alloc] initWithImage:loadingImg];
+		[loadingImageView addAnimateLoadingImage];
+		[loadingImageView setFrame:CGRectMake(startX+i*width+i*span, 0, loadingImg.size.width, loadingImg.size.height)];
+		[loadingImageView startAnimateLoadingImage];
+		[filmScrollView addSubview:loadingImageView];
+		[filmImageViewList addObject:loadingImageView];
+		[loadingImageView release];
+	}
+	
+	CGFloat total_width = startX + [filmList count]*width + [filmList count]*span;
+	[filmScrollView scrollRectToVisible:CGRectMake(total_width, 0, total_width, loadingImg.size.height)
+							   animated:NO];
 }
 
 // any offset changes
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	NSLog(@"scrollview offset:%f", scrollView.contentOffset.x);
+	//NSLog(@"scrollview offset:%f", scrollView.contentOffset.x);
 	
 	if (scrollView.contentOffset.x < 101*7 || scrollView.contentOffset.x > 101*40) {
 		[scrollView scrollRectToVisible:CGRectMake(101*22, 0, 101, 145) animated:NO];
@@ -136,28 +210,6 @@ enum REQUEST_TYPE {
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 	NSLog(@"end decelerating");
 }
-
-
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
--(void)viewWillAppear:(BOOL)animated{
-	[self refreshHotFilmView];
-	[super viewWillAppear:animated];
-}
-
-
--(void)refreshHotFilmView{
-	self.hotFilm = [[YXTHotFilm alloc] init];
-	[hotFilm setDelegateFilm:self];
-	[hotFilm setCityInfo:cityInfo];
-	
-	[hotFilm startToFetchFilmList];
-}
-
 
 -(void)pressCitySwitchBtn{
 	self.location = [[YXTLocation alloc] init];
@@ -199,7 +251,39 @@ enum REQUEST_TYPE {
 	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+-(void)setUpUINavigationBarItem{
+	// set uibaritem
+	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+	[cityBtn setBackgroundColor:[UIColor clearColor]];
+	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
+	[cityBtn setFrame:CGRectMake(0, 0, cityImg.size.width+15.0, cityImg.size.height+8.0)];
+	[cityBtn setBackgroundImage:cityImg forState:UIControlStateNormal];
+	[cityBtn addTarget:self action:@selector(pressCitySwitchBtn) forControlEvents:UIControlEventTouchUpInside];
+	[[cityBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:14.0f]];
+	
+	[cityBtn setTitleEdgeInsets:UIEdgeInsetsMake(-2.0, -11.0, 0.0, 0.0)];
+	[cityBtn setTitle:[cityInfo cityName] forState:UIControlStateNormal];
+	
+	UIBarButtonItem *cityBarItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];	
+	self.navigationItem.rightBarButtonItem = cityBarItem;
+	[cityBarItem release];
+}
 
+-(void)updateFilmInfo{
+	YXTFilmInfo *filmInfo = (YXTFilmInfo *)[filmList objectAtIndex:0];
+	self.filmNameLabel.text = filmInfo.filmName;
+	self.directorLabel.text = filmInfo.director;
+	self.mainPerformerLabel.text = filmInfo.mainPerformer;
+	self.filmClassLabel.text = filmInfo.filmClass;
+	self.areaLabel.text = filmInfo.area;
+	self.ycTimeLabel.text = filmInfo.ycTime;
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
 
 -(NSString *)getNavTitle{ return @"正在热映";}
 -(NSString *)getTabTitle{ return @"影片"; }

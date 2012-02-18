@@ -250,7 +250,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBUILabel" id="686435526">
 						<reference key="NSNextResponder" ref="1064915700"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{119, 204}, {163, 21}}</string>
+						<string key="NSFrame">{{119, 204}, {181, 21}}</string>
 						<reference key="NSSuperview" ref="1064915700"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -262,6 +262,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="IBUITextColor" ref="674857633"/>
 						<reference key="IBUIHighlightedColor" ref="270915513"/>
 						<int key="IBUIBaselineAdjustment">1</int>
+						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 						<float key="IBUIMinimumFontSize">10</float>
 					</object>
 					<object class="IBUILabel" id="395528876">

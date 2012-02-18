@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "YXTBasicTabController.h"
 #import "OFXPRequest.h"
+#import "ASINetworkQueue.h"
+#import "YXTUIImageView.h"
 
 @class YXTLocation;
 @class YXTCityInfo;
@@ -24,6 +26,11 @@
 	YXTHotFilm *hotFilm;
 	
 	NSMutableArray *filmList;
+	ASINetworkQueue *imageQueue;
+	
+	//retain download film image
+	NSMutableArray *filmImageList;
+	
 	
 	UIButton *cityBtn;
 	YXTActionSheet *citySheet;
@@ -31,7 +38,7 @@
 	YXTPickerDelegate *cityPickerDelegate;
 	
 	UIScrollView *filmScrollView;
-	NSMutableArray *filmViewArray;
+	NSMutableArray *filmImageViewList;
 	
 	UILabel *filmNameLabel;
 	UILabel *directorLabel;
@@ -46,6 +53,8 @@
 @property (nonatomic, retain) YXTHotFilm *hotFilm;
 
 @property (nonatomic, retain) NSMutableArray *filmList;
+@property (nonatomic, retain) ASINetworkQueue *imageQueue;
+@property (nonatomic, retain) NSMutableArray *filmImageList;
 
 @property (nonatomic, retain) UIButton *cityBtn;
 @property (nonatomic, retain) YXTActionSheet *citySheet;
@@ -53,6 +62,7 @@
 @property (nonatomic, retain) YXTPickerDelegate *cityPickerDelegate;
 
 @property (nonatomic, retain) IBOutlet UIScrollView *filmScrollView;
+@property (nonatomic, retain) NSMutableArray *filmImageViewList;
 
 @property (nonatomic, retain) IBOutlet UILabel *filmNameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *directorLabel;
@@ -62,5 +72,11 @@
 @property (nonatomic, retain) IBOutlet UILabel *ycTimeLabel;
 
 -(void)refreshHotFilmView;
+
+@end
+
+@interface YXTFilmTabController(Private) 
+
+-(void)setUpUINavigationBarItem;
 
 @end

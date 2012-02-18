@@ -41,7 +41,6 @@
 		
 		[dict setValue:@"hotfilm" forKey:@"METHOD"];
 		
-		[cityInfo setCityId:@"320300"];
 		[dict setValue:[cityInfo cityId] forKey:@"CITYID"];
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
 		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
@@ -69,7 +68,6 @@
         NSArray *filmListBody = [bodyDict objectForKey:@"HOTFILMLIST"];
 		
 		if ([filmListBody count] != 0 && recordCount != 0) {
-			//NSLog(@"%@", filmListBody);
 			
 			for (NSDictionary *filmDict in filmListBody) {
 				YXTFilmInfo *filmInfo = [[YXTFilmInfo alloc] init];
@@ -92,6 +90,7 @@
 				[filmInfo release];
 			}
 			[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
+			[delegateFilm performSelectorInBackground:@selector(fetchFilmListSucceed:) withObject:self.filmList];
 		}else {
 			[delegateFilm setResponseMessage:@"目前暂无数据"];
 			[delegateFilm performSelectorOnMainThread:@selector(displayChangeActivityView) withObject:nil waitUntilDone:NO];
