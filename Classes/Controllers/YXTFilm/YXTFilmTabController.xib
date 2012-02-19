@@ -45,7 +45,7 @@
 					<object class="IBUIScrollView" id="84239939">
 						<reference key="NSNextResponder" ref="1064915700"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{0, 9}, {330, 145}}</string>
+						<string key="NSFrame">{{0, 9}, {320, 145}}</string>
 						<reference key="NSSuperview" ref="1064915700"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">10</int>

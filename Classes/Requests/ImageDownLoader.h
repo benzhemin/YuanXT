@@ -10,10 +10,19 @@
 #import "ASIHTTPRequest.h"
 #import "YXTBasicViewController.h"
 
+@protocol ImageDownLoadDelegate
+
+-(void)imageRequestFinished:(NSDictionary *)userInfo;
+
+@end
+
+
 @interface ImageDownLoader : ASIHTTPRequest {
 	NSData *imgData;
+	id<ImageDownLoadDelegate> reqDelegate;
 }
 
 @property (nonatomic, retain) NSData *imgData;
+@property (nonatomic, assign) id<ImageDownLoadDelegate> reqDelegate; 
 
 @end

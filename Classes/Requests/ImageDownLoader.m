@@ -11,16 +11,18 @@
 
 @implementation ImageDownLoader
 
-@synthesize imgData;
+@synthesize imgData, reqDelegate;
 
 
 - (void)requestFinished{
     [super requestFinished]; 
 	
-	NSLog(@"request finished:%@", self.originalURL.path);
-	
 	if (self.responseStatusCode == 200) {
+		NSLog(@"request finished:%@", self.originalURL.path);
+		
 		self.imgData = [self responseData];
+			
+		[(NSObject *)reqDelegate performSelectorOnMainThread:@selector(imageRequestFinished:) withObject:self.userInfo waitUntilDone:NO];
 	}
 }
 

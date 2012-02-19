@@ -11,16 +11,18 @@
 #import "OFXPRequest.h"
 #import "ASINetworkQueue.h"
 #import "YXTUIImageView.h"
+#import "ImageDownLoader.h"
 
 @class YXTLocation;
 @class YXTCityInfo;
 @class YXTHotFilm;
+@class YXTFilmInfo;
 
 @class YXTActionSheet;
 @class YXTPickerDelegate;
 
 
-@interface YXTFilmTabController : YXTBasicTabController<UIScrollViewDelegate>{
+@interface YXTFilmTabController : YXTBasicTabController<UIScrollViewDelegate, ImageDownLoadDelegate>{
 	YXTLocation *location;
 	YXTCityInfo *cityInfo;
 	YXTHotFilm *hotFilm;
@@ -78,5 +80,6 @@
 @interface YXTFilmTabController(Private) 
 
 -(void)setUpUINavigationBarItem;
+-(void)updateFilmInfo:(YXTFilmInfo *)filmInfo;
 
 @end

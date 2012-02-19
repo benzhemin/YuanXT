@@ -21,6 +21,9 @@ static const CGFloat startX = 0;
 static const CGFloat width = 101;
 static const CGFloat height = 145;
 static const CGFloat span = 8;
+static 	int factor = 3;
+
+static CGFloat begin_decelerate_offsetx = 0; 
 
 @implementation YXTFilmTabController
 
@@ -83,7 +86,7 @@ static const CGFloat span = 8;
 	filmScrollView.delegate = self;
 	filmScrollView.pagingEnabled = NO;
 	filmScrollView.showsHorizontalScrollIndicator = NO;
-	filmScrollView.contentSize = CGSizeMake(startX + film_init_image*width + (film_init_image-1)*span + startX, height);	
+	filmScrollView.contentSize = CGSizeMake(startX + film_init_image*width + film_init_image*span + startX, height);
 	
 	NSString *loadingImgName = [NSString stringWithFormat:@"bg_movie.png"];
 	UIImage *loadingImg = [UIImage imageNamed:loadingImgName];
@@ -96,41 +99,6 @@ static const CGFloat span = 8;
 		[loadingImageView release];
 	}
 	
-	//set filmscroll
-	//首先假设一共有15张图片，为了保证一次滑动不拖到底。
-	/*
-	int filmnum = 46;
-	
-	filmViewArray = [[[NSMutableArray alloc] initWithCapacity:20] autorelease];
-	
-	for (int i=1; i<=filmnum; i++) {
-		int index = 0;
-		if (i % 6 == 0) {
-			index = 6;
-		}else {
-			index = i % 6;
-		}
-
-		
-		NSString *imgName = [NSString stringWithFormat:@"large_%d.png", index];
-		UIImage *imageFilm = [UIImage imageNamed:imgName];
-		YXTUIImageView *imageView = [[[YXTUIImageView alloc] initWithImage:imageFilm] autorelease];
-		[imageView setBackgroundColor:[UIColor lightGrayColor]];
-		[imageView setFrame:CGRectMake(startX+(i-1)*width+(i-1)*span, 0, 101, 145)];
-		[filmViewArray addObject:imageView];
-		[filmScrollView addSubview:imageView];
-	}
-	filmScrollView.delegate = self;
-	filmScrollView.pagingEnabled = NO;
-	filmScrollView.showsHorizontalScrollIndicator = NO;
-	filmScrollView.contentSize = CGSizeMake(startX + filmnum*width + (filmnum-1)*span + startX, height);
-
-	UIImageView *imgView = [filmViewArray objectAtIndex:((filmnum/2 + 1)-1-1)];
-	CGPoint centerfilm = CGPointZero;
-	centerfilm.x = imgView.frame.origin.x;
-	NSLog(@"center:%f", centerfilm.x);
-	[filmScrollView setContentOffset:centerfilm animated:NO];
-	*/
 	[super viewDidLoad];
 }
 
@@ -150,7 +118,7 @@ static const CGFloat span = 8;
 -(void)fetchFilmListSucceed:(NSMutableArray *)filmListArray {
 	self.filmList = filmListArray;
 
-	[self performSelectorOnMainThread:@selector(updateFilmInfo) withObject:nil waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(updateFilmInfo:) withObject:[filmList objectAtIndex:0] waitUntilDone:NO];
 	[self performSelectorOnMainThread:@selector(layoutFilmScroll) withObject:nil waitUntilDone:NO];
 	
 	if (imageQueue) {
@@ -159,12 +127,15 @@ static const CGFloat span = 8;
 	self.imageQueue = [[ASINetworkQueue alloc] init];
 	self.filmImageList = [[NSMutableArray alloc] initWithCapacity:20];
 	
+	int i=0;
 	for (YXTFilmInfo *filmInfo in filmList) {
 		if (filmInfo.webPoster2 != nil) {
 			ImageDownLoader *imgLoader = [ImageDownLoader requestWithURL:[NSURL URLWithString:filmInfo.webPoster2]];
+			imgLoader.reqDelegate = self;
+			imgLoader.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:i], @"tag", nil];;
 			[self.imageQueue addOperation:imgLoader];
 			[self.filmImageList addObject:imgLoader];
-			[imgLoader release];
+			i++;
 		}
 	}
 	[imageQueue go];
@@ -176,8 +147,9 @@ static const CGFloat span = 8;
 	}
 	
 	//为了有循环滑动效果，设置scrollview的宽度为3倍内容
-	int film_init_image = [self.filmList count] * 3;
-	self.filmImageViewList = [[NSMutableArray alloc] initWithCapacity:[self.filmList count]];
+	
+	int film_init_image = [self.filmList count] * factor;
+	self.filmImageViewList = [[NSMutableArray alloc] initWithCapacity:film_init_image];
 	filmScrollView.contentSize = CGSizeMake(startX + film_init_image*width + (film_init_image-1)*span + startX, height);	
 	
 	NSString *loadingImgName = [NSString stringWithFormat:@"bg_movie.png"];
@@ -193,23 +165,85 @@ static const CGFloat span = 8;
 	}
 	
 	CGFloat total_width = startX + [filmList count]*width + [filmList count]*span;
-	[filmScrollView scrollRectToVisible:CGRectMake(total_width, 0, total_width, loadingImg.size.height)
+	total_width = total_width * ((int)factor/2);
+	//将第一条移到中间,右移一个图片的位置
+	CGFloat offset = (width + span);
+	total_width = total_width - offset;
+	begin_decelerate_offsetx = total_width;
+	[filmScrollView scrollRectToVisible:CGRectMake(total_width, 0, filmScrollView.bounds.size.width, loadingImg.size.height)
 							   animated:NO];
+}
+
+-(void)imageRequestFinished:(NSDictionary *)userInfo{
+	int index = [((NSNumber *)[userInfo objectForKey:@"tag"]) intValue];
+	ImageDownLoader *imgLoader = [self.filmImageList objectAtIndex:index];
+	UIImage *image = [[UIImage alloc] initWithData:[imgLoader imgData]];
+	
+	for (int i=0; i<[filmImageViewList count]; i++) {
+		if (i%[filmList count] == index) {
+			YXTUIImageView *imageView = [filmImageViewList objectAtIndex:i];
+			[imageView setImage:image];
+			[imageView stopAnimateLoadingImage];
+		}
+	}
+	[image release];
 }
 
 // any offset changes
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	//NSLog(@"scrollview offset:%f", scrollView.contentOffset.x);
-	
-	if (scrollView.contentOffset.x < 101*7 || scrollView.contentOffset.x > 101*40) {
-		[scrollView scrollRectToVisible:CGRectMake(101*22, 0, 101, 145) animated:NO];
+	/*
+	if (scrollView.contentOffset.x <= 0 || scrollView.contentOffset.x >= scrollView.contentSize.width-(startX + [filmList count]*width + ([filmList count]+1)*span)) {
+		CGFloat total_width = startX + [filmList count]*width + [filmList count]*span;
+		total_width = total_width * ((int)factor/2);
+		//将第一条移到中间,右移一个图片的位置
+		CGFloat offset = (width + span);
+		total_width = total_width - offset;
+		
+		[filmScrollView scrollRectToVisible:CGRectMake(total_width, 0, filmScrollView.bounds.size.width, filmScrollView.bounds.size.height)
+								   animated:NO];
 	}
+	*/
 }
 
 // called when scroll view grinds to a halt
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-	NSLog(@"end decelerating");
+	
 }
+
+// called on finger up if user dragged. decelerate is true if it will continue moving afterwards
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	if (decelerate == YES) {
+		return ;
+	}
+	
+	CGFloat total_width = startX + [filmList count]*width + [filmList count]*span;
+	
+	int offset_list_unit = begin_decelerate_offsetx / total_width;
+	int offset_list_span = (int)begin_decelerate_offsetx % (int)total_width;
+	
+	int offset_film_unit = offset_list_span / (width+span);
+	
+	//向右滑动
+	if (scrollView.contentOffset.x > begin_decelerate_offsetx) {
+		offset_film_unit++;
+	}else {
+		offset_film_unit--;
+	}
+
+	CGFloat offset = (offset_list_unit*[filmList count] + offset_film_unit)*(width+span);
+	
+	[filmScrollView scrollRectToVisible:CGRectMake(offset, 0, filmScrollView.bounds.size.width, filmScrollView.bounds.size.height)
+							   animated:YES];
+	begin_decelerate_offsetx = offset;
+	
+	YXTFilmInfo *filmInfo = [filmList objectAtIndex:(offset_film_unit+1)%[filmList count]];
+	[self updateFilmInfo:filmInfo];
+}
+
+-(void)scrollViewToFormatFilm:(UIScrollView *)scrollView{
+	
+}
+
 
 -(void)pressCitySwitchBtn{
 	self.location = [[YXTLocation alloc] init];
@@ -269,8 +303,7 @@ static const CGFloat span = 8;
 	[cityBarItem release];
 }
 
--(void)updateFilmInfo{
-	YXTFilmInfo *filmInfo = (YXTFilmInfo *)[filmList objectAtIndex:0];
+-(void)updateFilmInfo:(YXTFilmInfo *)filmInfo{
 	self.filmNameLabel.text = filmInfo.filmName;
 	self.directorLabel.text = filmInfo.director;
 	self.mainPerformerLabel.text = filmInfo.mainPerformer;
