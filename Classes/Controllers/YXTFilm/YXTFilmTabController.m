@@ -191,23 +191,66 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 // any offset changes
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	/*
-	if (scrollView.contentOffset.x <= 0 || scrollView.contentOffset.x >= scrollView.contentSize.width-(startX + [filmList count]*width + ([filmList count]+1)*span)) {
-		CGFloat total_width = startX + [filmList count]*width + [filmList count]*span;
-		total_width = total_width * ((int)factor/2);
-		//将第一条移到中间,右移一个图片的位置
-		CGFloat offset = (width + span);
-		total_width = total_width - offset;
-		
-		[filmScrollView scrollRectToVisible:CGRectMake(total_width, 0, filmScrollView.bounds.size.width, filmScrollView.bounds.size.height)
-								   animated:NO];
-	}
-	*/
+	
 }
 
 // called when scroll view grinds to a halt
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 	
+	int film_init_image = [self.filmList count] * (factor-1);
+	if ([self.filmList count] == 2) {
+		film_init_image = 3;
+	}
+	
+	CGFloat contentWidth = startX + film_init_image*width + (film_init_image-1)*span + startX;
+	
+	if (scrollView.contentOffset.x <= 30 || scrollView.contentOffset.x>=contentWidth-30) {
+		
+		CGFloat total_width = startX + [filmList count]*width + [filmList count]*span;
+		
+		total_width = total_width * ((int)factor/2);
+		
+		if (scrollView.contentOffset.x>=contentWidth-30) {
+			if ([self.filmList count] > 3) {
+				CGFloat offset = ([filmList count]-3) * (width+span);
+				total_width = total_width + offset;
+			}else if ([self.filmList count] == 2) {
+				total_width = total_width - (width+span);
+			}
+		}
+		
+		//将第一条移到中间,右移一个图片的位置
+		//CGFloat offset = (width + span);
+		//total_width = total_width - offset;
+		
+		begin_decelerate_offsetx = total_width;
+		[filmScrollView scrollRectToVisible:CGRectMake(total_width, 0, filmScrollView.bounds.size.width, filmScrollView.bounds.size.height)
+								   animated:NO];
+		
+		int update_index = ((int)total_width/(int)(width+span)+1) % [filmList count];
+		[self updateFilmInfo:[filmList objectAtIndex:update_index]];
+	}else {
+		CGFloat total_width = startX + [filmList count]*width + [filmList count]*span;
+		int offset_list_unit = scrollView.contentOffset.x / total_width;
+		int offset_list_span = (int)scrollView.contentOffset.x % (int)total_width;
+		
+		int offset_film_unit = offset_list_span / (width+span);
+		
+		if (scrollView.contentOffset.x < begin_decelerate_offsetx) {
+			
+		}else {
+			offset_film_unit++;
+		}
+		
+		CGFloat offset = (offset_list_unit*[filmList count] + offset_film_unit)*(width+span);
+		begin_decelerate_offsetx = offset;
+		
+		[filmScrollView scrollRectToVisible:CGRectMake(offset, 0, filmScrollView.bounds.size.width, filmScrollView.bounds.size.height)
+								   animated:YES];
+
+		YXTFilmInfo *filmInfo = [filmList objectAtIndex:(offset_film_unit+1)%[filmList count]];
+		[self updateFilmInfo:filmInfo];
+	}
 }
 
 // called on finger up if user dragged. decelerate is true if it will continue moving afterwards
