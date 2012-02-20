@@ -7,6 +7,7 @@
 //
 
 #import "YXTSettings.h"
+#import "YXTLocation.h"
 
 @interface YXTSettings()
 @property (nonatomic, retain) NSMutableDictionary* settingsDict;
@@ -18,6 +19,13 @@ static YXTSettings* sInstance = nil;
 @implementation YXTSettings
 
 @synthesize settingsDict = mSettingsDict;
+@synthesize cityInfo;
+
+-(void)dealloc{
+    self.settingsDict = nil;
+	[cityInfo release];
+    [super dealloc];
+}
 
 +(YXTSettings*) instance {
     if(sInstance == nil)
@@ -40,6 +48,11 @@ static YXTSettings* sInstance = nil;
 		//[self setDefaultTag:@"mobile-number" value:@"18001957019"];
 		[self setDefaultTag:@"mobile-number" value:@"18918828387"];
 		[self setDefaultTag:@"sign-code" value:@"e96e260410b4ea1a9cd227fae1041e30"];
+		
+		self.cityInfo = [[YXTCityInfo alloc] init];
+		[cityInfo setProvinceId:@"310000"];
+		[cityInfo setCityId:@"310000"];
+		[cityInfo setCityName:@"上海市"];
     }
     return self;
 }
@@ -51,11 +64,5 @@ static YXTSettings* sInstance = nil;
 -(void) setDefaultTag:(NSString*)tag value:(NSString*)value{
     [self.settingsDict setObject:value forKey:tag];
 }
-
--(void)dealloc{
-    self.settingsDict = nil;
-    [super dealloc];
-}
-
 
 @end

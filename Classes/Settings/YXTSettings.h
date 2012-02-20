@@ -10,10 +10,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class YXTCityInfo;
+
 @interface YXTSettings : NSObject {
 @private
     NSMutableDictionary* mSettingsDict;
+	YXTCityInfo *cityInfo;
 }
+
+@property (nonatomic, retain) YXTCityInfo *cityInfo;
 
 +(YXTSettings*) instance;
 +(void)deleteInstance;

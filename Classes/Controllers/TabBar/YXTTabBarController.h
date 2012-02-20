@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #import "YXTFilmTabController.h"
-#import "YXTCinimaTabController.h"
+#import "YXTCinemaTabController.h"
 #import "YXTHelpTabController.h"
 
 
 @interface YXTTabBarController : UITabBarController<UITabBarDelegate> {
 	YXTFilmTabController *_filmViewController;
-	YXTCinimaTabController *_cinimaViewController;
+	YXTCinemaTabController *_cinimaViewController;
 	YXTHelpTabController *_helpViewController;
 	
 	int prePageNum;

@@ -25,9 +25,9 @@
 - (void)viewDidLoad{
 	[super viewDidLoad];
 	
-	_filmViewController = [[YXTFilmTabController alloc] init];
-	_cinimaViewController = [[YXTCinimaTabController alloc] init];
-	_helpViewController = [[YXTHelpTabController alloc] init];
+	_filmViewController = [[YXTFilmTabController alloc] initWithTab];
+	_cinimaViewController = [[YXTCinemaTabController alloc] initWithTab];
+	_helpViewController = [[YXTHelpTabController alloc] initWithTab];
 	
 	YXTNavigationController *filmNavigation = [[YXTNavigationController alloc] initWithRootViewController:_filmViewController];
 	YXTNavigationController *cinimaNavigation = [[YXTNavigationController alloc] initWithRootViewController:_cinimaViewController];

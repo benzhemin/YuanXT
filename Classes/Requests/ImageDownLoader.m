@@ -18,8 +18,6 @@
     [super requestFinished]; 
 	
 	if (self.responseStatusCode == 200) {
-		NSLog(@"request finished:%@", self.originalURL.path);
-		
 		self.imgData = [self responseData];
 			
 		[(NSObject *)reqDelegate performSelectorOnMainThread:@selector(imageRequestFinished:) withObject:self.userInfo waitUntilDone:NO];

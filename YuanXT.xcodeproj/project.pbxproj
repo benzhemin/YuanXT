@@ -18,7 +18,7 @@
 		0F2E976A14E5340500F091A4 /* dropselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F2E976814E5340500F091A4 /* dropselect.png */; };
 		0F2E9A0214E652C500F091A4 /* YXTBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9A0114E652C500F091A4 /* YXTBasicViewController.m */; };
 		0F2E9CE714E7687300F091A4 /* OFXPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9CE614E7687300F091A4 /* OFXPRequest.m */; };
-		0F2E9DF014E7AF4800F091A4 /* YXTLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */; };
+		0F2E9DF014E7AF4800F091A4 /* YXTLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E9DEF14E7AF4800F091A4 /* YXTLocationService.m */; };
 		0F2EA02414E7DF9C00F091A4 /* NSNotificationCenter+OF.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2EA02314E7DF9C00F091A4 /* NSNotificationCenter+OF.m */; };
 		0F2EA25614E7F67000F091A4 /* YXTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2EA25314E7F67000F091A4 /* YXTActionSheet.m */; };
 		0F2EA25714E7F67000F091A4 /* YXTPickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2EA25514E7F67000F091A4 /* YXTPickerDelegate.m */; };
@@ -30,6 +30,10 @@
 		0F3CDADC14EBD82C0010A1EF /* large_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CDAD614EBD82C0010A1EF /* large_6.png */; };
 		0F3CDB7414EE47580010A1EF /* ImageDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CDB7314EE47580010A1EF /* ImageDownLoader.m */; };
 		0F3CDBE114EF53720010A1EF /* YXTUIImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CDBE014EF53720010A1EF /* YXTUIImageView.m */; };
+		0F3CDDFA14F20CC10010A1EF /* btn_yingyuanxiangqing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CDDF814F20CC10010A1EF /* btn_yingyuanxiangqing.png */; };
+		0F3CDDFB14F20CC10010A1EF /* btn_yingyuanxiangqing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CDDF914F20CC10010A1EF /* btn_yingyuanxiangqing@2x.png */; };
+		0F3CDE4514F2444A0010A1EF /* YXTCinemaService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CDE4414F2444A0010A1EF /* YXTCinemaService.m */; };
+		0F3CDE7F14F2725D0010A1EF /* YXTCinemaTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CDE7E14F2725D0010A1EF /* YXTCinemaTabController.m */; };
 		1D3623260D0F684500981E51 /* YuanXTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -48,7 +52,7 @@
 		CE1CFDD814E8E6B700E1AE6F /* btn_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFDD514E8E6B700E1AE6F /* btn_back@2x.png */; };
 		CE1CFDD914E8E6B700E1AE6F /* dropselect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1CFDD614E8E6B700E1AE6F /* dropselect@2x.png */; };
 		CE1CFE5314E909ED00E1AE6F /* DSActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1CFE5214E909ED00E1AE6F /* DSActivityView.m */; };
-		CE1CFEAC14E9F8C800E1AE6F /* YXTHotFilm.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1CFEAB14E9F8C800E1AE6F /* YXTHotFilm.m */; };
+		CE1CFEAC14E9F8C800E1AE6F /* YXTHotFilmService.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1CFEAB14E9F8C800E1AE6F /* YXTHotFilmService.m */; };
 		CE82370414E39B7000412576 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370314E39B7000412576 /* QuartzCore.framework */; };
 		CE82370814E39B7E00412576 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370714E39B7E00412576 /* CoreLocation.framework */; };
 		CE82370C14E39B8700412576 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370B14E39B8700412576 /* MapKit.framework */; };
@@ -71,7 +75,6 @@
 		CE82377D14E39CE800412576 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82376E14E39CE800412576 /* SBJsonWriter.m */; };
 		CE82379014E39DDC00412576 /* YXTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378314E39DDC00412576 /* YXTNavigationController.m */; };
 		CE82379114E39DDC00412576 /* YXTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378614E39DDC00412576 /* YXTTabBarController.m */; };
-		CE82379214E39DDC00412576 /* YXTCinimaTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378914E39DDC00412576 /* YXTCinimaTabController.m */; };
 		CE82379314E39DDC00412576 /* YXTFilmTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378C14E39DDC00412576 /* YXTFilmTabController.m */; };
 		CE82379414E39DDC00412576 /* YXTHelpTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82378F14E39DDC00412576 /* YXTHelpTabController.m */; };
 		CE82379914E39FCA00412576 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82379814E39FCA00412576 /* Security.framework */; };
@@ -94,8 +97,8 @@
 		0F2E9A0114E652C500F091A4 /* YXTBasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTBasicViewController.m; sourceTree = "<group>"; };
 		0F2E9CE514E7687300F091A4 /* OFXPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFXPRequest.h; sourceTree = "<group>"; };
 		0F2E9CE614E7687300F091A4 /* OFXPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OFXPRequest.m; sourceTree = "<group>"; };
-		0F2E9DEE14E7AF4800F091A4 /* YXTLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTLocation.h; sourceTree = "<group>"; };
-		0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTLocation.m; sourceTree = "<group>"; };
+		0F2E9DEE14E7AF4800F091A4 /* YXTLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTLocationService.h; sourceTree = "<group>"; };
+		0F2E9DEF14E7AF4800F091A4 /* YXTLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTLocationService.m; sourceTree = "<group>"; };
 		0F2EA02214E7DF9C00F091A4 /* NSNotificationCenter+OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OF.h"; sourceTree = "<group>"; };
 		0F2EA02314E7DF9C00F091A4 /* NSNotificationCenter+OF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+OF.m"; sourceTree = "<group>"; };
 		0F2EA25214E7F67000F091A4 /* YXTActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTActionSheet.h; sourceTree = "<group>"; };
@@ -112,6 +115,12 @@
 		0F3CDB7314EE47580010A1EF /* ImageDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownLoader.m; sourceTree = "<group>"; };
 		0F3CDBDF14EF53720010A1EF /* YXTUIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTUIImageView.h; sourceTree = "<group>"; };
 		0F3CDBE014EF53720010A1EF /* YXTUIImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTUIImageView.m; sourceTree = "<group>"; };
+		0F3CDDF814F20CC10010A1EF /* btn_yingyuanxiangqing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_yingyuanxiangqing.png; sourceTree = "<group>"; };
+		0F3CDDF914F20CC10010A1EF /* btn_yingyuanxiangqing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_yingyuanxiangqing@2x.png"; sourceTree = "<group>"; };
+		0F3CDE4314F2444A0010A1EF /* YXTCinemaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTCinemaService.h; sourceTree = "<group>"; };
+		0F3CDE4414F2444A0010A1EF /* YXTCinemaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTCinemaService.m; sourceTree = "<group>"; };
+		0F3CDE7D14F2725D0010A1EF /* YXTCinemaTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTCinemaTabController.h; sourceTree = "<group>"; };
+		0F3CDE7E14F2725D0010A1EF /* YXTCinemaTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTCinemaTabController.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* YuanXTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuanXTAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YuanXTAppDelegate.m; sourceTree = "<group>"; };
@@ -136,8 +145,8 @@
 		CE1CFE5114E909ED00E1AE6F /* DSActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSActivityView.h; sourceTree = "<group>"; };
 		CE1CFE5214E909ED00E1AE6F /* DSActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSActivityView.m; sourceTree = "<group>"; };
 		CE1CFE6314E9F24800E1AE6F /* BasicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicInfo.h; sourceTree = "<group>"; };
-		CE1CFEAA14E9F8C800E1AE6F /* YXTHotFilm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTHotFilm.h; sourceTree = "<group>"; };
-		CE1CFEAB14E9F8C800E1AE6F /* YXTHotFilm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTHotFilm.m; sourceTree = "<group>"; };
+		CE1CFEAA14E9F8C800E1AE6F /* YXTHotFilmService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTHotFilmService.h; sourceTree = "<group>"; };
+		CE1CFEAB14E9F8C800E1AE6F /* YXTHotFilmService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTHotFilmService.m; sourceTree = "<group>"; };
 		CE82370314E39B7000412576 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CE82370714E39B7E00412576 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CE82370B14E39B8700412576 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -179,8 +188,6 @@
 		CE82378314E39DDC00412576 /* YXTNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTNavigationController.m; sourceTree = "<group>"; };
 		CE82378514E39DDC00412576 /* YXTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTTabBarController.h; sourceTree = "<group>"; };
 		CE82378614E39DDC00412576 /* YXTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTTabBarController.m; sourceTree = "<group>"; };
-		CE82378814E39DDC00412576 /* YXTCinimaTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTCinimaTabController.h; sourceTree = "<group>"; };
-		CE82378914E39DDC00412576 /* YXTCinimaTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTCinimaTabController.m; sourceTree = "<group>"; };
 		CE82378B14E39DDC00412576 /* YXTFilmTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTFilmTabController.h; sourceTree = "<group>"; };
 		CE82378C14E39DDC00412576 /* YXTFilmTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTFilmTabController.m; sourceTree = "<group>"; };
 		CE82378E14E39DDC00412576 /* YXTHelpTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTHelpTabController.h; sourceTree = "<group>"; };
@@ -238,6 +245,7 @@
 				0F2E970314E522FD00F091A4 /* navigation */,
 				0F2E970514E522FD00F091A4 /* tab */,
 				CE1C071414EA415B00E1AE6F /* film */,
+				0F3CDDF714F20CC10010A1EF /* cinima */,
 				0F3CDAD014EBD82C0010A1EF /* test */,
 			);
 			path = image;
@@ -284,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				0F2E9DED14E7AF2E00F091A4 /* YXTFilm */,
+				0F3CDE1F14F23F240010A1EF /* YXTCinima */,
 				CE1CFE6314E9F24800E1AE6F /* BasicInfo.h */,
 			);
 			path = Services;
@@ -292,10 +301,10 @@
 		0F2E9DED14E7AF2E00F091A4 /* YXTFilm */ = {
 			isa = PBXGroup;
 			children = (
-				0F2E9DEE14E7AF4800F091A4 /* YXTLocation.h */,
-				0F2E9DEF14E7AF4800F091A4 /* YXTLocation.m */,
-				CE1CFEAA14E9F8C800E1AE6F /* YXTHotFilm.h */,
-				CE1CFEAB14E9F8C800E1AE6F /* YXTHotFilm.m */,
+				0F2E9DEE14E7AF4800F091A4 /* YXTLocationService.h */,
+				0F2E9DEF14E7AF4800F091A4 /* YXTLocationService.m */,
+				CE1CFEAA14E9F8C800E1AE6F /* YXTHotFilmService.h */,
+				CE1CFEAB14E9F8C800E1AE6F /* YXTHotFilmService.m */,
 			);
 			path = YXTFilm;
 			sourceTree = "<group>";
@@ -331,6 +340,33 @@
 				0F3CDBE014EF53720010A1EF /* YXTUIImageView.m */,
 			);
 			path = YXTImage;
+			sourceTree = "<group>";
+		};
+		0F3CDDF714F20CC10010A1EF /* cinima */ = {
+			isa = PBXGroup;
+			children = (
+				0F3CDDF814F20CC10010A1EF /* btn_yingyuanxiangqing.png */,
+				0F3CDDF914F20CC10010A1EF /* btn_yingyuanxiangqing@2x.png */,
+			);
+			path = cinima;
+			sourceTree = "<group>";
+		};
+		0F3CDE1F14F23F240010A1EF /* YXTCinima */ = {
+			isa = PBXGroup;
+			children = (
+				0F3CDE4314F2444A0010A1EF /* YXTCinemaService.h */,
+				0F3CDE4414F2444A0010A1EF /* YXTCinemaService.m */,
+			);
+			path = YXTCinima;
+			sourceTree = "<group>";
+		};
+		0F3CDE7C14F2725D0010A1EF /* YXTCinema */ = {
+			isa = PBXGroup;
+			children = (
+				0F3CDE7D14F2725D0010A1EF /* YXTCinemaTabController.h */,
+				0F3CDE7E14F2725D0010A1EF /* YXTCinemaTabController.m */,
+			);
+			path = YXTCinema;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -473,7 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				CE82378A14E39DDC00412576 /* YXTFilm */,
-				CE82378714E39DDC00412576 /* YXTCinima */,
+				0F3CDE7C14F2725D0010A1EF /* YXTCinema */,
 				CE82378D14E39DDC00412576 /* YXTHelp */,
 				CE82378114E39DDC00412576 /* Navigation */,
 				CE82378414E39DDC00412576 /* TabBar */,
@@ -503,15 +539,6 @@
 				0F2E967814E50D5500F091A4 /* YXTBasicTabController.m */,
 			);
 			path = TabBar;
-			sourceTree = "<group>";
-		};
-		CE82378714E39DDC00412576 /* YXTCinima */ = {
-			isa = PBXGroup;
-			children = (
-				CE82378814E39DDC00412576 /* YXTCinimaTabController.h */,
-				CE82378914E39DDC00412576 /* YXTCinimaTabController.m */,
-			);
-			path = YXTCinima;
 			sourceTree = "<group>";
 		};
 		CE82378A14E39DDC00412576 /* YXTFilm */ = {
@@ -606,6 +633,8 @@
 				0F3CDADA14EBD82C0010A1EF /* large_4.png in Resources */,
 				0F3CDADB14EBD82C0010A1EF /* large_5.png in Resources */,
 				0F3CDADC14EBD82C0010A1EF /* large_6.png in Resources */,
+				0F3CDDFA14F20CC10010A1EF /* btn_yingyuanxiangqing.png in Resources */,
+				0F3CDDFB14F20CC10010A1EF /* btn_yingyuanxiangqing@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,7 +662,6 @@
 				CE82377D14E39CE800412576 /* SBJsonWriter.m in Sources */,
 				CE82379014E39DDC00412576 /* YXTNavigationController.m in Sources */,
 				CE82379114E39DDC00412576 /* YXTTabBarController.m in Sources */,
-				CE82379214E39DDC00412576 /* YXTCinimaTabController.m in Sources */,
 				CE82379314E39DDC00412576 /* YXTFilmTabController.m in Sources */,
 				CE82379414E39DDC00412576 /* YXTHelpTabController.m in Sources */,
 				0F2E945214E4CE6E00F091A4 /* OFReachability.m in Sources */,
@@ -641,14 +669,16 @@
 				0F2E967914E50D5500F091A4 /* YXTBasicTabController.m in Sources */,
 				0F2E9A0214E652C500F091A4 /* YXTBasicViewController.m in Sources */,
 				0F2E9CE714E7687300F091A4 /* OFXPRequest.m in Sources */,
-				0F2E9DF014E7AF4800F091A4 /* YXTLocation.m in Sources */,
+				0F2E9DF014E7AF4800F091A4 /* YXTLocationService.m in Sources */,
 				0F2EA02414E7DF9C00F091A4 /* NSNotificationCenter+OF.m in Sources */,
 				0F2EA25614E7F67000F091A4 /* YXTActionSheet.m in Sources */,
 				0F2EA25714E7F67000F091A4 /* YXTPickerDelegate.m in Sources */,
 				CE1CFE5314E909ED00E1AE6F /* DSActivityView.m in Sources */,
-				CE1CFEAC14E9F8C800E1AE6F /* YXTHotFilm.m in Sources */,
+				CE1CFEAC14E9F8C800E1AE6F /* YXTHotFilmService.m in Sources */,
 				0F3CDB7414EE47580010A1EF /* ImageDownLoader.m in Sources */,
 				0F3CDBE114EF53720010A1EF /* YXTUIImageView.m in Sources */,
+				0F3CDE4514F2444A0010A1EF /* YXTCinemaService.m in Sources */,
+				0F3CDE7F14F2725D0010A1EF /* YXTCinemaTabController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

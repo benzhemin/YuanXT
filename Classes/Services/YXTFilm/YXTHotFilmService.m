@@ -6,13 +6,13 @@
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "YXTHotFilm.h"
-#import "YXTLocation.h"
+#import "YXTHotFilmService.h"
+#import "YXTLocationService.h"
 #import "YXTBasicViewController.h"
 #import "OFReachability.h"
 #import "YXTSettings.h"
 
-@implementation YXTHotFilm
+@implementation YXTHotFilmService
 
 @synthesize filmList, delegateFilm, cityInfo;
 

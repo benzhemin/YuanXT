@@ -7,11 +7,12 @@
 //
 
 #import "YXTFilmTabController.h"
-#import "YXTLocation.h"
-#import "YXTHotFilm.h"
+#import "YXTLocationService.h"
+#import "YXTHotFilmService.h"
 #import "YXTActionSheet.h"
 #import "YXTPickerDelegate.h"
 #import "ImageDownLoader.h"
+#import "YXTSettings.h"
 
 enum REQUEST_TYPE {
 	city_request = 0
@@ -27,7 +28,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 @implementation YXTFilmTabController
 
-@synthesize location, cityInfo, hotFilm, filmList, imageQueue, filmImageList;
+@synthesize location, hotFilm, filmList, imageQueue, filmImageList;
 
 @synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
 
@@ -38,7 +39,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 - (void)dealloc {
 	[location release];
-	[cityInfo release];
 	[hotFilm release];
 	
 	[filmList release];
@@ -72,10 +72,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(void)viewDidLoad{
-	self.cityInfo = [[YXTCityInfo alloc] init];
-	[cityInfo setProvinceId:@"310000"];
-	[cityInfo setCityId:@"310000"];
-	[cityInfo setCityName:@"上海市"];
 	
 	[self setUpUINavigationBarItem];
 	
@@ -108,9 +104,9 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(void)refreshHotFilmView{
-	self.hotFilm = [[YXTHotFilm alloc] init];
+	self.hotFilm = [[YXTHotFilmService alloc] init];
 	[hotFilm setDelegateFilm:self];
-	[hotFilm setCityInfo:cityInfo];
+	[hotFilm setCityInfo:[YXTSettings instance].cityInfo];
 	
 	[hotFilm startToFetchFilmList];
 }
@@ -289,7 +285,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 
 -(void)pressCitySwitchBtn{
-	self.location = [[YXTLocation alloc] init];
+	self.location = [[YXTLocationService alloc] init];
 	[location setDelegateFilm:self];
 	[location startToFetchCityList];
 }
@@ -317,8 +313,8 @@ static CGFloat begin_decelerate_offsetx = 0;
 -(IBAction)selectCityConfirm:(id)sender{
 	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
 	NSInteger row = [cityPicker selectedRowInComponent:0];
-	self.cityInfo = [[cityPickerDelegate pickerDataArray] objectAtIndex:row];
-    NSString *cityName = [cityInfo infoDescription];
+	[YXTSettings instance].cityInfo = [[cityPickerDelegate pickerDataArray] objectAtIndex:row];
+    NSString *cityName = [[YXTSettings instance].cityInfo infoDescription];
 	[cityBtn setTitle:cityName forState:UIControlStateNormal];
 	
 	[self refreshHotFilmView];
@@ -339,7 +335,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[[cityBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:14.0f]];
 	
 	[cityBtn setTitleEdgeInsets:UIEdgeInsetsMake(-2.0, -11.0, 0.0, 0.0)];
-	[cityBtn setTitle:[cityInfo cityName] forState:UIControlStateNormal];
+	[cityBtn setTitle:[[YXTSettings instance].cityInfo cityName] forState:UIControlStateNormal];
 	
 	UIBarButtonItem *cityBarItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];	
 	self.navigationItem.rightBarButtonItem = cityBarItem;

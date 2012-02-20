@@ -13,6 +13,8 @@
 
 }
 
+-(id)initWithTab;
+
 -(NSString *)getNavTitle;
 -(NSString *)getTabTitle;
 -(NSString *)getTabImage;

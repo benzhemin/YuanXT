@@ -6,7 +6,7 @@
 //  Copyright 2012 Ideal Information Industry. All rights reserved.
 //
 
-#import "YXTLocation.h"
+#import "YXTLocationService.h"
 #import "OFReachability.h"
 #import "NSNotificationCenter+OF.h"
 #import "YXTBasicViewController.h"
@@ -32,7 +32,7 @@
 @end
 
 
-@implementation YXTLocation
+@implementation YXTLocationService
 	
 @synthesize delegateFilm, cityList;
 

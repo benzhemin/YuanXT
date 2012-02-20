@@ -11,7 +11,7 @@
 #import "YXTBasicViewController.h"
 #import "BasicInfo.h"
 
-@interface YXTLocation : NSObject <OFXPResponseJSON>{
+@interface YXTLocationService : NSObject <OFXPResponseJSON>{
 	YXTBasicViewController *delegateFilm;
 	OFXPRequest *mReq;
 	NSMutableArray *cityList;

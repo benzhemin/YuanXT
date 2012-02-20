@@ -12,7 +12,7 @@
 @implementation YXTBasicTabController
 
 
--(id)init{
+-(id)initWithTab{
 	if (self = [super init]) {
 		self.title = [self getNavTitle];
 		UITabBarItem *barItem = [[UITabBarItem alloc] initWithTitle:[self getTabTitle] 

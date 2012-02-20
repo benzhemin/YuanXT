@@ -13,9 +13,9 @@
 #import "YXTUIImageView.h"
 #import "ImageDownLoader.h"
 
-@class YXTLocation;
+@class YXTLocationService;
 @class YXTCityInfo;
-@class YXTHotFilm;
+@class YXTHotFilmService;
 @class YXTFilmInfo;
 
 @class YXTActionSheet;
@@ -23,9 +23,8 @@
 
 
 @interface YXTFilmTabController : YXTBasicTabController<UIScrollViewDelegate, ImageDownLoadDelegate>{
-	YXTLocation *location;
-	YXTCityInfo *cityInfo;
-	YXTHotFilm *hotFilm;
+	YXTLocationService *location;
+	YXTHotFilmService *hotFilm;
 	
 	NSMutableArray *filmList;
 	ASINetworkQueue *imageQueue;
@@ -50,9 +49,8 @@
 	UILabel *ycTimeLabel;
 }
 
-@property (nonatomic, retain) YXTLocation *location;
-@property (nonatomic, retain) YXTCityInfo *cityInfo;
-@property (nonatomic, retain) YXTHotFilm *hotFilm;
+@property (nonatomic, retain) YXTLocationService *location;
+@property (nonatomic, retain) YXTHotFilmService *hotFilm;
 
 @property (nonatomic, retain) NSMutableArray *filmList;
 @property (nonatomic, retain) ASINetworkQueue *imageQueue;

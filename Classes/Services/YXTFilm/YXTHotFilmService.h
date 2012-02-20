@@ -12,7 +12,7 @@
 @class YXTCityInfo;
 @class YXTBasicViewController;
 
-@interface YXTHotFilm : NSObject<OFXPResponseJSON> {
+@interface YXTHotFilmService : NSObject<OFXPResponseJSON> {
 	YXTBasicViewController *delegateFilm;
 	YXTCityInfo *cityInfo;
 	
