@@ -10,12 +10,15 @@
 #import "YXTBasicTabController.h"
 
 @class YXTFilmInfo;
+@class YXTCinemaService;
 
 @interface YXTCinemaTabController : YXTBasicTabController {
 	YXTFilmInfo *filmInfo;
+	YXTCinemaService *cinimaService;
 }
 
 @property (nonatomic, retain) YXTFilmInfo *filmInfo;
+@property (nonatomic, retain) YXTCinemaService *cinimaService;
 
 -(void)refreshCinemaListTable;
 

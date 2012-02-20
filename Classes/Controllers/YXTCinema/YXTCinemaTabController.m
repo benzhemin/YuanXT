@@ -7,14 +7,15 @@
 //
 
 #import "YXTCinemaTabController.h"
-
+#import "YXTCinemaService.h"
 
 @implementation YXTCinemaTabController
 
-@synthesize filmInfo;
+@synthesize filmInfo, cinimaService;
 
 - (void)dealloc {
 	[filmInfo release];
+	[cinimaService release];
     [super dealloc];
 }
 
@@ -39,7 +40,9 @@
 }
 
 -(void)refreshCinemaListTable{
-	
+	self.cinimaService = [[YXTCinemaService alloc] init];
+	[cinimaService setDelegateCinema:self];
+	[cinimaService startToFetchCinimaList];
 }
 
 -(void)setUpUINavigationBarItem{

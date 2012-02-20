@@ -12,22 +12,23 @@
 #import "BasicInfo.h"
 
 @interface YXTCinemaService : NSObject <OFXPResponseJSON>{
-	YXTBasicViewController *delegateCinima;
+	YXTBasicViewController *delegateCinema;
 	OFXPRequest *mReq;
 	
-	NSMutableArray *cinimaList;
+	NSMutableArray *cinemaList;
 }
 
-@property (nonatomic, assign) YXTBasicViewController *delegateFilm;
-@property (nonatomic, retain) NSMutableArray *cinimaList;
+@property (nonatomic, assign) YXTBasicViewController *delegateCinema;
+@property (nonatomic, retain) NSMutableArray *cinemaList;
 
 -(void)startToFetchCinimaList;
+-(void)orderCinemaByDistrict;
 
 @end
 
 @interface YXTCinemaInfo : NSObject<BasicInfo>{
-	NSString *cinimaId;
-	NSString *cinimaName;
+	NSString *cinemaId;
+	NSString *cinemaName;
 	NSString *address;
 	NSString *cityId;
 	NSString *cityName;
@@ -44,8 +45,8 @@
 	NSString *partnerPicId;
 }
 
-@property (nonatomic, copy) NSString *cinimaId;
-@property (nonatomic, copy) NSString *cinimaName;
+@property (nonatomic, copy) NSString *cinemaId;
+@property (nonatomic, copy) NSString *cinemaName;
 @property (nonatomic, copy) NSString *address;
 @property (nonatomic, copy) NSString *cityId;
 @property (nonatomic, copy) NSString *cityName;
