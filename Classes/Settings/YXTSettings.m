@@ -7,7 +7,7 @@
 //
 
 #import "YXTSettings.h"
-#import "YXTLocation.h"
+#import "YXTLocationService.h"
 
 @interface YXTSettings()
 @property (nonatomic, retain) NSMutableDictionary* settingsDict;

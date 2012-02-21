@@ -15,16 +15,32 @@
 	YXTBasicViewController *delegateCinema;
 	OFXPRequest *mReq;
 	
-	NSMutableArray *cinemaList;
+	NSMutableArray *rawCinemaList;
+	NSMutableArray *cinemaDistrictList;
 }
 
 @property (nonatomic, assign) YXTBasicViewController *delegateCinema;
-@property (nonatomic, retain) NSMutableArray *cinemaList;
+@property (nonatomic, retain) NSMutableArray *rawCinemaList;
+@property (nonatomic, retain) NSMutableArray *cinemaDistrictList;
 
 -(void)startToFetchCinimaList;
 -(void)orderCinemaByDistrict;
 
 @end
+
+@interface YXTDistrict : NSObject<BasicInfo>{
+	NSMutableArray *cinemaList;
+	NSString *districtId;
+	NSString *distName;
+}
+
+@property (nonatomic, retain) NSMutableArray *cinemaList;
+
+@property (nonatomic, copy) NSString *districtId;
+@property (nonatomic, copy) NSString *distName;
+
+@end
+
 
 @interface YXTCinemaInfo : NSObject<BasicInfo>{
 	NSString *cinemaId;

@@ -112,6 +112,8 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(void)fetchFilmListSucceed:(NSMutableArray *)filmListArray {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
 	self.filmList = filmListArray;
 
 	[self performSelectorOnMainThread:@selector(updateFilmInfo:) withObject:[filmList objectAtIndex:0] waitUntilDone:NO];
@@ -135,6 +137,8 @@ static CGFloat begin_decelerate_offsetx = 0;
 		}
 	}
 	[imageQueue go];
+	
+	[pool drain];
 }
 
 -(void)layoutFilmScroll{

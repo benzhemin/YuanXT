@@ -12,15 +12,23 @@
 @class YXTFilmInfo;
 @class YXTCinemaService;
 
-@interface YXTCinemaTabController : YXTBasicTabController {
+@interface YXTCinemaTabController : YXTBasicTabController <UITableViewDelegate, UITableViewDataSource> {
 	YXTFilmInfo *filmInfo;
 	YXTCinemaService *cinimaService;
+	
+	NSMutableArray *cinemaDistrictList;
+	
+	UITableView *cinemaTableView;
 }
 
 @property (nonatomic, retain) YXTFilmInfo *filmInfo;
 @property (nonatomic, retain) YXTCinemaService *cinimaService;
+@property (nonatomic, retain) NSMutableArray *cinemaDistrictList;
+
+@property (nonatomic, retain) UITableView *cinemaTableView;
 
 -(void)refreshCinemaListTable;
+-(void)fetchCinemaDistrictListSucceed:(NSMutableArray *)districtList;
 
 @end
 

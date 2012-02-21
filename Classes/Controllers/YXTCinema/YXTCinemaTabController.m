@@ -11,11 +11,14 @@
 
 @implementation YXTCinemaTabController
 
-@synthesize filmInfo, cinimaService;
+@synthesize filmInfo, cinimaService, cinemaDistrictList;
+@synthesize cinemaTableView;
 
 - (void)dealloc {
 	[filmInfo release];
 	[cinimaService release];
+	[cinemaDistrictList release];
+	[cinemaTableView release];
     [super dealloc];
 }
 
@@ -31,6 +34,14 @@
 		[self setUpUINavigationBarItem];
 	}
 	
+	self.cinemaTableView = [[UITableView alloc] initWithFrame:self.view.frame
+														style:UITableViewStylePlain];
+	[self.cinemaTableView setDelegate:self];
+	[self.cinemaTableView setDataSource:self];
+	[self.cinemaTableView setBackgroundColor:[UIColor clearColor]];
+	
+	[self.view addSubview:cinemaTableView];
+	
 	[super viewDidLoad];
 }
 
@@ -44,6 +55,53 @@
 	[cinimaService setDelegateCinema:self];
 	[cinimaService startToFetchCinimaList];
 }
+
+-(void)fetchCinemaDistrictListSucceed:(NSMutableArray *)districtList{
+	self.cinemaDistrictList = districtList;
+	
+	//[self.cinemaTableView reloadData];
+}
+
+#pragma mark UITableViewDataSource delegates
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	// There is only one section.
+	return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	
+	if (cinemaDistrictList == nil || [cinemaDistrictList count]==0) {
+		return 0;
+	}
+	
+	return 0;
+}
+
+#pragma mark UITableViewDelegate delegates
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+	// don't keep the table selection
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView 
+		 cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cinema"];
+	if (!cell) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+									   reuseIdentifier:@"searchName"] autorelease];
+	}
+	
+	return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+	
+	return 60;
+}
+
 
 -(void)setUpUINavigationBarItem{
 	// set uibaritem

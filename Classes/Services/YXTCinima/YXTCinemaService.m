@@ -13,12 +13,21 @@
 
 @implementation YXTCinemaService
 
-@synthesize delegateCinema, cinemaList;
+@synthesize delegateCinema, rawCinemaList, cinemaDistrictList;;
 
 -(void)dealloc{
 	[mReq release];
-	self.cinemaList = nil;
+	self.rawCinemaList = nil;
+	[cinemaDistrictList release];
 	[super dealloc];
+}
+
+-(id)init{
+	if (self=[super init]) {
+		self.rawCinemaList = [[NSMutableArray alloc] initWithCapacity:20];
+		self.cinemaDistrictList = [[NSMutableArray alloc] initWithCapacity:20];
+	}
+	return self;
 }
 
 -(void)startToFetchCinimaList{
@@ -78,8 +87,7 @@
 				cinemaInfo.partnerName = [cinemaDict objectForKey:@"PARTNERNAME"];
 				cinemaInfo.partnerPicId = [cinemaDict objectForKey:@"PARTNERPICID"];
 			
-				
-				[cinemaList addObject:cinemaInfo];
+				[rawCinemaList addObject:cinemaInfo];
 				[cinemaInfo release];
 			}
 			[self orderCinemaByDistrict];
@@ -93,12 +101,67 @@
 	}
 }
 
+-(bool)cinemaDistrictHasInfo:(YXTCinemaInfo *)cinemaInfo{
+	if ([cinemaDistrictList count] == 0) {
+		return NO;
+	}else {
+		for (YXTDistrict *district in cinemaDistrictList) {
+			if ([district.districtId isEqualToString:cinemaInfo.districtId]) {
+				[district.cinemaList addObject:cinemaInfo];
+				return YES;
+			}
+		}
+		return NO;
+	}
+}
+
 -(void)orderCinemaByDistrict{
+	
+	for (YXTCinemaInfo *cinemaInfo in self.rawCinemaList) {
+		if (![self cinemaDistrictHasInfo:cinemaInfo]) {
+			YXTDistrict *district = [[YXTDistrict alloc] init];
+			district.districtId = cinemaInfo.districtId;
+			district.distName = cinemaInfo.distName;
+			[district.cinemaList addObject:cinemaInfo];
+			[self.cinemaDistrictList addObject:district];
+			[district release];
+		}
+	}
+	
+	
+	
 	[delegateCinema performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
-	[delegateCinema performSelectorOnMainThread:@selector(popUpCityChangePicker:) withObject:nil waitUntilDone:NO];
+	[delegateCinema performSelectorOnMainThread:@selector(fetchCinemaDistrictListSucceed:) withObject:cinemaDistrictList waitUntilDone:NO];
 }
 
 @end
+
+
+@implementation YXTDistrict
+
+@synthesize districtId, distName, cinemaList;
+
+-(id)init{
+	if (self=[super init]) {
+		self.cinemaList = [[NSMutableArray alloc] initWithCapacity:10];
+	}
+	return self;
+}
+
+-(void)dealloc{
+	[districtId release];
+	[distName release];
+	[cinemaList release];
+	[super dealloc];
+}
+
+-(NSString *)infoDescription{
+	return distName;
+}
+
+@end
+
+
 
 @implementation YXTCinemaInfo
 
