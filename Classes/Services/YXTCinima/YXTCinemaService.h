@@ -32,12 +32,17 @@
 	NSMutableArray *cinemaList;
 	NSString *districtId;
 	NSString *distName;
+	
+	//tag used for tree
+	BOOL isExpand;
 }
 
 @property (nonatomic, retain) NSMutableArray *cinemaList;
 
 @property (nonatomic, copy) NSString *districtId;
 @property (nonatomic, copy) NSString *distName;
+
+@property (nonatomic, assign) BOOL isExpand;
 
 @end
 

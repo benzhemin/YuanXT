@@ -139,11 +139,12 @@
 
 @implementation YXTDistrict
 
-@synthesize districtId, distName, cinemaList;
+@synthesize districtId, distName, cinemaList, isExpand;
 
 -(id)init{
 	if (self=[super init]) {
 		self.cinemaList = [[NSMutableArray alloc] initWithCapacity:10];
+		isExpand = NO;
 	}
 	return self;
 }
