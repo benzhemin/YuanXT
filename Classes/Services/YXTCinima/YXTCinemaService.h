@@ -64,6 +64,8 @@
 	NSString *partnerId;
 	NSString *partnerName;
 	NSString *partnerPicId;
+	
+	UIImage *cinemaImage;
 }
 
 @property (nonatomic, copy) NSString *cinemaId;
@@ -82,5 +84,7 @@
 @property (nonatomic, copy) NSString *partnerId;
 @property (nonatomic, copy) NSString *partnerName;
 @property (nonatomic, copy) NSString *partnerPicId;
+
+@property (nonatomic, retain) UIImage *cinemaImage;
 
 @end

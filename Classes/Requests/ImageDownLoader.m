@@ -19,7 +19,9 @@
 	
 	if (self.responseStatusCode == 200) {
 		self.imgData = [self responseData];
-			
+		
+		[self processImageData];
+		
 		[(NSObject *)reqDelegate performSelectorOnMainThread:@selector(imageRequestFinished:) withObject:self.userInfo waitUntilDone:NO];
 	}
 }
@@ -27,6 +29,10 @@
 - (void)requestFailed:(ASIHTTPRequest *)request{
 	NSLog(@"request failed!");
 	[[NSNotificationCenter defaultCenter] postNotificationName:START_SHOW_REQUEST_FAILED_ERROR object:nil userInfo:nil];
+}
+
+-(void)processImageData{
+	//do nothing here for extention
 }
 
 

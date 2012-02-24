@@ -171,6 +171,8 @@
 @synthesize cinemaPhoto, districtId, distName, couponOrder;
 @synthesize onlineOrder, partnerId, partnerName, partnerPicId;
 
+@synthesize cinemaImage;
+
 -(NSString *)infoDescription{
 	return @"";
 }
@@ -192,6 +194,8 @@
 	[partnerId release];
 	[partnerName release];
 	[partnerPicId release];
+	
+	[cinemaImage release];
 	[super dealloc];
 }
 

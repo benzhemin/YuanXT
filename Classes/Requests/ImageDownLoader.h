@@ -25,4 +25,6 @@
 @property (nonatomic, retain) NSData *imgData;
 @property (nonatomic, assign) id<ImageDownLoadDelegate> reqDelegate; 
 
+-(void)processImageData;
+
 @end

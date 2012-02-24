@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "YXTBasicTabController.h"
+#import "YXTCinemaImgLoader.h"
 
 @class YXTFilmInfo;
 @class YXTCinemaService;
+@class ASINetworkQueue;
 
-@interface YXTCinemaTabController : YXTBasicTabController <UITableViewDelegate, UITableViewDataSource> {
+@interface YXTCinemaTabController : YXTBasicTabController <UITableViewDelegate, UITableViewDataSource, ImageDownLoadDelegate> {
 	YXTFilmInfo *filmInfo;
 	YXTCinemaService *cinimaService;
+	
+	ASINetworkQueue *imageQueue;
 	
 	NSMutableArray *cinemaDistrictList;
 	
@@ -30,6 +34,9 @@
 
 @property (nonatomic, retain) YXTFilmInfo *filmInfo;
 @property (nonatomic, retain) YXTCinemaService *cinimaService;
+
+@property (nonatomic, retain) ASINetworkQueue *imageQueue;
+
 @property (nonatomic, retain) NSMutableArray *cinemaDistrictList;
 
 @property (nonatomic, retain) UITableView *cinemaTableView;

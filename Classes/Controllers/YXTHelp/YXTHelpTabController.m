@@ -11,10 +11,23 @@
 
 @implementation YXTHelpTabController
 
+@synthesize scrollview;
+
+- (void)dealloc {
+	[scrollview release];
+	[super dealloc];
+}
+
 -(id)init{
 	if (self=[super init]) {
 	}
 	return self;
+}
+
+-(void)viewDidLoad{
+	//scrollview.contentSize = CGSizeMake(295, 480);
+	scrollview.showsVerticalScrollIndicator = NO;
+	[super viewDidLoad];
 }
 
 -(NSString *)getTabTitle{ return @"帮助"; }
@@ -33,11 +46,5 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
-
-- (void)dealloc {
-    [super dealloc];
-}
-
 
 @end

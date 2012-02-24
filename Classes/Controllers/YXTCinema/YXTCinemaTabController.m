@@ -1,4 +1,4 @@
-    //
+//
 //  YXTCinimaTabController.m
 //  YuanXT
 //
@@ -9,20 +9,31 @@
 #import "YXTCinemaTabController.h"
 #import "YXTCinemaService.h"
 #import "YXTUIImageView.h"
+#import "ASINetworkQueue.h"
+#import "OFReachability.h"
+
+enum TreeNodeLeafTag {
+	node_bg_tag = 1,
+	node_fold_tag,
+	leaf_cinema_tag
+};
+
 
 @implementation YXTCinemaTabController
 
 @synthesize filmInfo, cinimaService, cinemaDistrictList;
+@synthesize imageQueue;
 @synthesize cinemaTableView;
-
 @synthesize nodeSelectBgImage, nodeBgImage;
 @synthesize nodeRightImage, nodeDownImage;
 @synthesize cinemaPicImage;
+
 
 - (void)dealloc {
 	[filmInfo release];
 	[cinimaService release];
 	[cinemaDistrictList release];
+	[imageQueue release];
 	[cinemaTableView release];
 	[nodeSelectBgImage release];
 	[nodeBgImage release];
@@ -35,8 +46,16 @@
 
 -(id)init{
 	if (self=[super init]) {
+		self.imageQueue = [[ASINetworkQueue alloc] init];
+		[imageQueue go];
 	}
 	return self;
+}
+
+-(id)initWithTab{
+	self.imageQueue = [[ASINetworkQueue alloc] init];
+	[imageQueue go];
+	return [super initWithTab];
 }
 
 -(void)viewDidLoad{
@@ -81,9 +100,69 @@
 	self.cinemaDistrictList = districtList;
 	
 	//默认树的第一个节点为展开
-	((YXTDistrict *)[cinemaDistrictList objectAtIndex:0]).isExpand = YES;
+	YXTDistrict *district = [cinemaDistrictList objectAtIndex:0];
+	district.isExpand = YES;
+	
+	int distIndex = 0;
+	int cinemaIndex = 0;
+	for (YXTCinemaInfo *cinemaInfo in district.cinemaList) {
+		if (cinemaInfo.cinemaImage != nil) {
+			continue;
+		}
+		
+		YXTCinemaImgLoader *imgLoader = [YXTCinemaImgLoader requestWithURL:[NSURL URLWithString:cinemaInfo.cinemaPhoto]];
+		imgLoader.cinemaInfo = cinemaInfo;
+		imgLoader.reqDelegate = self;
+		
+		imgLoader.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:distIndex], @"distIndex", 
+																		[NSNumber numberWithInt:cinemaIndex], @"cinemaIndex", 
+																		nil];;
+		
+		if ([OFReachability isConnectedToInternet]) {
+			[self.imageQueue addOperation:imgLoader];
+		}
+		
+		cinemaIndex++;
+	}
 	
 	[self.cinemaTableView reloadData];
+}
+
+-(void)imageRequestFinished:(NSDictionary *)userInfo{
+	int distIndex = [((NSNumber *)[userInfo objectForKey:@"distIndex"]) intValue];
+	int cinemaIndex = [((NSNumber *)[userInfo objectForKey:@"cinemaIndex"]) intValue];
+	
+	NSLog(@"img finished distIndex:%d, cinemaIndex:%d", distIndex, cinemaIndex);
+	
+	YXTDistrict *district = [self.cinemaDistrictList objectAtIndex:distIndex];
+	YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];
+	
+	if (district.isExpand == NO) {
+		return ;
+	}
+	
+	int cellIndex = 0;
+	for (int i=0; i<=distIndex; i++) {
+		cellIndex++;
+		if (i == distIndex) {
+			break;
+		}
+		
+		YXTDistrict *dist = [self.cinemaDistrictList objectAtIndex:i];
+		if (dist.isExpand) {
+			cellIndex = cellIndex + [dist.cinemaList count];
+		}
+	}
+	cellIndex = cellIndex + cinemaIndex;
+	
+	UITableViewCell *cell = [self.cinemaTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:0]];
+	for (UIView *view in [cell.contentView subviews]) {
+		if (view.tag == leaf_cinema_tag) {
+			NSLog(@"cellindex:%d", cellIndex);
+			UIImageView *cinemaImgView = (UIImageView *)view;
+			[cinemaImgView setImage:cinemaInfo.cinemaImage];
+		}
+	}
 }
 
 #pragma mark UITableViewDataSource delegates
@@ -111,6 +190,7 @@
 
 #pragma mark UITableViewDelegate delegates
 
+//判断index对应是树节点还是叶子算法
 -(bool)isIndexNode:(int)index districtIndex:(int *)distIndexParam cinemaIndex:(int *)cinemaIndexParam{
 	int distIndex = 0;
 	int cur = 0;
@@ -126,6 +206,11 @@
 			//从第0个节点计数（cur＋1）
 			lastCinemaIndex = index-(cur+1);
 			
+			if (distIndexParam!=NULL && cinemaIndexParam!=NULL) {
+				*distIndexParam = lastDistIndex;
+				*cinemaIndexParam = lastCinemaIndex;
+			}
+			
 			if (district.isExpand) {
 				cur = cur + [district.cinemaList count];
 			}
@@ -138,12 +223,6 @@
 			isNode = YES;
 			break;
 		}else {
-			if (distIndexParam==NULL || cinemaIndexParam==NULL) {
-				isNode = NO;
-				break;
-			}
-			*distIndexParam = lastDistIndex;
-			*cinemaIndexParam = lastCinemaIndex;
 			isNode = NO;
 			break;
 		}
@@ -174,7 +253,7 @@
 		bgFrame.size.width = nodeBgImage.size.width;
 		bgFrame.size.height = nodeBgImage.size.height;
 		UIImageView *bgImgView = [[UIImageView alloc] initWithFrame:bgFrame];
-		bgImgView.tag = 1;
+		bgImgView.tag = node_bg_tag;
 		
 		YXTDistrict *district = [self.cinemaDistrictList objectAtIndex:distIndex];
 		if (district.isExpand) {
@@ -204,7 +283,7 @@
 		[distCountLabel release];
 		
 		UIImageView *rightImgView = [[UIImageView alloc] initWithFrame:CGRectMake(290, 6, nodeRightImage.size.width, nodeRightImage.size.height)];
-		rightImgView.tag = 2;
+		rightImgView.tag = node_fold_tag;
 		
 		if (district.isExpand) {
 			[rightImgView setImage:nodeDownImage];
@@ -223,12 +302,20 @@
 		for (UIView *unitview in [cell.contentView subviews]) {
 			[unitview removeFromSuperview];
 		}
-		
+	
 		YXTDistrict *district = [self.cinemaDistrictList objectAtIndex:distIndex];
 		YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];
 		
-		UIImageView *picImgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 16, cinemaPicImage.size.width, cinemaPicImage.size.height)];
-		[picImgView setImage:cinemaPicImage];
+		YXTUIImageView *picImgView = [[YXTUIImageView alloc] init];
+		picImgView.tag = leaf_cinema_tag;
+		picImgView.frame = CGRectMake(20, 16, cinemaPicImage.size.width, cinemaPicImage.size.height);
+		
+		if (cinemaInfo.cinemaImage != nil) {
+			[picImgView setImage:cinemaInfo.cinemaImage];
+		}else {
+			[picImgView setImage:cinemaPicImage];
+		}
+		
 		[cell.contentView addSubview:picImgView];
 		[picImgView release];
 		
@@ -266,8 +353,6 @@
 		[cell.contentView addSubview:onlineOrderLabel];
 		[onlineOrderLabel release];
 	}
-
-
 	
 	return cell;
 }
@@ -295,11 +380,11 @@
 			[tableView deleteRowsAtIndexPaths:deleteCells withRowAnimation:UITableViewRowAnimationRight];
 			
 			for (UIView *view in [cell.contentView subviews]) {
-				if (view.tag == 1) {
+				if (view.tag == node_bg_tag) {
 					UIImageView *bgImgView = (UIImageView *)view;
 					[bgImgView setImage:nodeBgImage];
 				}
-				if (view.tag == 2) {
+				if (view.tag == node_fold_tag) {
 					UIImageView *foldImgView = (UIImageView *)view;
 					[foldImgView setImage:nodeRightImage];
 				}
@@ -315,14 +400,37 @@
 			[tableView insertRowsAtIndexPaths:insertCells withRowAnimation:UITableViewRowAnimationLeft];
 			
 			for (UIView *view in [cell.contentView subviews]) {
-				if (view.tag == 1) {
+				if (view.tag == node_bg_tag) {
 					UIImageView *bgImgView = (UIImageView *)view;
 					[bgImgView setImage:nodeSelectBgImage];
 				}
-				if (view.tag == 2) {
+				if (view.tag == node_fold_tag) {
 					UIImageView *foldImgView = (UIImageView *)view;
 					[foldImgView setImage:nodeDownImage];
 				}
+			}
+			
+			//here we process the tree node.
+			int tempCinemaIndex = 0;
+			for (YXTCinemaInfo *cinemaInfo in district.cinemaList) {
+				if (cinemaInfo.cinemaImage != nil) {
+					tempCinemaIndex++;
+					continue;
+				}
+				
+				YXTCinemaImgLoader *imgLoader = [YXTCinemaImgLoader requestWithURL:[NSURL URLWithString:cinemaInfo.cinemaPhoto]];
+				imgLoader.cinemaInfo = cinemaInfo;
+				imgLoader.reqDelegate = self;
+				
+				imgLoader.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:distIndex], @"distIndex", 
+									  [NSNumber numberWithInt:tempCinemaIndex], @"cinemaIndex", 
+									  nil];;
+				
+				if ([OFReachability isConnectedToInternet]) {
+					[self.imageQueue addOperation:imgLoader];
+				}
+				
+				tempCinemaIndex++;
 			}
 		}
 
