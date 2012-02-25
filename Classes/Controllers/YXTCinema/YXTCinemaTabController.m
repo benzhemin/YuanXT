@@ -13,7 +13,9 @@
 #import "OFReachability.h"
 
 enum TreeNodeLeafTag {
+	//node bg img
 	node_bg_tag = 1,
+	//node right fold icon
 	node_fold_tag,
 	leaf_cinema_tag
 };
@@ -107,6 +109,7 @@ enum TreeNodeLeafTag {
 	int cinemaIndex = 0;
 	for (YXTCinemaInfo *cinemaInfo in district.cinemaList) {
 		if (cinemaInfo.cinemaImage != nil) {
+			cinemaIndex++;
 			continue;
 		}
 		
@@ -132,8 +135,6 @@ enum TreeNodeLeafTag {
 	int distIndex = [((NSNumber *)[userInfo objectForKey:@"distIndex"]) intValue];
 	int cinemaIndex = [((NSNumber *)[userInfo objectForKey:@"cinemaIndex"]) intValue];
 	
-	NSLog(@"img finished distIndex:%d, cinemaIndex:%d", distIndex, cinemaIndex);
-	
 	YXTDistrict *district = [self.cinemaDistrictList objectAtIndex:distIndex];
 	YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];
 	
@@ -158,7 +159,6 @@ enum TreeNodeLeafTag {
 	UITableViewCell *cell = [self.cinemaTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cellIndex inSection:0]];
 	for (UIView *view in [cell.contentView subviews]) {
 		if (view.tag == leaf_cinema_tag) {
-			NSLog(@"cellindex:%d", cellIndex);
 			UIImageView *cinemaImgView = (UIImageView *)view;
 			[cinemaImgView setImage:cinemaInfo.cinemaImage];
 		}
@@ -190,7 +190,7 @@ enum TreeNodeLeafTag {
 
 #pragma mark UITableViewDelegate delegates
 
-//判断index对应是树节点还是叶子算法
+//judge index is node or leaf
 -(bool)isIndexNode:(int)index districtIndex:(int *)distIndexParam cinemaIndex:(int *)cinemaIndexParam{
 	int distIndex = 0;
 	int cur = 0;
@@ -223,6 +223,7 @@ enum TreeNodeLeafTag {
 			isNode = YES;
 			break;
 		}else {
+			//improve efficiency
 			isNode = NO;
 			break;
 		}
@@ -233,6 +234,8 @@ enum TreeNodeLeafTag {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *cellTreeNodeIdentifier = @"Tree_Node";
 	static NSString *cellTreeLeafIdentifier = @"Tree_Leaf";
+	static NSString *supportOnline = @"支持在线选座";
+	static NSString *notSupportOnline = @"不支持在线选座";
 	
 	int distIndex = 0;
 	int cinemaIndex = 0;
@@ -336,8 +339,6 @@ enum TreeNodeLeafTag {
 		[cell.contentView addSubview:cinemaAddressLabel];
 		[cinemaAddressLabel release];
 		
-		NSString *supportOnline = @"支持在线选座";
-		NSString *notSupportOnline = @"不支持在线选座";
 		UILabel *onlineOrderLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 45, 230, 20)];
 		onlineOrderLabel.backgroundColor = [UIColor clearColor];
 		onlineOrderLabel.font = [UIFont boldSystemFontOfSize:13.0f];
@@ -410,7 +411,7 @@ enum TreeNodeLeafTag {
 				}
 			}
 			
-			//here we process the tree node.
+			//here we process the tree leaf.
 			int tempCinemaIndex = 0;
 			for (YXTCinemaInfo *cinemaInfo in district.cinemaList) {
 				if (cinemaInfo.cinemaImage != nil) {
