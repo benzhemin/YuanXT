@@ -7,7 +7,7 @@
 //
 
 #import "YXTHelpTabController.h"
-
+#import "YXTNavigationBarView.h"
 
 @implementation YXTHelpTabController
 
@@ -25,6 +25,15 @@
 }
 
 -(void)viewDidLoad{
+	[self.navigationController setNavigationBarHidden:YES animated:NO];
+	
+	YXTNavigationBarView *naviView = [[YXTNavigationBarView alloc] init];
+	naviView.delegateCtrl = self;
+	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
+	[naviView addTitleLabelToBar:@"帮助"];
+	[self.view addSubview:naviView];
+	[naviView release];
+	
 	//scrollview.contentSize = CGSizeMake(295, 480);
 	scrollview.showsVerticalScrollIndicator = NO;
 	[super viewDidLoad];

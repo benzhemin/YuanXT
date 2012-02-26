@@ -21,8 +21,12 @@
 @class YXTActionSheet;
 @class YXTPickerDelegate;
 
+@class YXTCinemaTabController;
 
 @interface YXTFilmTabController : YXTBasicTabController<UIScrollViewDelegate, ImageDownLoadDelegate>{
+	YXTCinemaTabController *cinemaController;
+	BOOL refreshFisrtTiem;
+	
 	YXTLocationService *location;
 	YXTHotFilmService *hotFilm;
 	
@@ -49,6 +53,8 @@
 	UILabel *ycTimeLabel;
 }
 
+@property (nonatomic, retain) YXTCinemaTabController *cinemaController;
+
 @property (nonatomic, retain) YXTLocationService *location;
 @property (nonatomic, retain) YXTHotFilmService *hotFilm;
 
@@ -72,6 +78,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *ycTimeLabel;
 
 -(void)refreshHotFilmView;
+-(IBAction)pressFilmImgBtn:(id)sender;
 
 @end
 

@@ -13,6 +13,9 @@
 #import "YXTPickerDelegate.h"
 #import "ImageDownLoader.h"
 #import "YXTSettings.h"
+#import "YXTNavigationBarView.h"
+
+#import "YXTCinemaTabController.h"
 
 enum REQUEST_TYPE {
 	city_request = 0
@@ -22,11 +25,13 @@ static const CGFloat startX = 0;
 static const CGFloat width = 101;
 static const CGFloat height = 145;
 static const CGFloat span = 8;
-static 	int factor = 3;
+static int factor = 3;
 
 static CGFloat begin_decelerate_offsetx = 0; 
 
 @implementation YXTFilmTabController
+
+@synthesize cinemaController;
 
 @synthesize location, hotFilm, filmList, imageQueue, filmImageList;
 
@@ -71,11 +76,27 @@ static CGFloat begin_decelerate_offsetx = 0;
 	return self;
 }
 
+-(id)initWithTab{
+	if (self=[super initWithTab]){
+		//self.navigationController.navigationBarHidden = YES;
+		
+	}
+	return self;
+}
+
 -(void)viewDidLoad{
+	[self.navigationController setNavigationBarHidden:YES animated:NO];
 	
-	[self setUpUINavigationBarItem];
+	YXTNavigationBarView *naviView = [[YXTNavigationBarView alloc] init];
+	naviView.delegateCtrl = self;
+	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
+	[naviView addCitySwitchIconToBar];
+	[naviView addTitleLabelToBar:@"正在热映"];
+	[self.view addSubview:naviView];
+	[naviView release];
 	
-	
+	refreshFisrtTiem = YES;
+
 	//viewDidLoad时，初始化3张图片，等获取到所有图片再重新layout
 	int film_init_image = 3;
 	
@@ -99,7 +120,11 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-	[self refreshHotFilmView];
+	[self setUpUINavigationBarItem];
+	if (refreshFisrtTiem) {
+		[self refreshHotFilmView];
+		refreshFisrtTiem = NO;
+	}
 	[super viewWillAppear:animated];
 }
 
@@ -141,6 +166,30 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[pool drain];
 }
 
+-(void)imageRequestFinished:(NSDictionary *)userInfo{
+	int index = [((NSNumber *)[userInfo objectForKey:@"tag"]) intValue];
+	ImageDownLoader *imgLoader = [self.filmImageList objectAtIndex:index];
+	UIImage *image = [[UIImage alloc] initWithData:[imgLoader imgData]];
+	
+	for (int i=0; i<[filmImageViewList count]; i++) {
+		if (i%[filmList count] == index) {
+			YXTUIImageView *imageView = [filmImageViewList objectAtIndex:i];
+			[imageView setImage:image];
+			[imageView stopAnimateLoadingImage];
+		}
+	}
+	[image release];
+}
+
+-(IBAction)pressFilmImgBtn:(id)sender{
+	int index = ((UIView *)sender).tag;
+	YXTFilmInfo *filmInfo = [self.filmList objectAtIndex:(index%[filmList count])];
+	self.cinemaController = [[YXTCinemaTabController alloc] init];
+	cinemaController.filmInfo = filmInfo;
+	//[self.navigationController pushViewController:cinemaController animated:YES];
+	[self.navigationController pushViewController:cinemaController animated:YES];
+}
+
 -(void)layoutFilmScroll{
 	for (UIView *view in [self.filmScrollView subviews]) {
 		[view removeFromSuperview];
@@ -155,11 +204,21 @@ static CGFloat begin_decelerate_offsetx = 0;
 	NSString *loadingImgName = [NSString stringWithFormat:@"bg_movie.png"];
 	UIImage *loadingImg = [UIImage imageNamed:loadingImgName];
 	for (int i=0; i<film_init_image; i++) {
+		UIButton *filmImgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+		filmImgBtn.tag = i;
+		[filmImgBtn addTarget:self action:@selector(pressFilmImgBtn:) forControlEvents:UIControlEventTouchUpInside];
+		[filmImgBtn setFrame:CGRectMake(startX+i*width+i*span, 0, loadingImg.size.width, loadingImg.size.height)];
+		
 		YXTUIImageView *loadingImageView = [[YXTUIImageView alloc] initWithImage:loadingImg];
 		[loadingImageView addAnimateLoadingImage];
-		[loadingImageView setFrame:CGRectMake(startX+i*width+i*span, 0, loadingImg.size.width, loadingImg.size.height)];
+		[loadingImageView setFrame:CGRectMake(0, 0, loadingImg.size.width, loadingImg.size.height)];
 		[loadingImageView startAnimateLoadingImage];
-		[filmScrollView addSubview:loadingImageView];
+		
+		[filmImgBtn addSubview:loadingImageView];
+		
+		
+		
+		[filmScrollView addSubview:filmImgBtn];
 		[filmImageViewList addObject:loadingImageView];
 		[loadingImageView release];
 	}
@@ -172,21 +231,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 	begin_decelerate_offsetx = total_width;
 	[filmScrollView scrollRectToVisible:CGRectMake(total_width, 0, filmScrollView.bounds.size.width, loadingImg.size.height)
 							   animated:NO];
-}
-
--(void)imageRequestFinished:(NSDictionary *)userInfo{
-	int index = [((NSNumber *)[userInfo objectForKey:@"tag"]) intValue];
-	ImageDownLoader *imgLoader = [self.filmImageList objectAtIndex:index];
-	UIImage *image = [[UIImage alloc] initWithData:[imgLoader imgData]];
-	
-	for (int i=0; i<[filmImageViewList count]; i++) {
-		if (i%[filmList count] == index) {
-			YXTUIImageView *imageView = [filmImageViewList objectAtIndex:i];
-			[imageView setImage:image];
-			[imageView stopAnimateLoadingImage];
-		}
-	}
-	[image release];
 }
 
 // any offset changes
@@ -288,7 +332,11 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 
--(void)pressCitySwitchBtn{
+-(IBAction)popToPreviousViewController:(id)sender{
+	NSLog(@"do nothing");
+}
+
+-(IBAction)pressCitySwitchBtn:(id)sender{
 	self.location = [[YXTLocationService alloc] init];
 	[location setDelegateFilm:self];
 	[location startToFetchCityList];

@@ -22,6 +22,8 @@
 	
 	NSMutableArray *cinemaDistrictList;
 	
+	UIView *contentView;
+	CGRect tableFrame;
 	UITableView *cinemaTableView;
 	
 	UIImage *nodeSelectBgImage;
@@ -39,6 +41,7 @@
 
 @property (nonatomic, retain) NSMutableArray *cinemaDistrictList;
 
+@property (nonatomic, retain) UIView *contentView;
 @property (nonatomic, retain) UITableView *cinemaTableView;
 
 @property (nonatomic, retain) UIImage *nodeSelectBgImage;

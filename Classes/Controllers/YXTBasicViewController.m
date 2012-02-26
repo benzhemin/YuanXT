@@ -29,7 +29,7 @@
 	if (self = [super init]) {
 		[self setUseNetworkActivity:YES];
 		self.useBezelStyle = YES;
-		self.coverNavBar = YES;
+		//self.coverNavBar = YES;
 		self.waitingWidth = 150.0;
 		
 		
@@ -55,7 +55,7 @@
 	self.waitingMessage = @"服务端出错，请稍候重试";
 	
 	self.useBezelStyle = YES;
-	self.coverNavBar = YES;
+	//self.coverNavBar = YES;
 	
 	[self performSelector:@selector(displayActivityView)];
 	[self performSelector:@selector(removeActivityView) withObject:nil afterDelay:2.0];
@@ -65,7 +65,7 @@
 	self.waitingMessage = @"网络错误，请检查网络";
 	
 	self.useBezelStyle = YES;
-	self.coverNavBar = YES;
+	//self.coverNavBar = YES;
 	
 	[self performSelector:@selector(displayActivityView)];
 	[self performSelector:@selector(removeActivityView) withObject:nil afterDelay:2.0];

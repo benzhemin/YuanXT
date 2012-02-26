@@ -11,6 +11,7 @@
 #import "YXTUIImageView.h"
 #import "ASINetworkQueue.h"
 #import "OFReachability.h"
+#import "YXTNavigationBarView.h"
 
 enum TreeNodeLeafTag {
 	//node bg img
@@ -25,7 +26,7 @@ enum TreeNodeLeafTag {
 
 @synthesize filmInfo, cinimaService, cinemaDistrictList;
 @synthesize imageQueue;
-@synthesize cinemaTableView;
+@synthesize contentView, cinemaTableView;
 @synthesize nodeSelectBgImage, nodeBgImage;
 @synthesize nodeRightImage, nodeDownImage;
 @synthesize cinemaPicImage;
@@ -36,6 +37,7 @@ enum TreeNodeLeafTag {
 	[cinimaService release];
 	[cinemaDistrictList release];
 	[imageQueue release];
+	[contentView release];
 	[cinemaTableView release];
 	[nodeSelectBgImage release];
 	[nodeBgImage release];
@@ -48,6 +50,11 @@ enum TreeNodeLeafTag {
 
 -(id)init{
 	if (self=[super init]) {
+		
+		tableFrame = CGRectZero;
+		tableFrame.size.height = 396;
+		
+		self.hidesBottomBarWhenPushed = YES;
 		self.imageQueue = [[ASINetworkQueue alloc] init];
 		[imageQueue go];
 	}
@@ -55,19 +62,35 @@ enum TreeNodeLeafTag {
 }
 
 -(id)initWithTab{
-	self.imageQueue = [[ASINetworkQueue alloc] init];
-	[imageQueue go];
-	return [super initWithTab];
+	if (self=[super initWithTab]){
+		
+		tableFrame = CGRectZero;
+		tableFrame.size.height = 360;
+		
+		self.imageQueue = [[ASINetworkQueue alloc] init];
+		[imageQueue go];
+	}
+	return self;
 }
 
 -(void)viewDidLoad{
+	[self.navigationController setNavigationBarHidden:YES animated:NO];
+	
+	YXTNavigationBarView *naviView = [[YXTNavigationBarView alloc] init];
+	naviView.delegateCtrl = self;
+	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
+	[naviView addTitleLabelToBar:@"影院列表"];
 	if (self.filmInfo != nil) {
-		[self setUpUINavigationBarItem];
+		[naviView addFunctionIconToBar:[UIImage imageNamed:@"btn_yingyuanxiangqing.png"]];
 	}
 	
-	CGRect tableFrame = CGRectZero;
+	[self.view addSubview:naviView];
+	[naviView release];
+	
+	self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, self.view.bounds.size.width, tableFrame.size.height)];
+	[self.view addSubview:contentView];
+	
 	tableFrame.size.width = self.view.bounds.size.width;
-	tableFrame.size.height = 360;
 	
 	self.cinemaTableView = [[UITableView alloc] initWithFrame:tableFrame
 														style:UITableViewStylePlain];
@@ -75,7 +98,7 @@ enum TreeNodeLeafTag {
 	[self.cinemaTableView setDataSource:self];
 	[self.cinemaTableView setBackgroundColor:[UIColor clearColor]];
 	
-	[self.view addSubview:cinemaTableView];
+	[self.contentView addSubview:cinemaTableView];
 	
 	self.nodeSelectBgImage = [UIImage imageNamed:@"node_xuanzhong_bg_t.png"];
 	self.nodeBgImage = [UIImage imageNamed:@"node_bg_t.png"];
@@ -93,6 +116,10 @@ enum TreeNodeLeafTag {
 }
 
 -(void)refreshCinemaListTable{
+	if (self.filmInfo != nil) {
+		[self setUpUINavigationBarItem];
+	}
+	
 	self.cinimaService = [[YXTCinemaService alloc] init];
 	[cinimaService setDelegateCinema:self];
 	[cinimaService startToFetchCinimaList];
@@ -452,6 +479,16 @@ enum TreeNodeLeafTag {
 	}
 }
 
+-(IBAction)popToPreviousViewController:(id)sender{
+	if (self.filmInfo != nil) {
+		[self.navigationController popViewControllerAnimated:YES];
+	}
+}
+
+-(IBAction)funcToViewController:(id)sender{
+	NSLog(@"影院详情");
+}
+
 
 -(void)setUpUINavigationBarItem{
 	// set uibaritem
@@ -463,9 +500,9 @@ enum TreeNodeLeafTag {
 	[cinimaDetailBtn addTarget:self action:@selector(pressCitySwitchBtn) forControlEvents:UIControlEventTouchUpInside];
 
 	
-	UIBarButtonItem *cityDetailItem = [[UIBarButtonItem alloc] initWithCustomView:cinimaDetailBtn];	
-	self.navigationItem.rightBarButtonItem = cityDetailItem;
-	[cityDetailItem release];
+	UIBarButtonItem *cinemaDetailItem = [[UIBarButtonItem alloc] initWithCustomView:cinimaDetailBtn];	
+	self.navigationItem.rightBarButtonItem = cinemaDetailItem;
+	[cinemaDetailItem release];
 }
 
 -(NSString *)getTabTitle{ return @"影院"; }
