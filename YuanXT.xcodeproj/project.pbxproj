@@ -57,6 +57,25 @@
 		0F3CE31414F5FB790010A1EF /* topbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE31214F5FB790010A1EF /* topbg.png */; };
 		0F3CE31514F5FB790010A1EF /* topbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE31314F5FB790010A1EF /* topbg@2x.png */; };
 		0F3CE55814F925400010A1EF /* YXTNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CE55714F925400010A1EF /* YXTNavigationBarView.m */; };
+		0F3CE6E714FB3AEB0010A1EF /* YXTFilmDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CE6E614FB3AEB0010A1EF /* YXTFilmDetailController.m */; };
+		0F3CE6E914FB40EA0010A1EF /* YXTFilmDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE6E814FB40EA0010A1EF /* YXTFilmDetailController.xib */; };
+		0F3CE6F514FB55230010A1EF /* bottombg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE6F314FB55230010A1EF /* bottombg.png */; };
+		0F3CE6F614FB55230010A1EF /* bottombg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE6F414FB55230010A1EF /* bottombg@2x.png */; };
+		0F3CE6F914FB559E0010A1EF /* middlebg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE6F714FB559E0010A1EF /* middlebg.png */; };
+		0F3CE6FA14FB559E0010A1EF /* middlebg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE6F814FB559E0010A1EF /* middlebg@2x.png */; };
+		0F3CE77214FBC0DC0010A1EF /* btn_dianyingxiangqing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE77014FBC0DC0010A1EF /* btn_dianyingxiangqing.png */; };
+		0F3CE77314FBC0DC0010A1EF /* btn_dianyingxiangqing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE77114FBC0DC0010A1EF /* btn_dianyingxiangqing@2x.png */; };
+		0F3CE79C14FBC5420010A1EF /* YXTCinemaDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CE79B14FBC5420010A1EF /* YXTCinemaDetailController.m */; };
+		0F3CE79E14FBC57E0010A1EF /* YXTCinemaDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE79D14FBC57E0010A1EF /* YXTCinemaDetailController.xib */; };
+		0F3CE7A314FBC7E60010A1EF /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE7A114FBC7E60010A1EF /* line.png */; };
+		0F3CE7A414FBC7E60010A1EF /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE7A214FBC7E60010A1EF /* line@2x.png */; };
+		0F3CE7F914FCB30D0010A1EF /* YXTFilmShowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CE7F814FCB30D0010A1EF /* YXTFilmShowController.m */; };
+		0F3CE82414FCB5130010A1EF /* YXTFilmShowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE82314FCB5130010A1EF /* YXTFilmShowController.xib */; };
+		0F3CE82B14FCBA150010A1EF /* tab1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE82714FCBA150010A1EF /* tab1.png */; };
+		0F3CE82C14FCBA150010A1EF /* tab1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE82814FCBA150010A1EF /* tab1@2x.png */; };
+		0F3CE82D14FCBA150010A1EF /* tab2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE82914FCBA150010A1EF /* tab2.png */; };
+		0F3CE82E14FCBA150010A1EF /* tab2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3CE82A14FCBA150010A1EF /* tab2@2x.png */; };
+		0F3CE86714FCC65A0010A1EF /* YXTShowService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F3CE86614FCC65A0010A1EF /* YXTShowService.m */; };
 		1D3623260D0F684500981E51 /* YuanXTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -169,6 +188,29 @@
 		0F3CE31314F5FB790010A1EF /* topbg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topbg@2x.png"; sourceTree = "<group>"; };
 		0F3CE55614F925400010A1EF /* YXTNavigationBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTNavigationBarView.h; sourceTree = "<group>"; };
 		0F3CE55714F925400010A1EF /* YXTNavigationBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTNavigationBarView.m; sourceTree = "<group>"; };
+		0F3CE6E514FB3AEB0010A1EF /* YXTFilmDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTFilmDetailController.h; sourceTree = "<group>"; };
+		0F3CE6E614FB3AEB0010A1EF /* YXTFilmDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTFilmDetailController.m; sourceTree = "<group>"; };
+		0F3CE6E814FB40EA0010A1EF /* YXTFilmDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTFilmDetailController.xib; sourceTree = "<group>"; };
+		0F3CE6F314FB55230010A1EF /* bottombg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottombg.png; sourceTree = "<group>"; };
+		0F3CE6F414FB55230010A1EF /* bottombg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottombg@2x.png"; sourceTree = "<group>"; };
+		0F3CE6F714FB559E0010A1EF /* middlebg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middlebg.png; sourceTree = "<group>"; };
+		0F3CE6F814FB559E0010A1EF /* middlebg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "middlebg@2x.png"; sourceTree = "<group>"; };
+		0F3CE77014FBC0DC0010A1EF /* btn_dianyingxiangqing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_dianyingxiangqing.png; sourceTree = "<group>"; };
+		0F3CE77114FBC0DC0010A1EF /* btn_dianyingxiangqing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_dianyingxiangqing@2x.png"; sourceTree = "<group>"; };
+		0F3CE79A14FBC5420010A1EF /* YXTCinemaDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTCinemaDetailController.h; sourceTree = "<group>"; };
+		0F3CE79B14FBC5420010A1EF /* YXTCinemaDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTCinemaDetailController.m; sourceTree = "<group>"; };
+		0F3CE79D14FBC57E0010A1EF /* YXTCinemaDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTCinemaDetailController.xib; sourceTree = "<group>"; };
+		0F3CE7A114FBC7E60010A1EF /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
+		0F3CE7A214FBC7E60010A1EF /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
+		0F3CE7F714FCB30D0010A1EF /* YXTFilmShowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTFilmShowController.h; sourceTree = "<group>"; };
+		0F3CE7F814FCB30D0010A1EF /* YXTFilmShowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTFilmShowController.m; sourceTree = "<group>"; };
+		0F3CE82314FCB5130010A1EF /* YXTFilmShowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTFilmShowController.xib; sourceTree = "<group>"; };
+		0F3CE82714FCBA150010A1EF /* tab1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab1.png; sourceTree = "<group>"; };
+		0F3CE82814FCBA150010A1EF /* tab1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab1@2x.png"; sourceTree = "<group>"; };
+		0F3CE82914FCBA150010A1EF /* tab2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab2.png; sourceTree = "<group>"; };
+		0F3CE82A14FCBA150010A1EF /* tab2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab2@2x.png"; sourceTree = "<group>"; };
+		0F3CE86514FCC65A0010A1EF /* YXTShowService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTShowService.h; sourceTree = "<group>"; };
+		0F3CE86614FCC65A0010A1EF /* YXTShowService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTShowService.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* YuanXTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuanXTAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* YuanXTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YuanXTAppDelegate.m; sourceTree = "<group>"; };
@@ -356,6 +398,8 @@
 				0F2E9DEF14E7AF4800F091A4 /* YXTLocationService.m */,
 				CE1CFEAA14E9F8C800E1AE6F /* YXTHotFilmService.h */,
 				CE1CFEAB14E9F8C800E1AE6F /* YXTHotFilmService.m */,
+				0F3CE86514FCC65A0010A1EF /* YXTShowService.h */,
+				0F3CE86614FCC65A0010A1EF /* YXTShowService.m */,
 			);
 			path = YXTFilm;
 			sourceTree = "<group>";
@@ -426,6 +470,9 @@
 			children = (
 				0F3CDE7D14F2725D0010A1EF /* YXTCinemaTabController.h */,
 				0F3CDE7E14F2725D0010A1EF /* YXTCinemaTabController.m */,
+				0F3CE79A14FBC5420010A1EF /* YXTCinemaDetailController.h */,
+				0F3CE79B14FBC5420010A1EF /* YXTCinemaDetailController.m */,
+				0F3CE79D14FBC57E0010A1EF /* YXTCinemaDetailController.xib */,
 			);
 			path = YXTCinema;
 			sourceTree = "<group>";
@@ -443,6 +490,12 @@
 				0F3CE30714F5F8420010A1EF /* hotline@2x.png */,
 				0F3CE31214F5FB790010A1EF /* topbg.png */,
 				0F3CE31314F5FB790010A1EF /* topbg@2x.png */,
+				0F3CE7A114FBC7E60010A1EF /* line.png */,
+				0F3CE7A214FBC7E60010A1EF /* line@2x.png */,
+				0F3CE6F714FB559E0010A1EF /* middlebg.png */,
+				0F3CE6F814FB559E0010A1EF /* middlebg@2x.png */,
+				0F3CE6F314FB55230010A1EF /* bottombg.png */,
+				0F3CE6F414FB55230010A1EF /* bottombg@2x.png */,
 			);
 			path = help;
 			sourceTree = "<group>";
@@ -512,6 +565,12 @@
 				CE1C075914EB50D600E1AE6F /* bg_movie@2x.png */,
 				CE1C071514EA415B00E1AE6F /* btn_goumaiyingpiao.png */,
 				CE1C071614EA415B00E1AE6F /* btn_goumaiyingpiao@2x.png */,
+				0F3CE77014FBC0DC0010A1EF /* btn_dianyingxiangqing.png */,
+				0F3CE77114FBC0DC0010A1EF /* btn_dianyingxiangqing@2x.png */,
+				0F3CE82714FCBA150010A1EF /* tab1.png */,
+				0F3CE82814FCBA150010A1EF /* tab1@2x.png */,
+				0F3CE82914FCBA150010A1EF /* tab2.png */,
+				0F3CE82A14FCBA150010A1EF /* tab2@2x.png */,
 			);
 			path = film;
 			sourceTree = "<group>";
@@ -627,6 +686,12 @@
 				CE82378B14E39DDC00412576 /* YXTFilmTabController.h */,
 				CE82378C14E39DDC00412576 /* YXTFilmTabController.m */,
 				CE1C042414EA290C00E1AE6F /* YXTFilmTabController.xib */,
+				0F3CE6E514FB3AEB0010A1EF /* YXTFilmDetailController.h */,
+				0F3CE6E614FB3AEB0010A1EF /* YXTFilmDetailController.m */,
+				0F3CE6E814FB40EA0010A1EF /* YXTFilmDetailController.xib */,
+				0F3CE7F714FCB30D0010A1EF /* YXTFilmShowController.h */,
+				0F3CE7F814FCB30D0010A1EF /* YXTFilmShowController.m */,
+				0F3CE82314FCB5130010A1EF /* YXTFilmShowController.xib */,
 			);
 			path = YXTFilm;
 			sourceTree = "<group>";
@@ -737,6 +802,21 @@
 				0F3CE30F14F5F8420010A1EF /* hotline@2x.png in Resources */,
 				0F3CE31414F5FB790010A1EF /* topbg.png in Resources */,
 				0F3CE31514F5FB790010A1EF /* topbg@2x.png in Resources */,
+				0F3CE6E914FB40EA0010A1EF /* YXTFilmDetailController.xib in Resources */,
+				0F3CE6F514FB55230010A1EF /* bottombg.png in Resources */,
+				0F3CE6F614FB55230010A1EF /* bottombg@2x.png in Resources */,
+				0F3CE6F914FB559E0010A1EF /* middlebg.png in Resources */,
+				0F3CE6FA14FB559E0010A1EF /* middlebg@2x.png in Resources */,
+				0F3CE77214FBC0DC0010A1EF /* btn_dianyingxiangqing.png in Resources */,
+				0F3CE77314FBC0DC0010A1EF /* btn_dianyingxiangqing@2x.png in Resources */,
+				0F3CE79E14FBC57E0010A1EF /* YXTCinemaDetailController.xib in Resources */,
+				0F3CE7A314FBC7E60010A1EF /* line.png in Resources */,
+				0F3CE7A414FBC7E60010A1EF /* line@2x.png in Resources */,
+				0F3CE82414FCB5130010A1EF /* YXTFilmShowController.xib in Resources */,
+				0F3CE82B14FCBA150010A1EF /* tab1.png in Resources */,
+				0F3CE82C14FCBA150010A1EF /* tab1@2x.png in Resources */,
+				0F3CE82D14FCBA150010A1EF /* tab2.png in Resources */,
+				0F3CE82E14FCBA150010A1EF /* tab2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +863,10 @@
 				0F3CDE7F14F2725D0010A1EF /* YXTCinemaTabController.m in Sources */,
 				0F3CE26814F52EF50010A1EF /* YXTCinemaImgLoader.m in Sources */,
 				0F3CE55814F925400010A1EF /* YXTNavigationBarView.m in Sources */,
+				0F3CE6E714FB3AEB0010A1EF /* YXTFilmDetailController.m in Sources */,
+				0F3CE79C14FBC5420010A1EF /* YXTCinemaDetailController.m in Sources */,
+				0F3CE7F914FCB30D0010A1EF /* YXTFilmShowController.m in Sources */,
+				0F3CE86714FCC65A0010A1EF /* YXTShowService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,10 @@
 #import "ASINetworkQueue.h"
 #import "OFReachability.h"
 #import "YXTNavigationBarView.h"
+#import "YXTFilmDetailController.h"
+#import "YXTHotFilmService.h"
+#import "YXTCinemaDetailController.h"
+#import "YXTFilmShowController.h"
 
 enum TreeNodeLeafTag {
 	//node bg img
@@ -79,10 +83,14 @@ enum TreeNodeLeafTag {
 	YXTNavigationBarView *naviView = [[YXTNavigationBarView alloc] init];
 	naviView.delegateCtrl = self;
 	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
-	[naviView addTitleLabelToBar:@"影院列表"];
+	
 	if (self.filmInfo != nil) {
-		[naviView addFunctionIconToBar:[UIImage imageNamed:@"btn_yingyuanxiangqing.png"]];
+		[naviView addFunctionIconToBar:[UIImage imageNamed:@"btn_dianyingxiangqing.png"]];
+		[naviView addTitleLabelToBar:self.filmInfo.filmName];
+	}else {
+		[naviView addTitleLabelToBar:@"影院列表"];
 	}
+
 	
 	[self.view addSubview:naviView];
 	[naviView release];
@@ -464,8 +472,18 @@ enum TreeNodeLeafTag {
 
 	}else {
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		YXTDistrict *district = [self.cinemaDistrictList objectAtIndex:distIndex];
+		YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];
+		
+		
+		YXTFilmShowController *filmShowController = [[YXTFilmShowController alloc] init];
+		if (self.filmInfo) {
+			filmShowController.filmInfo = filmInfo;
+		}
+		filmShowController.cinemaInfo = cinemaInfo;
+		[self.navigationController pushViewController:filmShowController animated:YES];
+		[filmShowController release];
 	}
-	
 }
 
 #define TABLE_TREE_NODE_HEIGHT 36
@@ -486,7 +504,12 @@ enum TreeNodeLeafTag {
 }
 
 -(IBAction)funcToViewController:(id)sender{
-	NSLog(@"影院详情");
+	if (self.filmInfo != nil) {
+		YXTFilmDetailController *filmDetailController = [[YXTFilmDetailController alloc] init];
+		filmDetailController.filmInfo = self.filmInfo;
+		[self.navigationController pushViewController:filmDetailController animated:YES];
+		[filmDetailController release];
+	}
 }
 
 

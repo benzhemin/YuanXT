@@ -11,9 +11,12 @@
 
 @interface YXTNavigationBarView : UIImageView {
 	id delegateCtrl;
+	
+	UIButton *cityBtn;
 }
 
 @property (nonatomic, assign) id delegateCtrl;
+@property (nonatomic, retain) UIButton *cityBtn;
 
 -(void)addBackIconToBar:(UIImage *)img;
 -(void)addFunctionIconToBar:(UIImage *)img;

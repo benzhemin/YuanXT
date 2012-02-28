@@ -10,9 +10,9 @@
 #import "YXTBasicTabController.h"
 
 @interface YXTHelpTabController : YXTBasicTabController {
-	IBOutlet UIScrollView *scrollview;
+	UIScrollView *scrollview;
 }
 
-@property (nonatomic, retain) UIScrollView *scrollview;
+@property (nonatomic, retain) IBOutlet UIScrollView *scrollview;
 
 @end

@@ -18,6 +18,8 @@
 @class YXTHotFilmService;
 @class YXTFilmInfo;
 
+@class YXTNavigationBarView;
+
 @class YXTActionSheet;
 @class YXTPickerDelegate;
 
@@ -36,11 +38,11 @@
 	//retain download film image
 	NSMutableArray *filmImageList;
 	
-	
-	UIButton *cityBtn;
 	YXTActionSheet *citySheet;
 	UIPickerView *cityPicker;
 	YXTPickerDelegate *cityPickerDelegate;
+	
+	YXTNavigationBarView *naviView;
 	
 	UIScrollView *filmScrollView;
 	NSMutableArray *filmImageViewList;
@@ -62,10 +64,11 @@
 @property (nonatomic, retain) ASINetworkQueue *imageQueue;
 @property (nonatomic, retain) NSMutableArray *filmImageList;
 
-@property (nonatomic, retain) UIButton *cityBtn;
 @property (nonatomic, retain) YXTActionSheet *citySheet;
 @property (nonatomic, retain) UIPickerView *cityPicker;
 @property (nonatomic, retain) YXTPickerDelegate *cityPickerDelegate;
+
+@property (nonatomic, retain) YXTNavigationBarView *naviView;
 
 @property (nonatomic, retain) IBOutlet UIScrollView *filmScrollView;
 @property (nonatomic, retain) NSMutableArray *filmImageViewList;

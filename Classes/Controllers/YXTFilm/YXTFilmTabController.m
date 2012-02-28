@@ -35,9 +35,9 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 @synthesize location, hotFilm, filmList, imageQueue, filmImageList;
 
-@synthesize cityBtn, citySheet, cityPicker, cityPickerDelegate;
+@synthesize citySheet, cityPicker, cityPickerDelegate;
 
-@synthesize filmScrollView, filmImageViewList;
+@synthesize naviView, filmScrollView, filmImageViewList;
 
 @synthesize filmNameLabel, directorLabel, mainPerformerLabel;
 @synthesize filmClassLabel, areaLabel, ycTimeLabel;
@@ -50,11 +50,11 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[imageQueue release];
 	[filmImageList release];
 	
-	[cityBtn release];
 	[citySheet release];
 	[cityPicker release];
 	[cityPickerDelegate release];
 	
+	[naviView release];
 	
 	[filmScrollView release];
 	[filmImageViewList release];
@@ -87,13 +87,12 @@ static CGFloat begin_decelerate_offsetx = 0;
 -(void)viewDidLoad{
 	[self.navigationController setNavigationBarHidden:YES animated:NO];
 	
-	YXTNavigationBarView *naviView = [[YXTNavigationBarView alloc] init];
+	self.naviView = [[YXTNavigationBarView alloc] init];
 	naviView.delegateCtrl = self;
 	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
 	[naviView addCitySwitchIconToBar];
 	[naviView addTitleLabelToBar:@"正在热映"];
 	[self.view addSubview:naviView];
-	[naviView release];
 	
 	refreshFisrtTiem = YES;
 
@@ -120,7 +119,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-	[self setUpUINavigationBarItem];
 	if (refreshFisrtTiem) {
 		[self refreshHotFilmView];
 		refreshFisrtTiem = NO;
@@ -366,32 +364,15 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
 	NSInteger row = [cityPicker selectedRowInComponent:0];
 	[YXTSettings instance].cityInfo = [[cityPickerDelegate pickerDataArray] objectAtIndex:row];
-    NSString *cityName = [[YXTSettings instance].cityInfo infoDescription];
-	[cityBtn setTitle:cityName forState:UIControlStateNormal];
+    //NSString *cityName = [[YXTSettings instance].cityInfo infoDescription];
+	
+	[naviView.cityBtn setTitle:[[YXTSettings instance].cityInfo cityName] forState:UIControlStateNormal];
 	
 	[self refreshHotFilmView];
 }
 
 -(IBAction)selectCityCancel:(id)sender{
 	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
-}
-
--(void)setUpUINavigationBarItem{
-	// set uibaritem
-	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-	[cityBtn setBackgroundColor:[UIColor clearColor]];
-	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
-	[cityBtn setFrame:CGRectMake(0, 0, cityImg.size.width+15.0, cityImg.size.height+8.0)];
-	[cityBtn setBackgroundImage:cityImg forState:UIControlStateNormal];
-	[cityBtn addTarget:self action:@selector(pressCitySwitchBtn) forControlEvents:UIControlEventTouchUpInside];
-	[[cityBtn titleLabel] setFont:[UIFont boldSystemFontOfSize:14.0f]];
-	
-	[cityBtn setTitleEdgeInsets:UIEdgeInsetsMake(-2.0, -11.0, 0.0, 0.0)];
-	[cityBtn setTitle:[[YXTSettings instance].cityInfo cityName] forState:UIControlStateNormal];
-	
-	UIBarButtonItem *cityBarItem = [[UIBarButtonItem alloc] initWithCustomView:cityBtn];	
-	self.navigationItem.rightBarButtonItem = cityBarItem;
-	[cityBarItem release];
 }
 
 -(void)updateFilmInfo:(YXTFilmInfo *)filmInfo{

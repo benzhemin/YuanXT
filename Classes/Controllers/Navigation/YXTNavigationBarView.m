@@ -14,6 +14,12 @@
 @implementation YXTNavigationBarView
 
 @synthesize delegateCtrl;
+@synthesize cityBtn;
+
+-(void)dealloc{
+	[cityBtn release];
+	[super dealloc];
+}
 
 -(id)init{
 	UIImage *bgImg = [UIImage imageNamed:@"bg_titlearea.png"];
@@ -51,12 +57,12 @@
 	[iconButton addSubview:rightImgView];
 	[rightImgView release];
 	
-	iconButton.center = CGPointMake(280, self.center.y+3.0);
+	iconButton.center = CGPointMake(285, self.center.y+3.0);
 	[self addSubview:iconButton];
 }
 
 -(void)addCitySwitchIconToBar{
-	UIButton *cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 	[cityBtn setBackgroundColor:[UIColor clearColor]];
 	UIImage *cityImg = [UIImage imageNamed:@"dropselect.png"];
 	[cityBtn setFrame:CGRectMake(0, 0, cityImg.size.width+15.0, cityImg.size.height+8.0)];
@@ -81,7 +87,7 @@
 	const float shadowOffset = 1.f;
 	titleLabel.shadowOffset = CGSizeMake(-shadowOffset, shadowOffset);
 	titleLabel.backgroundColor = [UIColor clearColor];
-	titleLabel.frame = [titleLabel textRectForBounds:CGRectMake(0.f, 0.f, 250.f, 30.f) limitedToNumberOfLines:1];
+	titleLabel.frame = [titleLabel textRectForBounds:CGRectMake(0.f, 0.f, 260.f, 30.f) limitedToNumberOfLines:1];
 	titleLabel.center = self.center;
 	[self addSubview:titleLabel];
 }
