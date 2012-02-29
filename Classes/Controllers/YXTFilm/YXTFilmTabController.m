@@ -184,7 +184,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 	YXTFilmInfo *filmInfo = [self.filmList objectAtIndex:(index%[filmList count])];
 	self.cinemaController = [[YXTCinemaTabController alloc] init];
 	cinemaController.filmInfo = filmInfo;
-	//[self.navigationController pushViewController:cinemaController animated:YES];
 	[self.navigationController pushViewController:cinemaController animated:YES];
 }
 

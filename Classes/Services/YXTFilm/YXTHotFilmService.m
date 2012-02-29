@@ -11,15 +11,19 @@
 #import "YXTBasicViewController.h"
 #import "OFReachability.h"
 #import "YXTSettings.h"
+#import "DSActivityView.h"
 
 @implementation YXTHotFilmService
 
-@synthesize filmList, delegateFilm, cityInfo;
+@synthesize filmList, delegateFilm, cityInfo, filmIdSet;
+@synthesize changeFlag;
+
 
 -(void)dealloc{
 	[mReq release];
 	[filmList release];
 	[cityInfo release];
+	[filmIdSet release];
 	[super dealloc];
 }
 
@@ -34,17 +38,25 @@
 -(void)startToFetchFilmList{
 	if ([OFReachability isConnectedToInternet]) {
 		[delegateFilm setWaitingMessage:@"正在获取电影列表"];
-		[delegateFilm displayActivityView];
+		
+		if (changeFlag) {
+			[DSActivityView currentActivityView].activityLabel.text = @"正在获取电影列表";
+		}else {
+			[delegateFilm displayActivityView];
+		}
 		
 		NSString* url = [NSString stringWithFormat:@"%@", @"/MTBM/httppost"];
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 		
 		[dict setValue:@"hotfilm" forKey:@"METHOD"];
 		
-		[dict setValue:[cityInfo cityId] forKey:@"CITYID"];
+		[dict setValue:[[[YXTSettings instance] cityInfo] cityId] forKey:@"CITYID"];
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
 		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
 		
+		if (self.filmIdSet) {
+			[dict setValue:filmIdSet forKey:@"FILMIDSET"];
+		}
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];

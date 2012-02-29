@@ -31,8 +31,6 @@
 		self.useBezelStyle = YES;
 		//self.coverNavBar = YES;
 		self.waitingWidth = 150.0;
-		
-		
 	
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(displayRequestFailedActivityView) 

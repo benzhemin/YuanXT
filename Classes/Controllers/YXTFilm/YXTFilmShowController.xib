@@ -50,7 +50,7 @@
 							<object class="IBUIImageView" id="676258039">
 								<reference key="NSNextResponder" ref="1071024680"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrame">{{14, 6}, {42, 39}}</string>
+								<string key="NSFrame">{{10, 12}, {42, 39}}</string>
 								<reference key="NSSuperview" ref="1071024680"/>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -62,7 +62,7 @@
 							<object class="IBUILabel" id="785740854">
 								<reference key="NSNextResponder" ref="1071024680"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{64, 3}, {243, 21}}</string>
+								<string key="NSFrame">{{60, 9}, {243, 21}}</string>
 								<reference key="NSSuperview" ref="1071024680"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -90,7 +90,7 @@
 							<object class="IBUILabel" id="1010143260">
 								<reference key="NSNextResponder" ref="1071024680"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{64, 25}, {236, 21}}</string>
+								<string key="NSFrame">{{60, 31}, {236, 21}}</string>
 								<reference key="NSSuperview" ref="1071024680"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -248,7 +248,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>YXTFilmShowController</string>
 					<string>UIResponder</string>
-					<string>{{152, 388}, {320, 460}}</string>
+					<string>{{175, 368}, {320, 460}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -284,7 +284,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">14</int>
+			<int key="maxID">16</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

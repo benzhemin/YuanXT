@@ -472,17 +472,19 @@ enum TreeNodeLeafTag {
 
 	}else {
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		
+		[self.imageQueue cancelAllOperations];
 		YXTDistrict *district = [self.cinemaDistrictList objectAtIndex:distIndex];
 		YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];
 		
-		
-		YXTFilmShowController *filmShowController = [[YXTFilmShowController alloc] init];
 		if (self.filmInfo) {
-			filmShowController.filmInfo = filmInfo;
+			
+		}else {
+			YXTFilmShowController *filmShowController = [[YXTFilmShowController alloc] init];
+			filmShowController.cinemaInfo = cinemaInfo;
+			[self.navigationController pushViewController:filmShowController animated:YES];
+			[filmShowController release];
 		}
-		filmShowController.cinemaInfo = cinemaInfo;
-		[self.navigationController pushViewController:filmShowController animated:YES];
-		[filmShowController release];
 	}
 }
 
@@ -499,6 +501,7 @@ enum TreeNodeLeafTag {
 
 -(IBAction)popToPreviousViewController:(id)sender{
 	if (self.filmInfo != nil) {
+		[self.imageQueue cancelAllOperations];
 		[self.navigationController popViewControllerAnimated:YES];
 	}
 }
@@ -522,7 +525,6 @@ enum TreeNodeLeafTag {
 	[cinimaDetailBtn setBackgroundImage:cinimaDetailImg forState:UIControlStateNormal];
 	[cinimaDetailBtn addTarget:self action:@selector(pressCitySwitchBtn) forControlEvents:UIControlEventTouchUpInside];
 
-	
 	UIBarButtonItem *cinemaDetailItem = [[UIBarButtonItem alloc] initWithCustomView:cinimaDetailBtn];	
 	self.navigationItem.rightBarButtonItem = cinemaDetailItem;
 	[cinemaDetailItem release];

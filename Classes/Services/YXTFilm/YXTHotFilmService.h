@@ -15,6 +15,9 @@
 @interface YXTHotFilmService : NSObject<OFXPResponseJSON> {
 	YXTBasicViewController *delegateFilm;
 	YXTCityInfo *cityInfo;
+	NSMutableString *filmIdSet;
+	
+	BOOL changeFlag;
 	
 	OFXPRequest *mReq;
 	NSMutableArray *filmList;
@@ -23,7 +26,10 @@
 @property (nonatomic, assign) YXTBasicViewController *delegateFilm;
 @property (nonatomic, retain) NSMutableArray *filmList;
 
+@property (nonatomic, assign) BOOL changeFlag;
+
 @property (nonatomic, retain) YXTCityInfo *cityInfo;
+@property (nonatomic, copy) NSMutableString *filmIdSet;
 
 -(void)startToFetchFilmList;
 

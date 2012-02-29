@@ -9,6 +9,7 @@
 #import "YXTCinemaDetailController.h"
 #import "YXTCinemaService.h"
 #import "YXTNavigationBarView.h"
+#import "YXTShowService.h"
 
 @implementation YXTCinemaDetailController
 
@@ -46,10 +47,14 @@
 		}else {
 			onlineOrderLabel.text = @"不支持在线选座";
 		}
-
 	}
-	
 	[super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+	YXTShowService *showService = [[YXTShowService alloc] init];
+	[showService startToFetchShowList];
+	
 }
 
 -(IBAction)popToPreviousViewController:(id)sender{

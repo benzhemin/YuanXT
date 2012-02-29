@@ -17,6 +17,7 @@
 
 @synthesize cinemaInfo, filmInfo;
 @synthesize delegateFilm, showList;
+@synthesize changeFlag;
 
 -(void)dealloc{
 	[cinemaInfo release];
@@ -24,6 +25,13 @@
 	[showList release];
 	
 	[super dealloc];
+}
+
+-(id)init{
+	if (self=[super init]) {
+		self.showList = [[NSMutableArray alloc] initWithCapacity:20];
+	}
+	return self;
 }
 
 -(void)startToFetchShowList{
@@ -41,6 +49,8 @@
 		if (self.filmInfo) {
 			[dict setValue:filmInfo.filmId forKey:@"FILMID"];
 		}
+		
+		[dict setValue:cinemaInfo.cinemaId forKey:@"CINEMAID"];
 		
 		NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
 		NSDate *todayDate = [NSDate date];
@@ -71,8 +81,6 @@
 		int recordCount = [[bodyDict objectForKey:@"RECORDAMOUNT"] intValue];
         NSArray *showListBody = [bodyDict objectForKey:@"SHOWLIST"];
 		
-		NSLog(@"%@", showListBody);
-		
 		if ([showListBody count] != 0 && recordCount != 0) {
 			for (NSDictionary *showDict in showListBody) {
 				YXTShowInfo *showInfo = [[YXTShowInfo alloc] init];
@@ -96,8 +104,13 @@
 				[showList addObject:showInfo];
 				[showInfo release];
 			}
-			[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
-			[delegateFilm performSelectorOnMainThread:@selector(popUpCityChangePicker:) withObject:showList waitUntilDone:NO];
+			if (changeFlag) {
+				
+			}else {
+				[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
+			}
+			
+			[delegateFilm performSelectorOnMainThread:@selector(showListFetchSucceed:) withObject:showList waitUntilDone:NO];
 		}else {
 			[delegateFilm setResponseMessage:@"目前暂无数据"];
 			[delegateFilm performSelectorOnMainThread:@selector(displayChangeActivityView) withObject:nil waitUntilDone:NO];

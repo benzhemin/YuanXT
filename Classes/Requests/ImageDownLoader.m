@@ -22,7 +22,9 @@
 		
 		[self processImageData];
 		
-		[(NSObject *)reqDelegate performSelectorOnMainThread:@selector(imageRequestFinished:) withObject:self.userInfo waitUntilDone:NO];
+		if (reqDelegate != nil) {
+			[(NSObject *)reqDelegate performSelectorOnMainThread:@selector(imageRequestFinished:) withObject:self.userInfo waitUntilDone:NO];
+		}
 	}
 }
 
