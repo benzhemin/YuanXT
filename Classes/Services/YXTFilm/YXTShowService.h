@@ -19,6 +19,8 @@
 	YXTBasicViewController *delegateFilm;
 	NSMutableArray *showList;
 	
+	NSString *dateStr;
+	
 	BOOL changeFlag;
 	
 	OFXPRequest *mReq;
@@ -28,6 +30,7 @@
 @property (nonatomic, retain) YXTFilmInfo *filmInfo;
 @property (nonatomic, assign) YXTBasicViewController *delegateFilm;
 @property (nonatomic, retain) NSMutableArray *showList;
+@property (nonatomic, copy) NSString *dateStr;
 @property (nonatomic, assign) BOOL changeFlag;
 
 -(void)startToFetchShowList;

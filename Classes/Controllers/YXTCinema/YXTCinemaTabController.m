@@ -249,7 +249,7 @@ enum TreeNodeLeafTag {
 			if (district.isExpand) {
 				cur = cur + [district.cinemaList count];
 			}
-			cur = cur++;
+			cur++;
 			distIndex++;
 		}else if (cur == index) {
 			if (distIndexParam != NULL) {

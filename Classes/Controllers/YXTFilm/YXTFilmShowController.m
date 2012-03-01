@@ -26,7 +26,7 @@ enum Film_Table_Tag {
 @synthesize hotFilmService, showService;
 @synthesize imageQueue;
 @synthesize filmList, showList, filmImageList;
-@synthesize todayStr, tomorrowStr;
+@synthesize dateSegImgView, selectDateStr, todayStr, tomorrowStr;
 @synthesize todayLabel, tomorrowLabel;
 @synthesize filmBgImg;
 @synthesize contentView, filmTableView;
@@ -42,6 +42,8 @@ enum Film_Table_Tag {
 	[showList release];
 	[filmImageList release];
 	
+	[dateSegImgView release];
+	[selectDateStr release];
 	[todayStr release];
 	[tomorrowStr release];
 	
@@ -61,6 +63,8 @@ enum Film_Table_Tag {
 -(id)init{
 	if (self=[super init]) {
 		self.hidesBottomBarWhenPushed = YES;
+		
+		dateTag = today_tag;
 		
 		self.imageQueue = [[ASINetworkQueue alloc] init];
 		[imageQueue go];
@@ -82,6 +86,7 @@ enum Film_Table_Tag {
 	naviView.delegateCtrl = self;
 	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
 	[naviView addTitleLabelToBar:self.cinemaInfo.cinemaName];
+	[naviView addFunctionIconToBar:[UIImage imageNamed:@"btn_yingyuanxiangqing.png"]];
 	[self.view addSubview:naviView];
 	[naviView release];	
 }
@@ -91,6 +96,8 @@ enum Film_Table_Tag {
 	
 	[self setUpCurrentDate];
 	[self setUpNaviBarView];
+	
+	selectDateStr = todayStr;
 	
 	UIImage *cinemaPicImg = [UIImage imageNamed:@"cinema_pic.png"];
 	if (cinemaInfo!=nil && cinemaInfo.cinemaImage!=nil) {
@@ -106,7 +113,7 @@ enum Film_Table_Tag {
 	
 	self.filmBgImg = [UIImage imageNamed:@"bg_movie.png"];
 	
-	self.filmTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 90, 300, 300) style:UITableViewStyleGrouped];
+	self.filmTableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 90, 310, 300) style:UITableViewStyleGrouped];
 	[self.filmTableView setDelegate:self];
 	[self.filmTableView setDataSource:self];
 	[self.filmTableView setBackgroundColor:[UIColor clearColor]];
@@ -114,11 +121,10 @@ enum Film_Table_Tag {
 	[self.contentView addSubview:filmTableView];
 	
 	CGRect dateSegFrame = CGRectMake(57, 60, 206, 31);
-	UIImageView *dateSegImgView = [[UIImageView alloc] initWithFrame:dateSegFrame];
+	self.dateSegImgView = [[UIImageView alloc] initWithFrame:dateSegFrame];
 	[dateSegImgView setUserInteractionEnabled:YES];
 	[dateSegImgView setImage:[UIImage imageNamed:@"tab1.png"]];
 	[self.contentView addSubview:dateSegImgView];
-	[dateSegImgView release];
 	
 	CGRect todayFrame = CGRectMake(12, 2, 80, 25);
 	self.todayLabel = [[UILabel alloc] initWithFrame:todayFrame];
@@ -140,14 +146,54 @@ enum Film_Table_Tag {
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+	[self requestShowService];
+	
+	[super viewWillAppear:YES];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+	UITouch *touch = [touches anyObject];
+	
+	if ([touch view] == dateSegImgView) {
+		//点击左半部分
+		CGPoint touchPoint = [touch locationInView:dateSegImgView];
+		if (touchPoint.x < [dateSegImgView bounds].size.width/2) {
+			if (dateTag == tomorrow_tag) {
+				[self.imageQueue cancelAllOperations];
+				dateTag = today_tag;
+				self.selectDateStr = todayStr;
+				 
+				todayLabel.textColor = [UIColor whiteColor];
+				tomorrowLabel.textColor = [UIColor blackColor];
+				[dateSegImgView setImage:[UIImage imageNamed:@"tab1.png"]];
+				
+				[self requestShowService];
+			}
+		}else {
+			if (dateTag == today_tag) {
+				[self.imageQueue cancelAllOperations];
+				dateTag = tomorrow_tag;
+				self.selectDateStr = tomorrowStr;
+				
+				todayLabel.textColor = [UIColor blackColor];
+				tomorrowLabel.textColor = [UIColor whiteColor];
+				[dateSegImgView setImage:[UIImage imageNamed:@"tab2.png"]];
+				
+				[self requestShowService];
+			}
+		}
+	}
+}
+
+
+-(void)requestShowService{
 	self.showService = [[YXTShowService alloc] init];
+	showService.dateStr = selectDateStr;
 	showService.changeFlag = YES;
 	showService.delegateFilm = self;
 	showService.cinemaInfo = self.cinemaInfo;
 	
 	[showService startToFetchShowList];
-	
-	[super viewWillAppear:YES];
 }
 
 -(void)showListFetchSucceed:(NSMutableArray *)showListParam{
@@ -196,6 +242,11 @@ enum Film_Table_Tag {
 	}
 	
 	[pool drain];
+}
+
+-(void)requestHasNoCount{
+	self.filmList = [[NSMutableArray alloc] initWithCapacity:0];
+	[self performSelectorOnMainThread:@selector(refreshFilmTableView) withObject:nil waitUntilDone:NO];
 }
 
 -(void)imageRequestFinished:(NSDictionary *)userInfo{
@@ -368,7 +419,8 @@ enum Film_Table_Tag {
 	[self.navigationController popViewControllerAnimated:YES];	
 }
 
--(void)pushToCinemaDetailController{
+-(IBAction)funcToViewController:(id)sender{
+	[self.imageQueue cancelAllOperations];
 	YXTCinemaDetailController *cinemaDetailController = [[YXTCinemaDetailController alloc] init];
 	cinemaDetailController.cinemaInfo = cinemaInfo;
 	[self.navigationController pushViewController:cinemaDetailController animated:YES];

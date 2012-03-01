@@ -16,6 +16,11 @@
 @class YXTFilmInfo;
 @class ASINetworkQueue;
 
+enum Film_Date_Tag {
+	today_tag = 1,
+	tomorrow_tag
+};
+
 @interface YXTFilmShowController : YXTBasicViewController <ImageDownLoadDelegate, UITableViewDelegate, UITableViewDataSource>{
 	YXTCinemaInfo *cinemaInfo;
 	
@@ -24,12 +29,15 @@
 	
 	ASINetworkQueue *imageQueue;
 	
+	enum Film_Date_Tag dateTag;
+	
 	NSMutableArray *filmList;
 	NSMutableArray *showList;
 	//retain download film image
 	NSMutableArray *filmImageList;
 
-	
+	UIImageView *dateSegImgView;
+	NSString *selectDateStr;
 	NSString *todayStr;
 	NSString *tomorrowStr;
 	UILabel *todayLabel;
@@ -55,6 +63,8 @@
 
 @property (nonatomic, retain) NSMutableArray *filmImageList;
 
+@property (nonatomic, retain) UIImageView *dateSegImgView; 
+@property (nonatomic, copy) NSString *selectDateStr;
 @property (nonatomic, copy) NSString *todayStr;
 @property (nonatomic, copy) NSString *tomorrowStr;
 
@@ -67,5 +77,7 @@
 @property (nonatomic, retain) IBOutlet UIImageView *cinemaImgView;
 @property (nonatomic, retain) IBOutlet UILabel *addressLabel;
 @property (nonatomic, retain) IBOutlet UILabel *onlineOrderLabel;
+
+-(void)requestShowService;
 
 @end

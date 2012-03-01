@@ -52,8 +52,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-	YXTShowService *showService = [[YXTShowService alloc] init];
-	[showService startToFetchShowList];
+	
 	
 }
 

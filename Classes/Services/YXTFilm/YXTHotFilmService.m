@@ -104,7 +104,10 @@
 			[delegateFilm performSelectorOnMainThread:@selector(removeActivityView) withObject:nil waitUntilDone:NO];
 			[delegateFilm performSelectorInBackground:@selector(fetchFilmListSucceed:) withObject:self.filmList];
 		}else {
-			[delegateFilm setResponseMessage:@"目前暂无数据"];
+			[delegateFilm setResponseMessage:@"热映电影目前暂无数据"];
+			if ([delegateFilm respondsToSelector:@selector(requestHasNoCount)]) {
+				[delegateFilm performSelectorOnMainThread:@selector(requestHasNoCount) withObject:nil waitUntilDone:NO];
+			}
 			[delegateFilm performSelectorOnMainThread:@selector(displayChangeActivityView) withObject:nil waitUntilDone:NO];
 		}
 	}

@@ -17,12 +17,15 @@
 
 @synthesize cinemaInfo, filmInfo;
 @synthesize delegateFilm, showList;
+@synthesize dateStr;
 @synthesize changeFlag;
 
 -(void)dealloc{
 	[cinemaInfo release];
 	[filmInfo release];
 	[showList release];
+	
+	[dateStr release];
 	
 	[super dealloc];
 }
@@ -52,12 +55,7 @@
 		
 		[dict setValue:cinemaInfo.cinemaId forKey:@"CINEMAID"];
 		
-		NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
-		NSDate *todayDate = [NSDate date];
-		[formatter setDateFormat:@"yyyy-MM-dd"];
-		NSString *todayStr = [NSString stringWithFormat:@"%@", [formatter stringFromDate:todayDate]];
-		
-		[dict setValue:todayStr forKey:@"SHOWDATE"];
+		[dict setValue:dateStr forKey:@"SHOWDATE"];
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];
@@ -112,7 +110,10 @@
 			
 			[delegateFilm performSelectorOnMainThread:@selector(showListFetchSucceed:) withObject:showList waitUntilDone:NO];
 		}else {
-			[delegateFilm setResponseMessage:@"目前暂无数据"];
+			if ([delegateFilm respondsToSelector:@selector(requestHasNoCount)]) {
+				[delegateFilm performSelectorOnMainThread:@selector(requestHasNoCount) withObject:nil waitUntilDone:NO];
+			}
+			[delegateFilm setResponseMessage:@"场次信息目前暂无数据"];
 			[delegateFilm performSelectorOnMainThread:@selector(displayChangeActivityView) withObject:nil waitUntilDone:NO];
 		}
 	}

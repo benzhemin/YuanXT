@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F21760314FF4EB4009C6256 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F21760214FF4EB4009C6256 /* libz.1.2.5.dylib */; };
 		0F2E945214E4CE6E00F091A4 /* OFReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945114E4CE6E00F091A4 /* OFReachability.m */; };
 		0F2E945B14E4CEF000F091A4 /* YXTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945A14E4CEF000F091A4 /* YXTSettings.m */; };
 		0F2E967914E50D5500F091A4 /* YXTBasicTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E967814E50D5500F091A4 /* YXTBasicTabController.m */; };
@@ -101,7 +102,6 @@
 		CE82371014E39B9800412576 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82370F14E39B9800412576 /* CFNetwork.framework */; };
 		CE82371214E39BA200412576 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82371114E39BA200412576 /* SystemConfiguration.framework */; };
 		CE82371414E39BAA00412576 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82371314E39BAA00412576 /* MobileCoreServices.framework */; };
-		CE82371614E39BBB00412576 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82371514E39BBB00412576 /* libz.1.2.3.dylib */; };
 		CE82377114E39CE800412576 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375114E39CE800412576 /* ASIAuthenticationDialog.m */; };
 		CE82377214E39CE800412576 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375314E39CE800412576 /* ASIFormDataRequest.m */; };
 		CE82377314E39CE800412576 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CE82375514E39CE800412576 /* ASIHTTPRequest.m */; };
@@ -123,6 +123,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F21760214FF4EB4009C6256 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		0F2E945014E4CE6E00F091A4 /* OFReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFReachability.h; sourceTree = "<group>"; };
 		0F2E945114E4CE6E00F091A4 /* OFReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OFReachability.m; sourceTree = "<group>"; };
 		0F2E945914E4CEF000F091A4 /* YXTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSettings.h; sourceTree = "<group>"; };
@@ -290,6 +291,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F21760314FF4EB4009C6256 /* libz.1.2.5.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -299,7 +301,6 @@
 				CE82371014E39B9800412576 /* CFNetwork.framework in Frameworks */,
 				CE82371214E39BA200412576 /* SystemConfiguration.framework in Frameworks */,
 				CE82371414E39BAA00412576 /* MobileCoreServices.framework in Frameworks */,
-				CE82371614E39BBB00412576 /* libz.1.2.3.dylib in Frameworks */,
 				CE82379914E39FCA00412576 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,6 +512,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				0F21760214FF4EB4009C6256 /* libz.1.2.5.dylib */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				CE82374E14E39CE800412576 /* ThirdPart */,
@@ -882,8 +884,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YuanXT_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "YuanXT-Info.plist";
 				PRODUCT_NAME = YuanXT;
+				SDKROOT = iphoneos5.0;
 			};
 			name = Debug;
 		};
@@ -894,6 +898,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YuanXT_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "YuanXT-Info.plist";
 				PRODUCT_NAME = YuanXT;
 				VALIDATE_PRODUCT = YES;
@@ -906,6 +911,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -919,6 +925,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
