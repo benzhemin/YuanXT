@@ -478,6 +478,7 @@ enum TreeNodeLeafTag {
 		YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];
 		
 		if (self.filmInfo) {
+            
 			
 		}else {
 			YXTFilmShowController *filmShowController = [[YXTFilmShowController alloc] init];

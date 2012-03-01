@@ -343,7 +343,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 	self.citySheet = [[YXTActionSheet alloc] initWithHeight:234.0f WithSheetTitle:@"" delegateClass:self 
 											   confirm:@selector(selectCityConfirm:) cancel:@selector(selectCityCancel:)];
 	
-	self.cityPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 200, 225)];
+	self.cityPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, citySheet.bounds.size.width, 225)];
 	
 	cityPicker.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	cityPicker.showsSelectionIndicator = YES;	// note this is default to NO

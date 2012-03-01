@@ -2,8 +2,8 @@
 //  VlionActionSheet.h
 //  TestActionSheet
 //
-//  Created by Cui Lionel on 10-12-8.
-//  Copyright 2010 vlion. All rights reserved.
+//  Created by benzhemin on 10-12-8.
+//  Copyright 2010 ideal. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
