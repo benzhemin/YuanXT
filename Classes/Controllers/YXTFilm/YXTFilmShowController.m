@@ -155,7 +155,6 @@ enum Film_Table_Tag {
 	UITouch *touch = [touches anyObject];
 	
 	if ([touch view] == dateSegImgView) {
-		//点击左半部分
 		CGPoint touchPoint = [touch locationInView:dateSegImgView];
 		if (touchPoint.x < [dateSegImgView bounds].size.width/2) {
 			if (dateTag == tomorrow_tag) {
