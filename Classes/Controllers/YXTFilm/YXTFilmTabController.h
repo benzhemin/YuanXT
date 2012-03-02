@@ -28,6 +28,8 @@
 @interface YXTFilmTabController : YXTBasicTabController<UIScrollViewDelegate, ImageDownLoadDelegate>{
 	YXTCinemaTabController *cinemaController;
 	BOOL refreshFisrtTiem;
+    
+    YXTFilmInfo *curFilmInfo;
 	
 	YXTLocationService *location;
 	YXTHotFilmService *hotFilm;
@@ -44,6 +46,8 @@
 	
 	YXTNavigationBarView *naviView;
 	
+    UIView *contentView;
+    
 	UIScrollView *filmScrollView;
 	NSMutableArray *filmImageViewList;
 	
@@ -57,6 +61,8 @@
 
 @property (nonatomic, retain) YXTCinemaTabController *cinemaController;
 
+@property (nonatomic, retain) YXTFilmInfo *curFilmInfo;
+
 @property (nonatomic, retain) YXTLocationService *location;
 @property (nonatomic, retain) YXTHotFilmService *hotFilm;
 
@@ -69,6 +75,7 @@
 @property (nonatomic, retain) YXTPickerDelegate *cityPickerDelegate;
 
 @property (nonatomic, retain) YXTNavigationBarView *naviView;
+@property (nonatomic, retain) IBOutlet UIView *contentView;
 
 @property (nonatomic, retain) IBOutlet UIScrollView *filmScrollView;
 @property (nonatomic, retain) NSMutableArray *filmImageViewList;
@@ -82,6 +89,7 @@
 
 -(void)refreshHotFilmView;
 -(IBAction)pressFilmImgBtn:(id)sender;
+-(IBAction)pressBuyFilmTicket:(id)sender;
 
 @end
 

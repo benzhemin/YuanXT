@@ -15,7 +15,9 @@
 @interface YXTFilmDetailController : YXTBasicViewController <ImageDownLoadDelegate>{
 	YXTFilmInfo *filmInfo;
 	ImageDownLoader *imgLoader;
-	
+    
+	UIView *contentView;
+    
 	UIImageView *filmImageView;
 	
 	UILabel *filmNameLabel;
@@ -32,6 +34,8 @@
 
 @property (nonatomic, retain) YXTFilmInfo *filmInfo;
 @property (nonatomic, retain) ImageDownLoader *imgLoader;
+
+@property (nonatomic, retain) IBOutlet UIView *contentView;
 
 @property (nonatomic, retain) IBOutlet UIImageView *filmImageView;
 

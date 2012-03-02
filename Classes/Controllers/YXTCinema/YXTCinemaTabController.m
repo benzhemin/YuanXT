@@ -16,6 +16,7 @@
 #import "YXTHotFilmService.h"
 #import "YXTCinemaDetailController.h"
 #import "YXTFilmShowController.h"
+#import "YXTOrderShowController.h"
 
 enum TreeNodeLeafTag {
 	//node bg img
@@ -96,6 +97,7 @@ enum TreeNodeLeafTag {
 	[naviView release];
 	
 	self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, self.view.bounds.size.width, tableFrame.size.height)];
+    [self.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:246.0/255.0 blue:248.0/255.0 alpha:1.0]];
 	[self.view addSubview:contentView];
 	
 	tableFrame.size.width = self.view.bounds.size.width;
@@ -115,11 +117,12 @@ enum TreeNodeLeafTag {
 	self.nodeDownImage = [UIImage imageNamed:@"icon_down.png"];
 	
 	self.cinemaPicImage = [UIImage imageNamed:@"cinema_pic.png"];
-	[super viewDidLoad];
+
+	[self refreshCinemaListTable];
+    [super viewDidLoad];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-	[self refreshCinemaListTable];
 	[super viewWillAppear:animated];
 }
 
@@ -478,7 +481,11 @@ enum TreeNodeLeafTag {
 		YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];
 		
 		if (self.filmInfo) {
-            
+            YXTOrderShowController *orderShowController = [[YXTOrderShowController alloc] init];
+            orderShowController.cinemaInfo = cinemaInfo;
+            orderShowController.filmInfo = filmInfo;
+            [self.navigationController pushViewController:orderShowController animated:YES];
+            [orderShowController release];
 			
 		}else {
 			YXTFilmShowController *filmShowController = [[YXTFilmShowController alloc] init];

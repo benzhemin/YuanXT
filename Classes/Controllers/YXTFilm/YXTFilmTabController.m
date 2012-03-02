@@ -31,13 +31,13 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 @implementation YXTFilmTabController
 
-@synthesize cinemaController;
+@synthesize cinemaController, curFilmInfo;
 
 @synthesize location, hotFilm, filmList, imageQueue, filmImageList;
 
 @synthesize citySheet, cityPicker, cityPickerDelegate;
 
-@synthesize naviView, filmScrollView, filmImageViewList;
+@synthesize naviView, contentView, filmScrollView, filmImageViewList;
 
 @synthesize filmNameLabel, directorLabel, mainPerformerLabel;
 @synthesize filmClassLabel, areaLabel, ycTimeLabel;
@@ -45,6 +45,9 @@ static CGFloat begin_decelerate_offsetx = 0;
 - (void)dealloc {
 	[location release];
 	[hotFilm release];
+    
+    [cinemaController release];
+    [curFilmInfo release];
 	
 	[filmList release];
 	[imageQueue release];
@@ -55,6 +58,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[cityPickerDelegate release];
 	
 	[naviView release];
+    [contentView release];
 	
 	[filmScrollView release];
 	[filmImageViewList release];
@@ -93,6 +97,8 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[naviView addCitySwitchIconToBar];
 	[naviView addTitleLabelToBar:@"正在热映"];
 	[self.view addSubview:naviView];
+    
+    [self.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:246.0/255.0 blue:248.0/255.0 alpha:1.0]];
 	
 	refreshFisrtTiem = YES;
 
@@ -177,14 +183,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 		}
 	}
 	[image release];
-}
-
--(IBAction)pressFilmImgBtn:(id)sender{
-	int index = ((UIView *)sender).tag;
-	YXTFilmInfo *filmInfo = [self.filmList objectAtIndex:(index%[filmList count])];
-	self.cinemaController = [[YXTCinemaTabController alloc] init];
-	cinemaController.filmInfo = filmInfo;
-	[self.navigationController pushViewController:cinemaController animated:YES];
 }
 
 -(void)layoutFilmScroll{
@@ -374,7 +372,22 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[citySheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+-(IBAction)pressFilmImgBtn:(id)sender{
+	int index = ((UIView *)sender).tag;
+	YXTFilmInfo *filmInfo = [self.filmList objectAtIndex:(index%[filmList count])];
+	self.cinemaController = [[YXTCinemaTabController alloc] init];
+	cinemaController.filmInfo = filmInfo;
+	[self.navigationController pushViewController:cinemaController animated:YES];
+}
+
+-(IBAction)pressBuyFilmTicket:(id)sender{
+    self.cinemaController = [[YXTCinemaTabController alloc] init];
+    cinemaController.filmInfo = self.curFilmInfo;
+    [self.navigationController pushViewController:cinemaController animated:YES];
+}
+
 -(void)updateFilmInfo:(YXTFilmInfo *)filmInfo{
+    self.curFilmInfo = filmInfo;
 	self.filmNameLabel.text = filmInfo.filmName;
 	self.directorLabel.text = filmInfo.director;
 	self.mainPerformerLabel.text = filmInfo.mainPerformer;

@@ -15,6 +15,7 @@
 #import "YXTHotFilmService.h"
 #import "ASINetworkQueue.h"
 #import "OFReachability.h"
+#import "YXTOrderShowController.h"
 
 enum Film_Table_Tag {
 	film_imgview_tag = 1
@@ -96,6 +97,8 @@ enum Film_Table_Tag {
 	
 	[self setUpCurrentDate];
 	[self setUpNaviBarView];
+    
+    [self.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:246.0/255.0 blue:248.0/255.0 alpha:1.0]];
 	
 	selectDateStr = todayStr;
 	
@@ -141,12 +144,11 @@ enum Film_Table_Tag {
 	tomorrowLabel.text = tomorrowStr;
 	[dateSegImgView addSubview:tomorrowLabel];
 	
-	
+	[self requestShowService];
 	[super viewDidLoad];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-	[self requestShowService];
 	
 	[super viewWillAppear:YES];
 }
@@ -263,6 +265,15 @@ enum Film_Table_Tag {
 
 -(void)refreshFilmTableView{
 	[self.filmTableView reloadData];
+    
+    [self performSelector:@selector(scrollTableToTop) withObject:nil afterDelay:0.2];
+}
+
+-(void)scrollTableToTop{
+    if ([self.filmList count] > 0) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [filmTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
 }
 
 
@@ -312,6 +323,7 @@ enum Film_Table_Tag {
 	
 	CGRect filmNameFrame = CGRectMake(80, 5, 180, 20);
 	UILabel *filmNameLabel = [[UILabel alloc] initWithFrame:filmNameFrame];
+    [filmNameLabel setBackgroundColor:[UIColor clearColor]];
 	filmNameLabel.font = [UIFont boldSystemFontOfSize:14];
 	filmNameLabel.textColor = [UIColor colorWithRed:0.06 green:0.55 blue:0.78 alpha:1.0];
 	filmNameLabel.text = filmInfo.filmName;
@@ -320,6 +332,7 @@ enum Film_Table_Tag {
 	
 	CGRect directorStrFrame = CGRectMake(80, 25, 40, 20);
 	UILabel *directorStrLabel = [[UILabel alloc] initWithFrame:directorStrFrame];
+    [directorStrLabel setBackgroundColor:[UIColor clearColor]];
 	directorStrLabel.font = [UIFont boldSystemFontOfSize:13];
 	directorStrLabel.text = @"导演：";
 	[cell.contentView addSubview:directorStrLabel];
@@ -327,6 +340,7 @@ enum Film_Table_Tag {
 	
 	CGRect filmDirectorFrame = CGRectMake(120, 25, 160, 20);
 	UILabel *dirctorLabel = [[UILabel alloc] initWithFrame:filmDirectorFrame];
+    [dirctorLabel setBackgroundColor:[UIColor clearColor]];
 	dirctorLabel.font = [UIFont boldSystemFontOfSize:13];
 	dirctorLabel.textColor = [UIColor colorWithRed:0.06 green:0.55 blue:0.78 alpha:1.0];
 	dirctorLabel.text = filmInfo.director;
@@ -335,6 +349,7 @@ enum Film_Table_Tag {
 	
 	CGRect perfomerStrFrame = CGRectMake(80, 45, 40, 20);
 	UILabel *perfomerStrLabel = [[UILabel alloc] initWithFrame:perfomerStrFrame];
+    [perfomerStrLabel setBackgroundColor:[UIColor clearColor]];
 	perfomerStrLabel.font = [UIFont boldSystemFontOfSize:13];
 	perfomerStrLabel.text = @"主演：";
 	[cell.contentView addSubview:perfomerStrLabel];
@@ -342,6 +357,7 @@ enum Film_Table_Tag {
 	
 	CGRect perfomerFrame = CGRectMake(120, 45, 160, 20);
 	UILabel *perfomerLabel = [[UILabel alloc] initWithFrame:perfomerFrame];
+    [perfomerLabel setBackgroundColor:[UIColor clearColor]];
 	perfomerLabel.font = [UIFont boldSystemFontOfSize:13];
 	perfomerLabel.textColor = [UIColor colorWithRed:0.06 green:0.55 blue:0.78 alpha:1.0];
 	perfomerLabel.text = filmInfo.mainPerformer;
@@ -350,6 +366,7 @@ enum Film_Table_Tag {
 	
 	CGRect classStrFrame = CGRectMake(80, 65, 40, 20);
 	UILabel *classStrLabel = [[UILabel alloc] initWithFrame:classStrFrame];
+    [classStrLabel setBackgroundColor:[UIColor clearColor]];
 	classStrLabel.font = [UIFont boldSystemFontOfSize:13];
 	classStrLabel.text = @"类型：";
 	[cell.contentView addSubview:classStrLabel];
@@ -357,6 +374,7 @@ enum Film_Table_Tag {
 	
 	CGRect classFrame = CGRectMake(120, 65, 160, 20);
 	UILabel *classLabel = [[UILabel alloc] initWithFrame:classFrame];
+    [classLabel setBackgroundColor:[UIColor clearColor]];
 	classLabel.font = [UIFont boldSystemFontOfSize:13];
 	classLabel.textColor = [UIColor colorWithRed:0.06 green:0.55 blue:0.78 alpha:1.0];
 	classLabel.text = filmInfo.filmClass;
@@ -371,6 +389,7 @@ enum Film_Table_Tag {
 	
 	CGRect filmCountFrame = CGRectMake(90, 85, 30, 20);
 	UILabel *filmCountLabel = [[UILabel alloc] initWithFrame:filmCountFrame];
+    [filmCountLabel setBackgroundColor:[UIColor clearColor]];
 	filmCountLabel.font = [UIFont boldSystemFontOfSize:13];
 	filmCountLabel.textColor = [UIColor colorWithRed:1.0 green:0.49 blue:0.00 alpha:1.0];
 	filmCountLabel.text = filmCountStr;
@@ -379,6 +398,7 @@ enum Film_Table_Tag {
 	
 	CGRect filmPlainFrame = CGRectMake(111, 85, 120, 20);
 	UILabel *filmPlainLabel = [[UILabel alloc] initWithFrame:filmPlainFrame];
+    [filmPlainLabel setBackgroundColor:[UIColor clearColor]];
 	filmPlainLabel.font = [UIFont boldSystemFontOfSize:13];
 	filmPlainLabel.text = @"家影院上映";
 	[cell.contentView addSubview:filmPlainLabel];
@@ -386,6 +406,7 @@ enum Film_Table_Tag {
 	
 	CGRect showCountFrame = CGRectMake(177, 85, 30, 20);
 	UILabel *showCountLabel = [[UILabel alloc] initWithFrame:showCountFrame];
+    [showCountLabel setBackgroundColor:[UIColor clearColor]];
 	showCountLabel.font = [UIFont boldSystemFontOfSize:13];
 	showCountLabel.textColor = [UIColor colorWithRed:1.0 green:0.49 blue:0.00 alpha:1.0];
 	showCountLabel.text = showCountStr;
@@ -394,6 +415,7 @@ enum Film_Table_Tag {
 	
 	CGRect filmPlainFrame2 = CGRectMake(204, 85, 30, 20);
 	UILabel *filmPlainLabel2 = [[UILabel alloc] initWithFrame:filmPlainFrame2];
+    [filmPlainLabel2 setBackgroundColor:[UIColor clearColor]];
 	filmPlainLabel2.font = [UIFont boldSystemFontOfSize:13];
 	filmPlainLabel2.text = @"场";
 	[cell.contentView addSubview:filmPlainLabel2];
@@ -405,7 +427,16 @@ enum Film_Table_Tag {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	
+    int index = indexPath.row;
+    
+    YXTFilmInfo *filmInfo = [self.filmList objectAtIndex:index];
+    
+	YXTOrderShowController *orderShowController = [[YXTOrderShowController alloc] init];
+    orderShowController.cinemaInfo = self.cinemaInfo;
+    orderShowController.filmInfo = filmInfo;
+    
+    [self.navigationController pushViewController:orderShowController animated:YES];
+    [orderShowController release];
 }
 
 #define FILM_TABLE_HEIGHT 112.0

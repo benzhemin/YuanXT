@@ -13,10 +13,13 @@
 
 @implementation YXTCinemaDetailController
 
+@synthesize contentView;
 @synthesize cinemaInfo;
 @synthesize addressLabel, cinemaBusLineLabel, onlineOrderLabel;
 
 - (void)dealloc {
+    [contentView release];
+    
 	[cinemaInfo release];
 	
 	[addressLabel release];
@@ -38,6 +41,8 @@
 	}
 	[self.view addSubview:naviView];
 	[naviView release];
+    
+    [self.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:246.0/255.0 blue:248.0/255.0 alpha:1.0]];
 	
 	if (self.cinemaInfo != nil) {
 		addressLabel.text = self.cinemaInfo.address;

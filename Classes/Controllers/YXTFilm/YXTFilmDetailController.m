@@ -14,7 +14,7 @@
 
 @synthesize filmInfo, imgLoader;
 
-@synthesize filmImageView;
+@synthesize contentView, filmImageView;
 
 @synthesize filmNameLabel;
 @synthesize directorLabel, mainPerformerLabel, durationLabel;
@@ -25,6 +25,8 @@
 -(void)dealloc{
 	[filmInfo release];
 	[imgLoader release];
+    
+    [contentView release];
 	[filmImageView release];
 	
 	[filmNameLabel release];
@@ -49,6 +51,8 @@
 	[naviView addTitleLabelToBar:@"电影详情"];
 	[self.view addSubview:naviView];
 	[naviView release];
+    
+    [self.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:246.0/255.0 blue:248.0/255.0 alpha:1.0]];
 	
 	[descriptionText setFont:[UIFont boldSystemFontOfSize:15.0f]];
 	

@@ -23,6 +23,7 @@
 	
 	UIView *contentView;
 	
+    UIImage *seatImg;
 	UITableView *orderTableView;
 	
 	UILabel *cinemaLabel;
@@ -49,6 +50,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *cinemaLabel;
 @property (nonatomic, retain) IBOutlet UILabel *filmLabel;
 
+@property (nonatomic, retain) UIImage *seatImg;
 @property (nonatomic, retain) UITableView *orderTableView;
 
 @property (nonatomic, retain) UIImageView *dateSegImgView; 
@@ -59,6 +61,7 @@
 @property (nonatomic, retain) UILabel *todayLabel;
 @property (nonatomic, retain) UILabel *tomorrowLabel;
 
+-(IBAction)pushToFilmDetailController:(id)sender;
 -(void)requestShowService;
 
 @end
