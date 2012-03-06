@@ -118,11 +118,11 @@ enum TreeNodeLeafTag {
 	
 	self.cinemaPicImage = [UIImage imageNamed:@"cinema_pic.png"];
 
-	[self refreshCinemaListTable];
     [super viewDidLoad];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [self refreshCinemaListTable];
 	[super viewWillAppear:animated];
 }
 
@@ -132,6 +132,9 @@ enum TreeNodeLeafTag {
 	}
 	
 	self.cinimaService = [[YXTCinemaService alloc] init];
+	if (self.filmInfo != nil) {
+		cinimaService.filmInfo = filmInfo;
+	}
 	[cinimaService setDelegateCinema:self];
 	[cinimaService startToFetchCinimaList];
 }

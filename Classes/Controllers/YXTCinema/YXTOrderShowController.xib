@@ -83,10 +83,9 @@
 							<object class="IBUILabel" id="15966684">
 								<reference key="NSNextResponder" ref="525007473"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{17, 41}, {97, 21}}</string>
+								<string key="NSFrame">{{17, 41}, {213, 21}}</string>
 								<reference key="NSSuperview" ref="525007473"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -273,6 +272,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">YXTOrderShowController</string>
 					<string key="superclassName">YXTBasicViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">pushToFilmDetailController:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">pushToFilmDetailController:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">pushToFilmDetailController:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">

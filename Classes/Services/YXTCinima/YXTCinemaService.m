@@ -13,10 +13,12 @@
 
 @implementation YXTCinemaService
 
-@synthesize delegateCinema, rawCinemaList, cinemaDistrictList;;
+@synthesize delegateCinema, filmInfo, rawCinemaList, cinemaDistrictList;;
 
 -(void)dealloc{
 	[mReq release];
+	
+	[filmInfo release];
 	self.rawCinemaList = nil;
 	[cinemaDistrictList release];
 	[super dealloc];
@@ -44,6 +46,15 @@
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
 		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
 		
+		if (self.filmInfo) {
+			[dict setValue:filmInfo.filmId forKey:@"FILMID"];
+            
+            NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            NSDate *todayDate = [NSDate date];
+            NSString *todayStr = [NSString stringWithFormat:@"%@", [formatter stringFromDate:todayDate]];
+            [dict setValue:todayStr forKey:@"SHOWDATE"];
+		}
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];

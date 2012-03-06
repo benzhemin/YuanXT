@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YXTBasicViewController.h"
 
 @class YXTCinemaInfo;
 
-@interface YXTCinemaDetailController : UIViewController {
+@interface YXTCinemaDetailController : YXTBasicViewController {
 	YXTCinemaInfo *cinemaInfo;
 	
     UIView *contentView;

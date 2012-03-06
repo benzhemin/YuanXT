@@ -13,6 +13,7 @@
 #import "YXTShowService.h"
 #import "YXTCinemaDetailController.h"
 #import "YXTFilmDetailController.h"
+#import "YXTSeatSelController.h"
 
 @implementation YXTOrderShowController
 
@@ -172,6 +173,9 @@
 	showService.dateStr = selectDateStr;
 	showService.delegateFilm = self;
 	showService.cinemaInfo = self.cinemaInfo;
+    if (self.filmInfo) {
+        showService.filmInfo = filmInfo;
+    }
 	
 	[showService startToFetchShowList];
 }
@@ -290,10 +294,24 @@
     return cell;
 }
 
+-(void)pushToSeatSelController:(int)index{
+    YXTShowInfo *showInfo = [self.showList objectAtIndex:index];
+    
+    YXTSeatSelController *seatSelController = [[YXTSeatSelController alloc] init];
+    seatSelController.showInfo = showInfo;
+    
+    [self.navigationController pushViewController:seatSelController animated:YES];
+    [seatSelController release];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	
+    if (indexPath.row == 0) {
+        return;
+    }
+
+	[self pushToSeatSelController:(indexPath.row-1)];
 }
 
 #define ORDER_TABLE_HEIGHT 44.0
@@ -314,10 +332,7 @@
 }
 
 -(IBAction)pressChooseSeat:(id)sender{
-    int index = ((UIView *)sender).tag;
-    YXTShowInfo *showInfo = [self.showList objectAtIndex:index];
-    
-    
+    [self pushToSeatSelController:((UIView *)sender).tag];
 }
 
 -(IBAction)funcToViewController:(id)sender{

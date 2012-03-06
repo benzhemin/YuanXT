@@ -10,16 +10,21 @@
 #import "OFXPRequest.h"
 #import "YXTBasicViewController.h"
 #import "BasicInfo.h"
+#import "YXTHotFilmService.h"
 
 @interface YXTCinemaService : NSObject <OFXPResponseJSON>{
 	YXTBasicViewController *delegateCinema;
 	OFXPRequest *mReq;
+	YXTFilmInfo *filmInfo;
 	
 	NSMutableArray *rawCinemaList;
 	NSMutableArray *cinemaDistrictList;
 }
 
 @property (nonatomic, assign) YXTBasicViewController *delegateCinema;
+
+@property (nonatomic, retain) YXTFilmInfo *filmInfo;
+
 @property (nonatomic, retain) NSMutableArray *rawCinemaList;
 @property (nonatomic, retain) NSMutableArray *cinemaDistrictList;
 
