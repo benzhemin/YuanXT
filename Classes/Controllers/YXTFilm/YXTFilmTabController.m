@@ -25,7 +25,7 @@ static const CGFloat startX = 0;
 static const CGFloat width = 101;
 static const CGFloat height = 145;
 static const CGFloat span = 8;
-static int factor = 3;
+static int factor = 5;
 
 static CGFloat begin_decelerate_offsetx = 0; 
 

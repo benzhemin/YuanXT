@@ -98,6 +98,11 @@
 		0F7AC0F6150458B000630E36 /* input3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F7AC0F4150458B000630E36 /* input3@2x.png */; };
 		0FE8922315046DBF00F8AFF7 /* YXTSeatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE8922215046DBF00F8AFF7 /* YXTSeatService.m */; };
 		0FE892281504AC2600F8AFF7 /* YXTSeatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE892271504AC2600F8AFF7 /* YXTSeatButton.m */; };
+		0FE8922C1505B32E00F8AFF7 /* YXTTicketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE8922A1505B32C00F8AFF7 /* YXTTicketController.m */; };
+		0FE8922D1505B32E00F8AFF7 /* YXTTicketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FE8922B1505B32D00F8AFF7 /* YXTTicketController.xib */; };
+		0FE892351505DC7400F8AFF7 /* YXTOrderService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE892341505DC7400F8AFF7 /* YXTOrderService.m */; };
+		0FE8923D1505F1B300F8AFF7 /* btn_zhifu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FE8923B1505F1B300F8AFF7 /* btn_zhifu.png */; };
+		0FE8923E1505F1B300F8AFF7 /* btn_zhifu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FE8923C1505F1B300F8AFF7 /* btn_zhifu@2x.png */; };
 		0FFA546214FF5E1400A9787A /* YXTOrderShowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFA546114FF5E1400A9787A /* YXTOrderShowController.xib */; };
 		0FFA548D14FF649900A9787A /* btn_gray_yingpianxiangqing.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FFA548B14FF649900A9787A /* btn_gray_yingpianxiangqing.png */; };
 		0FFA548E14FF649900A9787A /* btn_gray_yingpianxiangqing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FFA548C14FF649900A9787A /* btn_gray_yingpianxiangqing@2x.png */; };
@@ -261,6 +266,13 @@
 		0FE8922215046DBF00F8AFF7 /* YXTSeatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTSeatService.m; sourceTree = "<group>"; };
 		0FE892261504AC2600F8AFF7 /* YXTSeatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSeatButton.h; sourceTree = "<group>"; };
 		0FE892271504AC2600F8AFF7 /* YXTSeatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTSeatButton.m; sourceTree = "<group>"; };
+		0FE892291505B32B00F8AFF7 /* YXTTicketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTTicketController.h; sourceTree = "<group>"; };
+		0FE8922A1505B32C00F8AFF7 /* YXTTicketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTTicketController.m; sourceTree = "<group>"; };
+		0FE8922B1505B32D00F8AFF7 /* YXTTicketController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXTTicketController.xib; sourceTree = "<group>"; };
+		0FE892331505DC7400F8AFF7 /* YXTOrderService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTOrderService.h; sourceTree = "<group>"; };
+		0FE892341505DC7400F8AFF7 /* YXTOrderService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTOrderService.m; sourceTree = "<group>"; };
+		0FE8923B1505F1B300F8AFF7 /* btn_zhifu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_zhifu.png; sourceTree = "<group>"; };
+		0FE8923C1505F1B300F8AFF7 /* btn_zhifu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_zhifu@2x.png"; sourceTree = "<group>"; };
 		0FFA546114FF5E1400A9787A /* YXTOrderShowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YXTOrderShowController.xib; sourceTree = "<group>"; };
 		0FFA548B14FF649900A9787A /* btn_gray_yingpianxiangqing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_gray_yingpianxiangqing.png; sourceTree = "<group>"; };
 		0FFA548C14FF649900A9787A /* btn_gray_yingpianxiangqing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_gray_yingpianxiangqing@2x.png"; sourceTree = "<group>"; };
@@ -497,6 +509,8 @@
 				0FFA548C14FF649900A9787A /* btn_gray_yingpianxiangqing@2x.png */,
 				0F3CDDF814F20CC10010A1EF /* btn_yingyuanxiangqing.png */,
 				0F3CDDF914F20CC10010A1EF /* btn_yingyuanxiangqing@2x.png */,
+				0FE8923B1505F1B300F8AFF7 /* btn_zhifu.png */,
+				0FE8923C1505F1B300F8AFF7 /* btn_zhifu@2x.png */,
 				0F3CE09A14F3C24C0010A1EF /* node_bg_t.png */,
 				0F3CE09B14F3C24C0010A1EF /* node_bg_t@2x.png */,
 				0F3CE09614F3C2090010A1EF /* node_xuanzhong_bg_t.png */,
@@ -532,6 +546,8 @@
 				0F3CDE4414F2444A0010A1EF /* YXTCinemaService.m */,
 				0FE8922115046DBF00F8AFF7 /* YXTSeatService.h */,
 				0FE8922215046DBF00F8AFF7 /* YXTSeatService.m */,
+				0FE892331505DC7400F8AFF7 /* YXTOrderService.h */,
+				0FE892341505DC7400F8AFF7 /* YXTOrderService.m */,
 			);
 			path = YXTCinima;
 			sourceTree = "<group>";
@@ -550,6 +566,9 @@
 				0F0A46151504528B009CADE7 /* YXTSeatSelController.h */,
 				0F0A46161504528C009CADE7 /* YXTSeatSelController.m */,
 				0F0A46171504528D009CADE7 /* YXTSeatSelController.xib */,
+				0FE892291505B32B00F8AFF7 /* YXTTicketController.h */,
+				0FE8922A1505B32C00F8AFF7 /* YXTTicketController.m */,
+				0FE8922B1505B32D00F8AFF7 /* YXTTicketController.xib */,
 			);
 			path = YXTCinema;
 			sourceTree = "<group>";
@@ -930,6 +949,9 @@
 				0F7AC0F21504588A00630E36 /* btn_tijiao@2x.png in Resources */,
 				0F7AC0F5150458B000630E36 /* input3.png in Resources */,
 				0F7AC0F6150458B000630E36 /* input3@2x.png in Resources */,
+				0FE8922D1505B32E00F8AFF7 /* YXTTicketController.xib in Resources */,
+				0FE8923D1505F1B300F8AFF7 /* btn_zhifu.png in Resources */,
+				0FE8923E1505F1B300F8AFF7 /* btn_zhifu@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -984,6 +1006,8 @@
 				0F0A46181504528E009CADE7 /* YXTSeatSelController.m in Sources */,
 				0FE8922315046DBF00F8AFF7 /* YXTSeatService.m in Sources */,
 				0FE892281504AC2600F8AFF7 /* YXTSeatButton.m in Sources */,
+				0FE8922C1505B32E00F8AFF7 /* YXTTicketController.m in Sources */,
+				0FE892351505DC7400F8AFF7 /* YXTOrderService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

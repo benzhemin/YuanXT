@@ -11,6 +11,8 @@
 #import "YXTShowService.h"
 #import "YXTNavigationBarView.h"
 #import "YXTSeatButton.h"
+#import "YXTOrderService.h"
+#import "YXTTicketController.h"
 
 static int row_max = 0;
 static int col_max = 0;
@@ -18,6 +20,7 @@ static int col_max = 0;
 @implementation YXTSeatSelController
 
 @synthesize seatService;
+@synthesize orderService;
 @synthesize showInfo;
 @synthesize seatList, pickList;
 @synthesize totalCounts;
@@ -28,6 +31,8 @@ static int col_max = 0;
 
 -(void)dealloc{
     [seatService release];
+    [orderService release];
+    
     [showInfo release];
     
     [seatList release];
@@ -100,6 +105,7 @@ static int col_max = 0;
     
     self.totalCounts = 0;
     self.pickList = [[NSMutableArray alloc] initWithCapacity:4];
+    self.seatSelLabel.text = @"";
     
     [self performSelector:@selector(layOutSeatScroll) withObject:nil afterDelay:0.2];
 }
@@ -156,16 +162,6 @@ static int col_max = 0;
     [self removeActivityView];
 }
 
-
--(IBAction)popToPreviousViewController:(id)sender{
-	[self.navigationController popViewControllerAnimated:YES];
-}
-
--(IBAction)pressSubmitSeat:(id)sender{
-    
-    
-}
-
 -(void)selectCinemaSeat:(YXTSeatInfo *)seatInfo{
     if (totalCounts >= SEL_MAX_SEAT) {
         NSLog(@"encounter error!");
@@ -195,6 +191,33 @@ static int col_max = 0;
     }
     
     seatSelLabel.text = pickStr;
+}
+
+-(IBAction)popToPreviousViewController:(id)sender{
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
+-(IBAction)pressSubmitSeat:(id)sender{
+    if ([pickList count] > 0) {
+        self.orderService = [[YXTOrderService alloc] init];
+        orderService.delegateSeat = self;
+        orderService.pickList = self.pickList;
+        orderService.showSeqNo = showInfo.showSeqNo;
+        [orderService startToFetchFilmOrder];
+    }else{
+        self.waitingMessage = @"请选座位后提交";
+        [self displayActivityView];
+        [self performSelector:@selector(removeActivityView) withObject:nil afterDelay:1.5];
+    }
+}
+
+-(void)fetchFilmOrderSucceed:(YXTOrderInfo *)orderInfoParam{
+    YXTTicketController *ticketController = [[YXTTicketController alloc] init];
+    ticketController.showInfo = self.showInfo;
+    ticketController.orderInfo = orderInfoParam;
+    ticketController.pickList = self.pickList;
+    [self.navigationController pushViewController:ticketController animated:YES];
+    [ticketController release];
 }
 
 - (void)viewDidUnload

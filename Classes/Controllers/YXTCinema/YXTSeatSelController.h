@@ -10,12 +10,15 @@
 #import "YXTSeatButton.h"
 
 @class YXTSeatService;
+@class YXTOrderService;
 @class YXTShowInfo;
 @class YXTSeatInfo;
 
 
 @interface YXTSeatSelController : YXTBasicViewController{
     YXTSeatService *seatService;
+    YXTOrderService *orderService;
+    
     YXTShowInfo *showInfo;
     
     NSMutableArray *seatList;
@@ -34,6 +37,7 @@
 	UIScrollView *scrollview;
 }
 @property (nonatomic, retain) YXTSeatService *seatService;
+@property (nonatomic, retain) YXTOrderService *orderService;
 
 @property (nonatomic, retain) YXTShowInfo *showInfo;
 
