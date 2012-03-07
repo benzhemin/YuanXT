@@ -47,7 +47,10 @@
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    //CGPoint point = [self convertPoint:self.center toView:[self superview]];
+    
     if (curStatus == seat_can_select) {
+        
         if (delegateSeat.totalCounts >= SEL_MAX_SEAT) {
             [delegateSeat setWaitingMessage:@"最多只能选4个座位"];
             [delegateSeat displayActivityView];
@@ -58,6 +61,7 @@
         [delegateSeat selectCinemaSeat:seatInfo];
         
     }else if (curStatus == seat_already_select){
+
         if (delegateSeat.totalCounts <=0) {
             NSLog(@"count error");
         }

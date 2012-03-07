@@ -83,7 +83,7 @@
 }
 
 -(IBAction)popToPreviousViewController:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(IBAction)funcToViewController:(id)sender{

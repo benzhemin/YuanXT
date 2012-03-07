@@ -13,9 +13,10 @@
 @class YXTOrderService;
 @class YXTShowInfo;
 @class YXTSeatInfo;
+@class YXTSeatBackView;
 
 
-@interface YXTSeatSelController : YXTBasicViewController{
+@interface YXTSeatSelController : YXTBasicViewController<UIScrollViewDelegate>{
     YXTSeatService *seatService;
     YXTOrderService *orderService;
     
@@ -27,6 +28,7 @@
     NSMutableArray *pickList;
     
 	UIView *contentView;
+    YXTSeatBackView *seatBackView;
 	
 	UILabel *cinemaNameLabel;
 	UILabel *hallNameLabel;
@@ -47,6 +49,7 @@
 @property (nonatomic, assign) int totalCounts;
 
 @property (nonatomic, retain) IBOutlet UIView *contentView;
+@property (nonatomic, retain) YXTSeatBackView *seatBackView;
 
 @property (nonatomic, retain) IBOutlet UILabel *cinemaNameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *hallNameLabel;
@@ -61,5 +64,7 @@
 
 -(void)selectCinemaSeat:(YXTSeatInfo *)seatInfo;
 -(void)deSelectCinemaSeat:(YXTSeatInfo *)seatInfo;
+
+- (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center;
 
 @end

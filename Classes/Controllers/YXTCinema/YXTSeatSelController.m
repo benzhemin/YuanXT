@@ -13,6 +13,7 @@
 #import "YXTSeatButton.h"
 #import "YXTOrderService.h"
 #import "YXTTicketController.h"
+#import "YXTSeatBackView.h"
 
 static int row_max = 0;
 static int col_max = 0;
@@ -25,6 +26,7 @@ static int col_max = 0;
 @synthesize seatList, pickList;
 @synthesize totalCounts;
 @synthesize contentView;
+@synthesize seatBackView;
 @synthesize cinemaNameLabel, hallNameLabel, showDateLabel;
 @synthesize seatSelLabel;
 @synthesize scrollview;
@@ -39,6 +41,7 @@ static int col_max = 0;
     [pickList release];
     
 	[contentView release];
+    [seatBackView release];
 	
 	[cinemaNameLabel release];
 	[hallNameLabel release];
@@ -67,6 +70,9 @@ static int col_max = 0;
     cinemaNameLabel.text = showInfo.cinemaName;
     hallNameLabel.text = showInfo.hallName;
     showDateLabel.text = [NSString stringWithFormat:@"%@ %@", showInfo.showDate, showInfo.showTime];
+    
+    [scrollview setMinimumZoomScale:1.0];
+    [scrollview setMaximumZoomScale:1.5];
     
     [super viewDidLoad];
 }
@@ -116,21 +122,37 @@ static int col_max = 0;
 #define SEAT_WIDTH 11
 #define SEAT_HEIGHT 18
 
-#define SEAT_NUMLABEL_OFFSET 4
+#define SEAT_NUMLABEL_OFFSET 5
 
 #define SCROLL_WIDTH_SPAN 20
 #define SCROLL_HEIGHT_SPAN 20
 
+#define ZOOM_VIEW_TAG 100
 
+#define ZOOM_MAXIMUM 1.7
+#define ZOOM_MINIMUM 0.7
 
 -(void)layOutSeatScroll{
     //self.scrollView.delegate = self;
 	self.scrollview.pagingEnabled = NO;
 	self.scrollview.showsHorizontalScrollIndicator = YES;
     self.scrollview.showsVerticalScrollIndicator = YES;
+    self.scrollview.delegate = self;
+	
+	for (UIView *view in [self.scrollview subviews]) {
+		[view removeFromSuperview];
+	}
     
-    self.scrollview.contentSize = CGSizeMake(INDEX_OFFSET+SEAT_WIDTH*col_max+COL_SPACING*(col_max+1)+SCROLL_WIDTH_SPAN, 
+    CGSize contentSize = CGSizeMake(INDEX_OFFSET+SEAT_WIDTH*col_max+COL_SPACING*(col_max+1)+SCROLL_WIDTH_SPAN, 
                                              SEAT_HEIGHT*row_max+ROW_SPACING*(row_max+1)+SCROLL_HEIGHT_SPAN);
+    
+    self.scrollview.contentSize = contentSize;
+    self.seatBackView = [[YXTSeatBackView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
+    seatBackView.tag = ZOOM_VIEW_TAG;
+    
+    //float minimumScale = [scrollview frame].size.width  / [seatBackView frame].size.width;
+    [scrollview setMinimumZoomScale:ZOOM_MINIMUM];
+    [scrollview setMaximumZoomScale:ZOOM_MAXIMUM];
     
     int rowNum = -1;
     for (YXTSeatInfo *seatInfo in self.seatList) {
@@ -140,12 +162,12 @@ static int col_max = 0;
             
             if (seatInfo.rowNum != rowNum) {
                 rowNum = seatInfo.rowNum;
-                UILabel *rowLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, rownum*ROW_SPACING+(rownum-1)*SEAT_HEIGHT-SEAT_NUMLABEL_OFFSET, 15, SEAT_HEIGHT+SEAT_NUMLABEL_OFFSET)];
+                UILabel *rowLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, rownum*ROW_SPACING+(rownum-1)*SEAT_HEIGHT-SEAT_NUMLABEL_OFFSET, 20, SEAT_HEIGHT+SEAT_NUMLABEL_OFFSET)];
                 [rowLabel setBackgroundColor:[UIColor lightGrayColor]];
                 rowLabel.font = [UIFont boldSystemFontOfSize:14];
                 rowLabel.text = seatInfo.rowId;
                 rowLabel.textAlignment = UITextAlignmentCenter;
-                [self.scrollview addSubview:rowLabel];
+                [self.seatBackView addSubview:rowLabel];
                 [rowLabel release];
             }
         
@@ -154,12 +176,46 @@ static int col_max = 0;
             seatBtn.delegateSeat = self;
             seatBtn.frame = CGRectMake(INDEX_OFFSET+colnum*COL_SPACING+(colnum-1)*SEAT_WIDTH, 
                                        rownum*ROW_SPACING+(rownum-1)*SEAT_HEIGHT, SEAT_WIDTH, SEAT_HEIGHT);
-            [self.scrollview addSubview:seatBtn];
+            [self.seatBackView addSubview:seatBtn];
             [seatBtn release];
         }
     }
     
+    [self.scrollview addSubview:seatBackView];
+    
     [self removeActivityView];
+}
+
+#pragma mark UIScrollViewDelegate methods
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return [scrollview viewWithTag:ZOOM_VIEW_TAG];
+}
+
+
+- (void)handleSeatTap:(CGPoint) point {
+    // double tap zooms in
+    float newScale = [scrollview zoomScale] * ZOOM_MAXIMUM;
+    CGRect zoomRect = [self zoomRectForScale:newScale withCenter:point];
+    [scrollview zoomToRect:zoomRect animated:YES];
+}
+
+#pragma mark Utility methods
+- (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center {
+    
+    CGRect zoomRect;
+    
+    // the zoom rect is in the content view's coordinates. 
+    //    At a zoom scale of 1.0, it would be the size of the imageScrollView's bounds.
+    //    As the zoom scale decreases, so more content is visible, the size of the rect grows.
+    zoomRect.size.height = [scrollview frame].size.height / scale;
+    zoomRect.size.width  = [scrollview frame].size.width  / scale;
+    
+    // choose an origin so as to get the right center.
+    zoomRect.origin.x    = center.x - (zoomRect.size.width  / 2.0);
+    zoomRect.origin.y    = center.y - (zoomRect.size.height / 2.0);
+    
+    return zoomRect;
 }
 
 -(void)selectCinemaSeat:(YXTSeatInfo *)seatInfo{
@@ -192,6 +248,7 @@ static int col_max = 0;
     
     seatSelLabel.text = pickStr;
 }
+
 
 -(IBAction)popToPreviousViewController:(id)sender{
 	[self.navigationController popViewControllerAnimated:YES];
