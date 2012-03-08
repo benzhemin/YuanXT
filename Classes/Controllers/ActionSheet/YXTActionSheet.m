@@ -3,7 +3,7 @@
 //  TestActionSheet
 //
 //  Created by benzhemin on 10-12-8.
-//  Copyright 2010 ideal. All rights reserved.
+//  Copyright 2010 Ideal Information Industry. All rights reserved.
 //
 
 #import "YXTActionSheet.h"

@@ -3,7 +3,7 @@
 //  YuanXT
 //
 //  Created by zhe zhang on 12-2-27.
-//  Copyright 2012 Ideal Information Industry. All rights reserved.
+//  Copyright 2012 benzhemin. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

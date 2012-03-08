@@ -2,8 +2,8 @@
 //  YXTOrderShowController.h
 //  YuanXT
 //
-//  Created by zhe zhang on 12-3-1.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by benzhemin on 12-3-1.
+//  Copyright (c) 2012年 Ideal Information Industry. All rights reserved.
 //
 
 #import "YXTBasicViewController.h"

@@ -3,7 +3,7 @@
 //  YuanXT
 //
 //  Created by zhe zhang on 12-3-5.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012年 Ideal Information Industry. All rights reserved.
 //
 
 #import "YXTSeatButton.h"
