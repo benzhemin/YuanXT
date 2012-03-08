@@ -9,7 +9,7 @@
 #import "YXTCinemaTabController.h"
 #import "YXTCinemaService.h"
 #import "YXTUIImageView.h"
-#import "ASINetworkQueue.h"
+#import "OFASINetworkQueue.h"
 #import "OFReachability.h"
 #import "YXTNavigationBarView.h"
 #import "YXTFilmDetailController.h"
@@ -60,7 +60,7 @@ enum TreeNodeLeafTag {
 		tableFrame.size.height = 396;
 		
 		self.hidesBottomBarWhenPushed = YES;
-		imageQueue = [[ASINetworkQueue alloc] init];
+		imageQueue = [[OFASINetworkQueue alloc] init];
 		[imageQueue go];
 	}
 	return self;
@@ -72,7 +72,7 @@ enum TreeNodeLeafTag {
 		tableFrame = CGRectZero;
 		tableFrame.size.height = 360;
 		
-		imageQueue = [[ASINetworkQueue alloc] init];
+		imageQueue = [[OFASINetworkQueue alloc] init];
 		[imageQueue go];
 	}
 	return self;

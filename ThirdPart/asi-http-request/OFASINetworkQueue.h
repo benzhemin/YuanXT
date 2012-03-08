@@ -6,11 +6,11 @@
 //  Copyright 2008-2009 All-Seeing Interactive. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "ASIHTTPRequestDelegate.h"
-#import "ASIProgressDelegate.h"
+#import <UIKit/UIKit.h>
+#import "OFASIHTTPRequestDelegate.h"
+#import "OFASIProgressDelegate.h"
 
-@interface ASINetworkQueue : NSOperationQueue <ASIProgressDelegate, ASIHTTPRequestDelegate, NSCopying> {
+@interface OFASINetworkQueue : NSOperationQueue <OFASIProgressDelegate, OFASIHTTPRequestDelegate, NSCopying> {
 	
 	// Delegate will get didFail + didFinish messages (if set)
 	id delegate;
@@ -88,8 +88,8 @@
 - (BOOL)isNetworkActive;
 
 
-@property (assign,setter=setUploadProgressDelegate:) id uploadProgressDelegate;
-@property (assign,setter=setDownloadProgressDelegate:) id downloadProgressDelegate;
+@property (assign, nonatomic, setter=setUploadProgressDelegate:) id uploadProgressDelegate;
+@property (assign, nonatomic, setter=setDownloadProgressDelegate:) id downloadProgressDelegate;
 
 @property (assign) SEL requestDidStartSelector;
 @property (assign) SEL requestDidReceiveResponseHeadersSelector;

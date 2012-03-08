@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class OFXPRequest, ASIHTTPRequest;
+@class OFXPRequest, OFASIHTTPRequest;
 
 @protocol OFXPResponseText <NSObject>
 - (void)onResponseText:(NSString*)body withResponseCode:(unsigned int)responseCode;
@@ -30,7 +30,7 @@
 	id<OFXPResponseText> mResponseText;
 	id<OFXPResponseData> mResponseData;
 	id<OFXPResponseJSON> mResponseJSON;
-	ASIHTTPRequest* mRequest;
+	OFASIHTTPRequest* mRequest;
 	NSString* mResponseAsString;
 	NSObject* mResponseAsJSON;
 	NSData* mResponseAsData;
@@ -83,6 +83,6 @@
 // Cancel the request
 - (void)cancel;
 
-@property (nonatomic, retain, readonly) ASIHTTPRequest* request;
+@property (nonatomic, retain, readonly) OFASIHTTPRequest* request;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ASIHTTPRequest.h"
+#import "OFASIHTTPRequest.h"
 #import "YXTBasicViewController.h"
 
 @protocol ImageDownLoadDelegate
@@ -17,7 +17,7 @@
 @end
 
 
-@interface ImageDownLoader : ASIHTTPRequest {
+@interface ImageDownLoader : OFASIHTTPRequest {
 	NSData *imgData;
 	id<ImageDownLoadDelegate> reqDelegate;
 }

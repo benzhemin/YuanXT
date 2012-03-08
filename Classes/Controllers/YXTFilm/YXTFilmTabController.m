@@ -152,7 +152,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 		[imageQueue cancelAllOperations];
 	}
     
-    self.imageQueue = [[[ASINetworkQueue alloc] init] autorelease];
+    self.imageQueue = [[[OFASINetworkQueue alloc] init] autorelease];
     
     self.filmImageList = [[[NSMutableArray alloc] initWithCapacity:20] autorelease];
 	

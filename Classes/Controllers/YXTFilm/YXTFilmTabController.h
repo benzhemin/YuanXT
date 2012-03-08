@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "YXTBasicTabController.h"
 #import "OFXPRequest.h"
-#import "ASINetworkQueue.h"
+#import "OFASINetworkQueue.h"
 #import "YXTUIImageView.h"
 #import "ImageDownLoader.h"
 
@@ -34,7 +34,7 @@
 	YXTHotFilmService *hotFilm;
 	
 	NSMutableArray *filmList;
-	ASINetworkQueue *imageQueue;
+	OFASINetworkQueue *imageQueue;
 	
 	//retain download film image
 	NSMutableArray *filmImageList;
@@ -64,7 +64,7 @@
 @property (nonatomic, retain) YXTHotFilmService *hotFilm;
 
 @property (nonatomic, retain) NSMutableArray *filmList;
-@property (nonatomic, retain) ASINetworkQueue *imageQueue;
+@property (nonatomic, retain) OFASINetworkQueue *imageQueue;
 @property (nonatomic, retain) NSMutableArray *filmImageList;
 
 @property (nonatomic, retain) YXTActionSheet *citySheet;

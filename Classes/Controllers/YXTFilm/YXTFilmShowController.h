@@ -14,7 +14,7 @@
 @class YXTShowService;
 @class YXTCinemaInfo;
 @class YXTFilmInfo;
-@class ASINetworkQueue;
+@class OFASINetworkQueue;
 
 enum Film_Date_Tag {
 	today_tag = 1,
@@ -27,7 +27,7 @@ enum Film_Date_Tag {
 	YXTShowService *showService;
 	YXTHotFilmService *hotFilmService;
 	
-	ASINetworkQueue *imageQueue;
+	OFASINetworkQueue *imageQueue;
 	
 	enum Film_Date_Tag dateTag;
 	
@@ -56,7 +56,7 @@ enum Film_Date_Tag {
 @property (nonatomic, retain) YXTHotFilmService *hotFilmService;
 @property (nonatomic, retain) YXTShowService *showService;
 
-@property (nonatomic, retain) ASINetworkQueue *imageQueue;
+@property (nonatomic, retain) OFASINetworkQueue *imageQueue;
 
 @property (nonatomic, retain) NSMutableArray *filmList;
 @property (nonatomic, retain) NSMutableArray *showList;

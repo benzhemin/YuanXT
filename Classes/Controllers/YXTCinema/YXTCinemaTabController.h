@@ -12,13 +12,13 @@
 
 @class YXTFilmInfo;
 @class YXTCinemaService;
-@class ASINetworkQueue;
+@class OFASINetworkQueue;
 
 @interface YXTCinemaTabController : YXTBasicTabController <UITableViewDelegate, UITableViewDataSource, ImageDownLoadDelegate> {
 	YXTFilmInfo *filmInfo;
 	YXTCinemaService *cinimaService;
 	
-	ASINetworkQueue *imageQueue;
+	OFASINetworkQueue *imageQueue;
 	
 	NSMutableArray *cinemaDistrictList;
 	
@@ -37,7 +37,7 @@
 @property (nonatomic, retain) YXTFilmInfo *filmInfo;
 @property (nonatomic, retain) YXTCinemaService *cinimaService;
 
-@property (nonatomic, retain) ASINetworkQueue *imageQueue;
+@property (nonatomic, retain) OFASINetworkQueue *imageQueue;
 
 @property (nonatomic, retain) NSMutableArray *cinemaDistrictList;
 

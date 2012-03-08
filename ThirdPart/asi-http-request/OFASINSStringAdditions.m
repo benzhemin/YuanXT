@@ -6,11 +6,11 @@
 //  Copyright 2008 All-Seeing Interactive. All rights reserved.
 //
 
-#import "ASINSStringAdditions.h"
+#import "OFASINSStringAdditions.h"
 
-@implementation NSString (CookieValueEncodingAdditions)
+@implementation NSString (OFCookieValueEncodingAdditions)
 
-- (NSString *)decodedCookieValue
+- (NSString *)ofdecodedCookieValue
 {
 	NSMutableString *s = [NSMutableString stringWithString:[self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	//Also swap plus signs for spaces
@@ -18,7 +18,7 @@
 	return [NSString stringWithString:s];
 }
 
-- (NSString *)encodedCookieValue
+- (NSString *)ofencodedCookieValue
 {
 	return [self stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (CookieValueEncodingAdditions)
+@interface NSString (OFCookieValueEncodingAdditions)
 
-- (NSString *)encodedCookieValue;
-- (NSString *)decodedCookieValue;
+- (NSString *)ofencodedCookieValue;
+- (NSString *)ofdecodedCookieValue;
 
 @end

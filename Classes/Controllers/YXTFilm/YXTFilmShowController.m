@@ -13,7 +13,7 @@
 #import "YXTNavigationBarView.h"
 #import "YXTShowService.h"
 #import "YXTHotFilmService.h"
-#import "ASINetworkQueue.h"
+#import "OFASINetworkQueue.h"
 #import "OFReachability.h"
 #import "YXTOrderShowController.h"
 
@@ -67,7 +67,7 @@ enum Film_Table_Tag {
 		
 		dateTag = today_tag;
 		
-		imageQueue = [[ASINetworkQueue alloc] init];
+		imageQueue = [[OFASINetworkQueue alloc] init];
 		[imageQueue go];
 	}
 	return self;

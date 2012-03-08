@@ -6,32 +6,32 @@
 //  Copyright 2009 All-Seeing Interactive. All rights reserved.
 //
 
-#import "ASIInputStream.h"
-#import "ASIHTTPRequest.h"
+#import "OFASIInputStream.h"
+#import "OFASIHTTPRequest.h"
 
 // Used to ensure only one request can read data at once
 static NSLock *readLock = nil;
 
-@implementation ASIInputStream
+@implementation OFASIInputStream
 
 + (void)initialize
 {
-	if (self == [ASIInputStream class]) {
+	if (self == [OFASIInputStream class]) {
 		readLock = [[NSLock alloc] init];
 	}
 }
 
-+ (id)inputStreamWithFileAtPath:(NSString *)path request:(ASIHTTPRequest *)request
++ (id)inputStreamWithFileAtPath:(NSString *)path request:(OFASIHTTPRequest *)request
 {
-	ASIInputStream *stream = [[[self alloc] init] autorelease];
+	OFASIInputStream *stream = [[[self alloc] init] autorelease];
 	[stream setRequest:request];
 	[stream setStream:[NSInputStream inputStreamWithFileAtPath:path]];
 	return stream;
 }
 
-+ (id)inputStreamWithData:(NSData *)data request:(ASIHTTPRequest *)request
++ (id)inputStreamWithData:(NSData *)data request:(OFASIHTTPRequest *)request
 {
-	ASIInputStream *stream = [[[self alloc] init] autorelease];
+	OFASIInputStream *stream = [[[self alloc] init] autorelease];
 	[stream setRequest:request];
 	[stream setStream:[NSInputStream inputStreamWithData:data]];
 	return stream;
@@ -49,8 +49,8 @@ static NSLock *readLock = nil;
 {
 	[readLock lock];
 	unsigned long toRead = len;
-	if ([ASIHTTPRequest isBandwidthThrottled]) {
-		toRead = [ASIHTTPRequest maxUploadReadLength];
+	if ([OFASIHTTPRequest isBandwidthThrottled]) {
+		toRead = [OFASIHTTPRequest maxUploadReadLength];
 		if (toRead > len) {
 			toRead = len;
 		} else if (toRead == 0) {
@@ -58,7 +58,7 @@ static NSLock *readLock = nil;
 		}
 		[request performThrottling];
 	}
-	[ASIHTTPRequest incrementBandwidthUsedInLastSecond:toRead];
+	[OFASIHTTPRequest incrementBandwidthUsedInLastSecond:toRead];
 	[readLock unlock];
 	return [stream read:buffer maxLength:toRead];
 }

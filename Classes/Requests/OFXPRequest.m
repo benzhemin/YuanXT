@@ -7,8 +7,8 @@
 //
 
 #import "OFXPRequest.h"
-#import "ASIHTTPRequest.h"
-#import "ASIFormDataRequest.h"
+#import "OFASIHTTPRequest.h"
+#import "OFASIFormDataRequest.h"
 #import "YXTSettings.h"
 #import "JSON.h"
 #import "YXTBasicViewController.h"
@@ -16,7 +16,7 @@
 
 @interface OFXPRequest ()
 
-@property (nonatomic, retain) ASIHTTPRequest* request;
+@property (nonatomic, retain) OFASIHTTPRequest* request;
 @property (nonatomic, retain) id<OFXPResponseText> responseText;
 @property (nonatomic, retain) id<OFXPResponseData> responseData;
 @property (nonatomic, retain) id<OFXPResponseJSON> responseJSON;
@@ -29,7 +29,7 @@
 
 @end
 
-@interface ExtendedGetRequest : ASIHTTPRequest <ExtendedRequest>{
+@interface ExtendedGetRequest : OFASIHTTPRequest <ExtendedRequest>{
     OFXPRequest* xpRequest;
 }
 @end
@@ -45,7 +45,7 @@
 }
 @end
 
-@interface ExtendedFormRequest : ASIFormDataRequest <ExtendedRequest>{
+@interface ExtendedFormRequest : OFASIFormDataRequest <ExtendedRequest>{
     OFXPRequest* xpRequest;
 }
 @end
@@ -109,13 +109,13 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 }
 
 @interface FormBuilder : NSObject<ArgBuilder>{
-	ASIFormDataRequest* request;
+	OFASIFormDataRequest* request;
 }
 
 - (void)addArgument:(id)arg forKey:(NSString*)key;
-+ (FormBuilder*)builderForRequest:(ASIFormDataRequest*)request;
++ (FormBuilder*)builderForRequest:(OFASIFormDataRequest*)request;
 
-@property (nonatomic, retain) ASIFormDataRequest* request;
+@property (nonatomic, retain) OFASIFormDataRequest* request;
 @end
 
 @implementation FormBuilder
@@ -124,7 +124,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 	[self.request addPostValue:arg forKey:key];
 }
 
-+ (FormBuilder*)builderForRequest:(ASIFormDataRequest*)request{
++ (FormBuilder*)builderForRequest:(OFASIFormDataRequest*)request{
 	FormBuilder* rv = [[self new] autorelease];
 	rv.request = request;
 	return rv;
@@ -172,16 +172,16 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 
 @synthesize path = mPath;
 
-- (void)setRequest:(ASIHTTPRequest*)request{
+- (void)setRequest:(OFASIHTTPRequest*)request{
 	// Cleanup existing
 	mRequest.delegate = nil;
-    [(ASIHTTPRequest<ExtendedRequest>*)mRequest setXPRequest:nil];
+    [(OFASIHTTPRequest<ExtendedRequest>*)mRequest setXPRequest:nil];
     [mRequest release];
 	
 	//setup new.    
 	mRequest = [request retain];
 	request.delegate = self;
-    [(ASIHTTPRequest<ExtendedRequest>*)mRequest setXPRequest:self];
+    [(OFASIHTTPRequest<ExtendedRequest>*)mRequest setXPRequest:self];
 }
 
 - (id)init{
@@ -203,7 +203,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 #pragma mark -
 
 - (void)genRequestWithURL:(NSURL*)url andASIClass:(Class)asiHttpRequestSubclass{
-    ASIHTTPRequest* req = [[asiHttpRequestSubclass alloc] initWithURL:url];
+    OFASIHTTPRequest* req = [[asiHttpRequestSubclass alloc] initWithURL:url];
 	// setup our config
 	req.timeOutSeconds = 20.f;
 	req.numberOfTimesToRetryOnTimeout = 2;
@@ -244,7 +244,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 	return path;
 }
 
-- (ASIHTTPRequest*)request{
+- (OFASIHTTPRequest*)request{
 	return mRequest;
 }
 
@@ -277,7 +277,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 + (id)putRequestWithPath:(NSString*)path andBody:(NSDictionary*)body{
 	OFXPRequest* req = [self requestWithPath:path andASIClass:[ExtendedFormRequest class]];
     req.request.requestMethod = @"PUT";
-	buildRoot([FormBuilder builderForRequest:(ASIFormDataRequest*)req->mRequest], body);
+	buildRoot([FormBuilder builderForRequest:(OFASIFormDataRequest*)req->mRequest], body);
 	return req;
 }
 
@@ -294,14 +294,14 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 	OFXPRequest* req = [self requestWithPath:[self embedQueryInPath:path andQuery:query] 
 								 andASIClass:[ExtendedFormRequest class]];
     req.request.requestMethod = @"POST";
-	buildRoot([FormBuilder builderForRequest:(ASIFormDataRequest*)req.request], body);
+	buildRoot([FormBuilder builderForRequest:(OFASIFormDataRequest*)req.request], body);
 	return req;
 }
 
 + (id)postRequestWithPath:(NSString*)path andBody:(NSDictionary*)body{
 	OFXPRequest* req = [self requestWithPath:path andASIClass:[ExtendedFormRequest class]];
     req.request.requestMethod = @"POST";
-	buildRoot([FormBuilder builderForRequest:(ASIFormDataRequest*)req.request], body);
+	buildRoot([FormBuilder builderForRequest:(OFASIFormDataRequest*)req.request], body);
 	return req;
 }
 
@@ -463,7 +463,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 }
 
 // This relies on -requestFinishedOnRequestThread being called first.
-- (void)requestFinished:(ASIHTTPRequest *)request{
+- (void)requestFinished:(OFASIHTTPRequest *)request{
 	if (401 == request.responseStatusCode ) {
 		//haven't authenticate
 		return;
@@ -477,7 +477,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 	self.request = nil;
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)request{
+- (void)requestFailed:(OFASIHTTPRequest *)request{
 	NSLog(@"request failed!");
 	[[NSNotificationCenter defaultCenter] postNotificationName:START_SHOW_REQUEST_FAILED_ERROR object:nil userInfo:nil];
 	// we're done here

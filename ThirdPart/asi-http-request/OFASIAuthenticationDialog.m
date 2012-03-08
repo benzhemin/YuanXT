@@ -1,42 +1,42 @@
 //
 //  ASIAuthenticationDialog.m
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  Part of OFASIHTTPRequest -> http://allseeing-i.com/OFASIHTTPRequest
 //
 //  Created by Ben Copsey on 21/08/2009.
 //  Copyright 2009 All-Seeing Interactive. All rights reserved.
 //
 
-#import "ASIAuthenticationDialog.h"
-#import "ASIHTTPRequest.h"
+#import "OFASIAuthenticationDialog.h"
+#import "OFASIHTTPRequest.h"
 
-ASIAuthenticationDialog *sharedDialog = nil;
-NSLock *dialogLock = nil;
+static OFASIAuthenticationDialog *sharedDialog = nil;
+static NSLock *dialogLock = nil;
 
-@interface ASIAuthenticationDialog ()
+@interface OFASIAuthenticationDialog ()
 - (void)show;
 @end
 
-@implementation ASIAuthenticationDialog
+@implementation OFASIAuthenticationDialog
 
 + (void)initialize
 {
-	if (self == [ASIAuthenticationDialog class]) {
+	if (self == [OFASIAuthenticationDialog class]) {
 		dialogLock = [[NSLock alloc] init];
 	}
 }
 
-+ (void)presentProxyAuthenticationDialogForRequest:(ASIHTTPRequest *)request
++ (void)presentProxyAuthenticationDialogForRequest:(OFASIHTTPRequest *)request
 {
 	[dialogLock lock];
 	[sharedDialog release];
 	sharedDialog = [[self alloc] init];
 	[sharedDialog setRequest:request];
-	[sharedDialog setType:ASIProxyAuthenticationType];
+	[sharedDialog setType:OFASIProxyAuthenticationType];
 	[sharedDialog show];
 	[dialogLock unlock];	
 }
 
-+ (void)presentAuthenticationDialogForRequest:(ASIHTTPRequest *)request
++ (void)presentAuthenticationDialogForRequest:(OFASIHTTPRequest *)request
 {
 	[dialogLock lock];
 	[sharedDialog release];
@@ -65,7 +65,7 @@ NSLock *dialogLock = nil;
 	// Setup the title (Couldn't figure out how to put this in the same toolbar as the buttons)
 	UIToolbar *titleBar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,30)] autorelease];
 	UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(10,0,300,30)] autorelease];
-	if ([self type] == ASIProxyAuthenticationType) {
+	if ([self type] == OFASIProxyAuthenticationType) {
 		[label setText:@"Login to this secure proxy server."];
 	} else {
 		[label setText:@"Login to this secure server."];
@@ -89,7 +89,7 @@ NSLock *dialogLock = nil;
 	[items addObject:backButton];
 	
 	label = [[[UILabel alloc] initWithFrame:CGRectMake(0,0,170,50)] autorelease];
-	if ([self type] == ASIProxyAuthenticationType) {
+	if ([self type] == OFASIProxyAuthenticationType) {
 		[label setText:[[self request] proxyHost]];
 	} else {
 		[label setText:[[[self request] url] host]];
@@ -129,7 +129,7 @@ NSLock *dialogLock = nil;
 	NSString *username = [[[[[[[self loginDialog] subviews] objectAtIndex:0] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] subviews] objectAtIndex:2] text];
 	NSString *password = [[[[[[[self loginDialog] subviews] objectAtIndex:0] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]] subviews] objectAtIndex:2] text];
 	
-	if ([self type] == ASIProxyAuthenticationType) {
+	if ([self type] == OFASIProxyAuthenticationType) {
 		[[self request] setProxyUsername:username];
 		[[self request] setProxyPassword:password];
 	} else {
@@ -138,10 +138,10 @@ NSLock *dialogLock = nil;
 	}
 	
 	// Handle NTLM domains
-	NSString *scheme = ([self type] == ASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
+	NSString *scheme = ([self type] == OFASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
 	if ([scheme isEqualToString:(NSString *)kCFHTTPAuthenticationSchemeNTLM]) {
 		NSString *domain = [[[[[[[self loginDialog] subviews] objectAtIndex:0] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] subviews] objectAtIndex:2] text];
-		if ([self type] == ASIProxyAuthenticationType) {
+		if ([self type] == OFASIProxyAuthenticationType) {
 			[[self request] setProxyDomain:domain];
 		} else {
 			[[self request] setDomain:domain];
@@ -155,7 +155,7 @@ NSLock *dialogLock = nil;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	NSString *scheme = ([self type] == ASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
+	NSString *scheme = ([self type] == OFASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
 	if ([scheme isEqualToString:(NSString *)kCFHTTPAuthenticationSchemeNTLM]) {
 		return 3;
 	}

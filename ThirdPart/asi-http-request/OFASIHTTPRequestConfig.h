@@ -1,6 +1,6 @@
 //
-//  ASIHTTPRequestConfig.h
-//  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
+//  OFASIHTTPRequestConfig.h
+//  Part of OFASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
 //
 //  Created by Ben Copsey on 14/12/2009.
 //  Copyright 2009 All-Seeing Interactive. All rights reserved.
@@ -50,6 +50,6 @@ This config option is not used for apps targeting Mac OS X
 */
 
 #ifndef REACHABILITY_20_API
-	#define REACHABILITY_20_API 1
+	#define REACHABILITY_20_API 0
 #endif
 

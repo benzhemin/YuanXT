@@ -28,7 +28,7 @@
 	}
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)request{
+- (void)requestFailed:(OFASIHTTPRequest *)request{
 	NSLog(@"request failed!");
 	[[NSNotificationCenter defaultCenter] postNotificationName:START_SHOW_REQUEST_FAILED_ERROR object:nil userInfo:nil];
 }

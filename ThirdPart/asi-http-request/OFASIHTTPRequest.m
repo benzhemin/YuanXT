@@ -1,5 +1,5 @@
 //
-//  ASIHTTPRequest.m
+//  OFASIHTTPRequest.m
 //
 //  Created by Ben Copsey on 04/10/2007.
 //  Copyright 2007-2010 All-Seeing Interactive. All rights reserved.
@@ -10,24 +10,24 @@
 //  Portions are based on the ImageClient example from Apple:
 //  See: http://developer.apple.com/samplecode/ImageClient/listing37.html
 
-#import "ASIHTTPRequest.h"
+#import "OFASIHTTPRequest.h"
 #import <zlib.h>
 #if TARGET_OS_IPHONE
-#import "Reachability.h"
-#import "ASIAuthenticationDialog.h"
+//#import "Reachability.h"
+#import "OFASIAuthenticationDialog.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #else
 #import <SystemConfiguration/SystemConfiguration.h>
 #endif
-#import "ASIInputStream.h"
+#import "OFASIInputStream.h"
 
 
 // Automatically set on build
-NSString *ASIHTTPRequestVersion = @"v1.6.2-14 2010-06-04";
+NSString *OFASIHTTPRequestVersion = @"v1.6.2-9 2010-05-10";
 
-NSString* const NetworkRequestErrorDomain = @"ASIHTTPRequestErrorDomain";
+NSString* const OFNetworkRequestErrorDomain = @"OFASIHTTPRequestErrorDomain";
 
-static NSString *ASIHTTPRequestRunLoopMode = @"ASIHTTPRequestRunLoopMode";
+static NSString *OFASIHTTPRequestRunLoopMode = @"OFASIHTTPRequestRunLoopMode";
 
 static const CFOptionFlags kNetworkEvents = kCFStreamEventOpenCompleted | kCFStreamEventHasBytesAvailable | kCFStreamEventEndEncountered | kCFStreamEventErrorOccurred;
 
@@ -42,23 +42,23 @@ static NSRecursiveLock *sessionCredentialsLock = nil;
 static NSMutableArray *sessionCookies = nil;
 
 // The number of times we will allow requests to redirect before we fail with a redirection error
-const int RedirectionLimit = 5;
+static const int RedirectionLimit = 5;
 
 // The default number of seconds to use for a timeout
 static NSTimeInterval defaultTimeOutSeconds = 10;
 
 static void ReadStreamClientCallBack(CFReadStreamRef readStream, CFStreamEventType type, void *clientCallBackInfo) {
-    [((ASIHTTPRequest*)clientCallBackInfo) handleNetworkEvent: type];
+    [((OFASIHTTPRequest*)clientCallBackInfo) handleNetworkEvent: type];
 }
 
 // This lock prevents the operation from being cancelled while it is trying to update the progress, and vice versa
 static NSRecursiveLock *progressLock;
 
-static NSError *ASIRequestCancelledError;
-static NSError *ASIRequestTimedOutError;
-static NSError *ASIAuthenticationError;
-static NSError *ASIUnableToCreateRequestError;
-static NSError *ASITooMuchRedirectionError;
+static NSError *OFASIRequestCancelledError;
+static NSError *OFASIRequestTimedOutError;
+static NSError *OFASIAuthenticationError;
+static NSError *OFASIUnableToCreateRequestError;
+static NSError *OFASITooMuchRedirectionError;
 
 static NSMutableArray *bandwidthUsageTracker = nil;
 static unsigned long averageBandwidthUsedPerSecond = 0;
@@ -92,7 +92,7 @@ static NSLock *bandwidthThrottlingLock = nil;
 static unsigned long maxBandwidthPerSecond = 0;
 
 // A default figure for throttling bandwidth on mobile devices
-unsigned long const ASIWWANBandwidthThrottleAmount = 14800;
+unsigned long const OFASIWWANBandwidthThrottleAmount = 14800;
 
 #if TARGET_OS_IPHONE
 // YES when bandwidth throttling is active
@@ -109,7 +109,7 @@ static BOOL shouldThrottleBandwithForWWANOnly = NO;
 static NSRecursiveLock *sessionCookiesLock = nil;
 
 // This lock ensures delegates only receive one notification that authentication is required at once
-// When using ASIAuthenticationDialogs, it also ensures only one dialog is shown at once
+// When using OFASIAuthenticationDialogs, it also ensures only one dialog is shown at once
 // If a request can't aquire the lock immediately, it means a dialog is being shown or a delegate is handling the authentication challenge
 // Once it gets the lock, it will try to look for existing credentials again rather than showing the dialog / notifying the delegate
 // This is so it can make use of any credentials supplied for the other request, if they are appropriate
@@ -122,7 +122,7 @@ static NSDate *throttleWakeUpTime = nil;
 static BOOL isiPhoneOS2;
 
 // Private stuff
-@interface ASIHTTPRequest ()
+@interface OFASIHTTPRequest ()
 
 - (void)checkRequestStatus;
 - (void)cancelLoad;
@@ -184,7 +184,7 @@ static BOOL isiPhoneOS2;
 @property (assign) BOOL connectionCanBeReused;
 @property (retain, nonatomic) NSMutableDictionary *connectionInfo;
 @property (retain, nonatomic) NSInputStream *readStream;
-@property (assign) ASIAuthenticationState authenticationNeeded;
+@property (assign) OFASIAuthenticationState authenticationNeeded;
 @property (assign, nonatomic) BOOL readStreamIsScheduled;
 @property (retain, nonatomic) NSTimer *statusTimer;
 @property (assign, nonatomic) BOOL downloadComplete;
@@ -193,13 +193,13 @@ static BOOL isiPhoneOS2;
 @end
 
 
-@implementation ASIHTTPRequest
+@implementation OFASIHTTPRequest
 
 #pragma mark init / dealloc
 
 + (void)initialize
 {
-	if (self == [ASIHTTPRequest class]) {
+	if (self == [OFASIHTTPRequest class]) {
 		persistentConnectionsPool = [[NSMutableArray alloc] init];
 		connectionsLock = [[NSLock alloc] init];
 		progressLock = [[NSRecursiveLock alloc] init];
@@ -208,11 +208,11 @@ static BOOL isiPhoneOS2;
 		sessionCredentialsLock = [[NSRecursiveLock alloc] init];
 		delegateAuthenticationLock = [[NSRecursiveLock alloc] init];
 		bandwidthUsageTracker = [[NSMutableArray alloc] initWithCapacity:5];
-		ASIRequestTimedOutError = [[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIRequestTimedOutErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"The request timed out",NSLocalizedDescriptionKey,nil]] retain];	
-		ASIAuthenticationError = [[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIAuthenticationErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Authentication needed",NSLocalizedDescriptionKey,nil]] retain];
-		ASIRequestCancelledError = [[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIRequestCancelledErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"The request was cancelled",NSLocalizedDescriptionKey,nil]] retain];
-		ASIUnableToCreateRequestError = [[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIUnableToCreateRequestErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to create request (bad url?)",NSLocalizedDescriptionKey,nil]] retain];
-		ASITooMuchRedirectionError = [[NSError errorWithDomain:NetworkRequestErrorDomain code:ASITooMuchRedirectionErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"The request failed because it redirected too many times",NSLocalizedDescriptionKey,nil]] retain];	
+		OFASIRequestTimedOutError = [[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIRequestTimedOutErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"The request timed out",NSLocalizedDescriptionKey,nil]] retain];	
+		OFASIAuthenticationError = [[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIAuthenticationErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Authentication needed",NSLocalizedDescriptionKey,nil]] retain];
+		OFASIRequestCancelledError = [[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIRequestCancelledErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"The request was cancelled",NSLocalizedDescriptionKey,nil]] retain];
+		OFASIUnableToCreateRequestError = [[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIUnableToCreateRequestErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to create request (bad url?)",NSLocalizedDescriptionKey,nil]] retain];
+		OFASITooMuchRedirectionError = [[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASITooMuchRedirectionErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"The request failed because it redirected too many times",NSLocalizedDescriptionKey,nil]] retain];	
 
 #if TARGET_OS_IPHONE
 		isiPhoneOS2 = ((floorf([[[UIDevice currentDevice] systemVersion] floatValue]) == 2.0) ? YES : NO);
@@ -240,7 +240,7 @@ static BOOL isiPhoneOS2;
 	[self setDefaultResponseEncoding:NSISOLatin1StringEncoding];
 	[self setShouldPresentProxyAuthenticationDialog:YES];
 	
-	[self setTimeOutSeconds:[ASIHTTPRequest defaultTimeOutSeconds]];
+	[self setTimeOutSeconds:[OFASIHTTPRequest defaultTimeOutSeconds]];
 	[self setUseSessionPersistence:YES];
 	[self setUseCookiePersistence:YES];
 	[self setValidatesSecureCertificate:YES];
@@ -264,7 +264,7 @@ static BOOL isiPhoneOS2;
 {
 	[statusTimer invalidate];
 	[statusTimer release];
-	[self setAuthenticationNeeded:ASINoAuthenticationNeededYet];
+	[self setAuthenticationNeeded:OFASINoAuthenticationNeededYet];
 	if (requestAuthentication) {
 		CFRelease(requestAuthentication);
 	}
@@ -348,21 +348,21 @@ static BOOL isiPhoneOS2;
 		NSString *path;
 		if ([self shouldCompressRequestBody]) {
 			[self setCompressedPostBodyFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:[[NSProcessInfo processInfo] globallyUniqueString]]];
-			[ASIHTTPRequest compressDataFromFile:[self postBodyFilePath] toFile:[self compressedPostBodyFilePath]];
+			[OFASIHTTPRequest compressDataFromFile:[self postBodyFilePath] toFile:[self compressedPostBodyFilePath]];
 			path = [self compressedPostBodyFilePath];
 		} else {
 			path = [self postBodyFilePath];
 		}
 		[self setPostLength:[[[NSFileManager defaultManager] attributesOfItemAtPath:path error:&err] fileSize]];
 		if (err) {
-			[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to get attributes for file at path '@%'",path],NSLocalizedDescriptionKey,error,NSUnderlyingErrorKey,nil]]];
+			[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to get attributes for file at path '@%'",path],NSLocalizedDescriptionKey,error,NSUnderlyingErrorKey,nil]]];
 			return;
 		}
 		
 	// Otherwise, we have an in-memory request body
 	} else {
 		if ([self shouldCompressRequestBody]) {
-			[self setCompressedPostBody:[ASIHTTPRequest compressData:[self postBody]]];
+			[self setCompressedPostBody:[OFASIHTTPRequest compressData:[self postBody]]];
 			[self setPostLength:[[self compressedPostBody] length]];
 		} else {
 			[self setPostLength:[[self postBody] length]];
@@ -460,7 +460,7 @@ static BOOL isiPhoneOS2;
 		return;
 	}
 	
-	[self failWithError:ASIRequestCancelledError];
+	[self failWithError:OFASIRequestCancelledError];
 	[self setComplete:YES];
 	[self cancelLoad];
 	[[self cancelledLock] unlock];
@@ -490,7 +490,7 @@ static BOOL isiPhoneOS2;
 - (NSData *)responseData
 {	
 	if ([self isResponseCompressed]) {
-		return [ASIHTTPRequest uncompressZippedData:[self rawResponseData]];
+		return [OFASIHTTPRequest uncompressZippedData:[self rawResponseData]];
 	} else {
 		return [self rawResponseData];
 	}
@@ -503,7 +503,7 @@ static BOOL isiPhoneOS2;
 #if DEBUG_REQUEST_STATUS || DEBUG_THROTTLING
 	NSLog(@"Starting synchronous request %@",self);
 #endif
-	[self setRunLoopMode:ASIHTTPRequestRunLoopMode];
+	[self setRunLoopMode:OFASIHTTPRequestRunLoopMode];
 	[self setInProgress:YES];
 	@try {	
 		if (![self isCancelled] && ![self complete]) {
@@ -512,8 +512,8 @@ static BOOL isiPhoneOS2;
 		}
 		
 	} @catch (NSException *exception) {
-		NSError *underlyingError = [NSError errorWithDomain:NetworkRequestErrorDomain code:ASIUnhandledExceptionError userInfo:[exception userInfo]];
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIUnhandledExceptionError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[exception name],NSLocalizedDescriptionKey,[exception reason],NSLocalizedFailureReasonErrorKey,underlyingError,NSUnderlyingErrorKey,nil]]];
+		NSError *underlyingError = [NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIUnhandledExceptionError userInfo:[exception userInfo]];
+		[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIUnhandledExceptionError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[exception name],NSLocalizedDescriptionKey,[exception reason],NSLocalizedFailureReasonErrorKey,underlyingError,NSUnderlyingErrorKey,nil]]];
 	}
 	[self setInProgress:NO];
 }
@@ -562,8 +562,8 @@ static BOOL isiPhoneOS2;
 		}
 		
 	} @catch (NSException *exception) {
-		NSError *underlyingError = [NSError errorWithDomain:NetworkRequestErrorDomain code:ASIUnhandledExceptionError userInfo:[exception userInfo]];
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIUnhandledExceptionError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[exception name],NSLocalizedDescriptionKey,[exception reason],NSLocalizedFailureReasonErrorKey,underlyingError,NSUnderlyingErrorKey,nil]]];
+		NSError *underlyingError = [NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIUnhandledExceptionError userInfo:[exception userInfo]];
+		[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIUnhandledExceptionError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[exception name],NSLocalizedDescriptionKey,[exception reason],NSLocalizedFailureReasonErrorKey,underlyingError,NSUnderlyingErrorKey,nil]]];
 	}	
 	[pool release];
 }
@@ -591,14 +591,14 @@ static BOOL isiPhoneOS2;
 {
 	[self setComplete:NO];
 	
-	// A HEAD request generated by an ASINetworkQueue may have set the error already. If so, we should not proceed.
+	// A HEAD request generated by an OFASINetworkQueue may have set the error already. If so, we should not proceed.
 	if ([self error]) {
 		[self failWithError:nil];
 		return;		
 	}
 	
 	if (![self url]) {
-		[self failWithError:ASIUnableToCreateRequestError];
+		[self failWithError:OFASIUnableToCreateRequestError];
 		return;		
 	}
 	
@@ -615,16 +615,16 @@ static BOOL isiPhoneOS2;
 	// Create a new HTTP request.
 	request = CFHTTPMessageCreateRequest(kCFAllocatorDefault, (CFStringRef)[self requestMethod], (CFURLRef)[self url], [self useHTTPVersionOne] ? kCFHTTPVersion1_0 : kCFHTTPVersion1_1);
 	if (!request) {
-		[self failWithError:ASIUnableToCreateRequestError];
+		[self failWithError:OFASIUnableToCreateRequestError];
 		return;
 	}
 
-	//If this is a HEAD request generated by an ASINetworkQueue, we need to let the main request generate its headers first so we can use them
+	//If this is a HEAD request generated by an OFASINetworkQueue, we need to let the main request generate its headers first so we can use them
 	if ([self mainRequest]) {
 		[[self mainRequest] buildRequestHeaders];
 	}
 	
-	// Even if this is a HEAD request with a mainRequest, we still need to call to give subclasses a chance to add their own to HEAD requests (ASIS3Request does this)
+	// Even if this is a HEAD request with a mainRequest, we still need to call to give subclasses a chance to add their own to HEAD requests (OFASIS3Request does this)
 	[self buildRequestHeaders];
 	
 	[self applyAuthorizationHeader];
@@ -741,7 +741,7 @@ static BOOL isiPhoneOS2;
 	
 	// Build and set the user agent string if the request does not already have a custom user agent specified
 	if (![[self requestHeaders] objectForKey:@"User-Agent"]) {
-		NSString *userAgentString = [ASIHTTPRequest defaultUserAgentString];
+		NSString *userAgentString = [OFASIHTTPRequest defaultUserAgentString];
 		if (userAgentString) {
 			[self addRequestHeader:@"User-Agent" value:userAgentString];
 		}
@@ -763,7 +763,7 @@ static BOOL isiPhoneOS2;
 		NSError *err = nil;
 		[self setPartialDownloadSize:[[[NSFileManager defaultManager] attributesOfItemAtPath:[self temporaryFileDownloadPath] error:&err] fileSize]];
 		if (err) {
-			[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to get attributes for file at path '@%'",[self temporaryFileDownloadPath]],NSLocalizedDescriptionKey,error,NSUnderlyingErrorKey,nil]]];
+			[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to get attributes for file at path '@%'",[self temporaryFileDownloadPath]],NSLocalizedDescriptionKey,error,NSUnderlyingErrorKey,nil]]];
 			return;
 		}
 		[self addRequestHeader:@"Range" value:[NSString stringWithFormat:@"bytes=%llu-",[self partialDownloadSize]]];
@@ -815,9 +815,9 @@ static BOOL isiPhoneOS2;
 		
 		// Are we gzipping the request body?
 		if ([self compressedPostBodyFilePath] && [[NSFileManager defaultManager] fileExistsAtPath:[self compressedPostBodyFilePath]]) {
-			[self setPostBodyReadStream:[ASIInputStream inputStreamWithFileAtPath:[self compressedPostBodyFilePath] request:self]];
+			[self setPostBodyReadStream:[OFASIInputStream inputStreamWithFileAtPath:[self compressedPostBodyFilePath] request:self]];
 		} else {
-			[self setPostBodyReadStream:[ASIInputStream inputStreamWithFileAtPath:[self postBodyFilePath] request:self]];
+			[self setPostBodyReadStream:[OFASIInputStream inputStreamWithFileAtPath:[self postBodyFilePath] request:self]];
 		}
 		[self setReadStream:[(NSInputStream *)CFReadStreamCreateForStreamedHTTPRequest(kCFAllocatorDefault, request,(CFReadStreamRef)[self postBodyReadStream]) autorelease]];
     } else {
@@ -825,9 +825,9 @@ static BOOL isiPhoneOS2;
 		// If we have a request body, we'll stream it from memory using our custom stream, so that we can measure bandwidth use and it can be bandwidth-throttled if nescessary
 		if ([self postBody] && [[self postBody] length] > 0) {
 			if ([self shouldCompressRequestBody] && [self compressedPostBody]) {
-				[self setPostBodyReadStream:[ASIInputStream inputStreamWithData:[self compressedPostBody] request:self]];
+				[self setPostBodyReadStream:[OFASIInputStream inputStreamWithData:[self compressedPostBody] request:self]];
 			} else if ([self postBody]) {
-				[self setPostBodyReadStream:[ASIInputStream inputStreamWithData:[self postBody] request:self]];
+				[self setPostBodyReadStream:[OFASIInputStream inputStreamWithData:[self postBody] request:self]];
 			}
 			[self setReadStream:[(NSInputStream *)CFReadStreamCreateForStreamedHTTPRequest(kCFAllocatorDefault, request,(CFReadStreamRef)[self postBodyReadStream]) autorelease]];
 		
@@ -838,12 +838,12 @@ static BOOL isiPhoneOS2;
 
 	if (![self readStream]) {
 		[[self cancelledLock] unlock];
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to create read stream",NSLocalizedDescriptionKey,nil]]];
+		[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to create read stream",NSLocalizedDescriptionKey,nil]]];
         return;
     }
 
 	// Tell CFNetwork not to validate SSL certificates
-	if (![self validatesSecureCertificate] && [[[[self url] scheme] lowercaseString] isEqualToString:@"https"]) {
+	if (!validatesSecureCertificate) {
 		CFReadStreamSetProperty((CFReadStreamRef)[self readStream], kCFStreamPropertySSLSettings, [NSMutableDictionary dictionaryWithObject:(NSString *)kCFBooleanFalse forKey:(NSString *)kCFStreamSSLValidatesCertificateChain]); 
 	}
 	
@@ -862,7 +862,7 @@ static BOOL isiPhoneOS2;
 		// Have we been given a proxy auto config file?
 		if ([self PACurl]) {
 			
-			proxies = [ASIHTTPRequest proxiesForURL:[self url] fromPAC:[self PACurl]];
+			proxies = [OFASIHTTPRequest proxiesForURL:[self url] fromPAC:[self PACurl]];
 			
 			// Detect proxy settings and apply them	
 		} else {
@@ -883,14 +883,14 @@ static BOOL isiPhoneOS2;
 			// Now check to see if the proxy settings contained a PAC url, we need to run the script to get the real list of proxies if so
 			NSDictionary *settings = [proxies objectAtIndex:0];
 			if ([settings objectForKey:(NSString *)kCFProxyAutoConfigurationURLKey]) {
-				proxies = [ASIHTTPRequest proxiesForURL:[self url] fromPAC:[settings objectForKey:(NSString *)kCFProxyAutoConfigurationURLKey]];
+				proxies = [OFASIHTTPRequest proxiesForURL:[self url] fromPAC:[settings objectForKey:(NSString *)kCFProxyAutoConfigurationURLKey]];
 			}
 		}
 		
 		if (!proxies) {
 			[self setReadStream:nil];
 			[[self cancelledLock] unlock];
-			[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to obtain information on proxy servers needed for request",NSLocalizedDescriptionKey,nil]]];
+			[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to obtain information on proxy servers needed for request",NSLocalizedDescriptionKey,nil]]];
 			return;			
 		}
 		// I don't really understand why the dictionary returned by CFNetworkCopyProxiesForURL uses different key names from CFNetworkCopySystemProxySettings/SCDynamicStoreCopyProxies
@@ -916,7 +916,7 @@ static BOOL isiPhoneOS2;
 	// Handle persistent connections
 	//
 	
-	[ASIHTTPRequest expirePersistentConnections];
+	[OFASIHTTPRequest expirePersistentConnections];
 
 	[connectionsLock lock];
 	
@@ -930,7 +930,7 @@ static BOOL isiPhoneOS2;
 	NSInputStream *oldStream = nil;
 	
 	// Use a persistent connection if possible
-	if ([self shouldAttemptPersistentConnection]) {
+	if (shouldAttemptPersistentConnection) {
 		
 
 		// If we are redirecting, we will re-use the current connection only if we are connecting to the same server
@@ -994,7 +994,7 @@ static BOOL isiPhoneOS2;
 		// Tag the stream with an id that tells it which connection to use behind the scenes
 		// See http://lists.apple.com/archives/macnetworkprog/2008/Dec/msg00001.html for details on this approach
 		
-		CFReadStreamSetProperty((CFReadStreamRef)[self readStream], CFSTR("ASIStreamID"), [[self connectionInfo] objectForKey:@"id"]);
+		CFReadStreamSetProperty((CFReadStreamRef)[self readStream], CFSTR("OFASIStreamID"), [[self connectionInfo] objectForKey:@"id"]);
 	
 	}
 	
@@ -1030,7 +1030,7 @@ static BOOL isiPhoneOS2;
 		[self setConnectionCanBeReused:NO];
 		[self destroyReadStream];
 		[[self cancelledLock] unlock];
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to start HTTP connection",NSLocalizedDescriptionKey,nil]]];
+		[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Unable to start HTTP connection",NSLocalizedDescriptionKey,nil]]];
 		return;	
 	}
 
@@ -1043,10 +1043,10 @@ static BOOL isiPhoneOS2;
 			} else {
 				[self incrementUploadSizeBy:1];	 
 			}
-			[ASIHTTPRequest updateProgressIndicator:[self uploadProgressDelegate] withProgress:0 ofTotal:1];
+			[OFASIHTTPRequest updateProgressIndicator:[self uploadProgressDelegate] withProgress:0 ofTotal:1];
 		}
 		if ([self shouldResetDownloadProgress] && ![self partialDownloadSize]) {
-			[ASIHTTPRequest updateProgressIndicator:[self downloadProgressDelegate] withProgress:0 ofTotal:1];
+			[OFASIHTTPRequest updateProgressIndicator:[self downloadProgressDelegate] withProgress:0 ofTotal:1];
 		}
 	}	
 	
@@ -1091,7 +1091,7 @@ static BOOL isiPhoneOS2;
 	[self setRedirectCount:[self redirectCount]+1];
 	if ([self redirectCount] > RedirectionLimit) {
 		// Some naughty / badly coded website is trying to force us into a redirection loop. This is not cool.
-		[self failWithError:ASITooMuchRedirectionError];
+		[self failWithError:OFASITooMuchRedirectionError];
 		[self setComplete:YES];
 		[[self cancelledLock] unlock];
 	} else {
@@ -1154,7 +1154,7 @@ static BOOL isiPhoneOS2;
 			[self startRequest];
 			return;
 		}
-		[self failWithError:ASIRequestTimedOutError];
+		[self failWithError:OFASIRequestTimedOutError];
 		[self cancelLoad];
 		[self setComplete:YES];
 		[[self cancelledLock] unlock];
@@ -1175,7 +1175,7 @@ static BOOL isiPhoneOS2;
 				
 				// We've uploaded more data,  reset the timeout
 				[self setLastActivityTime:[NSDate date]];
-				[ASIHTTPRequest incrementBandwidthUsedInLastSecond:(unsigned long)(totalBytesSent-lastBytesSent)];		
+				[OFASIHTTPRequest incrementBandwidthUsedInLastSecond:(unsigned long)(totalBytesSent-lastBytesSent)];		
 						
 				#if DEBUG_REQUEST_STATUS
 				if ([self totalBytesSent] == [self postLength]) {
@@ -1230,7 +1230,7 @@ static BOOL isiPhoneOS2;
 			NSError *removeError = nil;
 			[[NSFileManager defaultManager] removeItemAtPath:[self temporaryFileDownloadPath] error:&removeError];
 			if (removeError) {
-				[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to delete file at path '%@'",[self temporaryFileDownloadPath]],NSLocalizedDescriptionKey,removeError,NSUnderlyingErrorKey,nil]]];
+				[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to delete file at path '%@'",[self temporaryFileDownloadPath]],NSLocalizedDescriptionKey,removeError,NSUnderlyingErrorKey,nil]]];
 			}
 		}
 		[self setTemporaryFileDownloadPath:nil];
@@ -1243,7 +1243,7 @@ static BOOL isiPhoneOS2;
 		NSError *removeError = nil;
 		[[NSFileManager defaultManager] removeItemAtPath:[self postBodyFilePath] error:&removeError];
 		if (removeError) {
-			[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to delete file at path '%@'",[self postBodyFilePath]],NSLocalizedDescriptionKey,removeError,NSUnderlyingErrorKey,nil]]];
+			[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to delete file at path '%@'",[self postBodyFilePath]],NSLocalizedDescriptionKey,removeError,NSUnderlyingErrorKey,nil]]];
 		}
 		[self setPostBodyFilePath:nil];
 	}
@@ -1251,7 +1251,7 @@ static BOOL isiPhoneOS2;
 		NSError *removeError = nil;
 		[[NSFileManager defaultManager] removeItemAtPath:[self compressedPostBodyFilePath] error:&removeError];
 		if (removeError) {
-			[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to delete file at path '%@'",[self compressedPostBodyFilePath]],NSLocalizedDescriptionKey,removeError,NSUnderlyingErrorKey,nil]]];
+			[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to delete file at path '%@'",[self compressedPostBodyFilePath]],NSLocalizedDescriptionKey,removeError,NSUnderlyingErrorKey,nil]]];
 		}
 		[self setCompressedPostBodyFilePath:nil];
 	}
@@ -1259,10 +1259,10 @@ static BOOL isiPhoneOS2;
 
 #pragma mark HEAD request
 
-// Used by ASINetworkQueue to create a HEAD request appropriate for this request with the same headers (though you can use it yourself)
-- (ASIHTTPRequest *)HEADRequest
+// Used by OFASINetworkQueue to create a HEAD request appropriate for this request with the same headers (though you can use it yourself)
+- (OFASIHTTPRequest *)HEADRequest
 {
-	ASIHTTPRequest *headRequest = [[self class] requestWithURL:[self url]];
+	OFASIHTTPRequest *headRequest = [[self class] requestWithURL:[self url]];
 	[headRequest setMainRequest:self];
 	[headRequest setRequestMethod:@"HEAD"];
 	return headRequest;
@@ -1292,7 +1292,7 @@ static BOOL isiPhoneOS2;
 	#if !TARGET_OS_IPHONE
 	// If the uploadProgressDelegate is an NSProgressIndicator, we set its MaxValue to 1.0 so we can update it as if it were a UIProgressView
 	double max = 1.0;
-	[ASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:[self uploadProgressDelegate] withObject:nil amount:&max];
+	[OFASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:[self uploadProgressDelegate] withObject:nil amount:&max];
 	#endif
 	[[self cancelledLock] unlock];
 }
@@ -1305,7 +1305,7 @@ static BOOL isiPhoneOS2;
 	#if !TARGET_OS_IPHONE
 	// If the downloadProgressDelegate is an NSProgressIndicator, we set its MaxValue to 1.0 so we can update it as if it were a UIProgressView
 	double max = 1.0;
-	[ASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:[self downloadProgressDelegate] withObject:nil amount:&max];	
+	[OFASIHTTPRequest performSelector:@selector(setMaxValue:) onTarget:[self downloadProgressDelegate] withObject:nil amount:&max];	
 	#endif
 	[[self cancelledLock] unlock];
 }
@@ -1334,9 +1334,9 @@ static BOOL isiPhoneOS2;
 		return;
 	}
 
-	[ASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:[self queue] withObject:self amount:&value];
-	[ASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:[self downloadProgressDelegate] withObject:self amount:&value];
-	[ASIHTTPRequest updateProgressIndicator:[self downloadProgressDelegate] withProgress:[self totalBytesRead]+[self partialDownloadSize] ofTotal:[self contentLength]+[self partialDownloadSize]];
+	[OFASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:[self queue] withObject:self amount:&value];
+	[OFASIHTTPRequest performSelector:@selector(request:didReceiveBytes:) onTarget:[self downloadProgressDelegate] withObject:self amount:&value];
+	[OFASIHTTPRequest updateProgressIndicator:[self downloadProgressDelegate] withProgress:[self totalBytesRead]+[self partialDownloadSize] ofTotal:[self contentLength]+[self partialDownloadSize]];
 		
 	[self setLastBytesRead:bytesReadSoFar];
 }
@@ -1373,32 +1373,32 @@ static BOOL isiPhoneOS2;
 		return;
 	}
 	
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self queue] withObject:self amount:&value];
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self uploadProgressDelegate] withObject:self amount:&value];
-	[ASIHTTPRequest updateProgressIndicator:[self uploadProgressDelegate] withProgress:[self totalBytesSent]-[self uploadBufferSize] ofTotal:[self postLength]];
+	[OFASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self queue] withObject:self amount:&value];
+	[OFASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self uploadProgressDelegate] withObject:self amount:&value];
+	[OFASIHTTPRequest updateProgressIndicator:[self uploadProgressDelegate] withProgress:[self totalBytesSent]-[self uploadBufferSize] ofTotal:[self postLength]];
 }
 
 
 - (void)incrementDownloadSizeBy:(long long)length
 {
-	[ASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:[self queue] withObject:self amount:&length];
-	[ASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:[self downloadProgressDelegate] withObject:self amount:&length];
+	[OFASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:[self queue] withObject:self amount:&length];
+	[OFASIHTTPRequest performSelector:@selector(request:incrementDownloadSizeBy:) onTarget:[self downloadProgressDelegate] withObject:self amount:&length];
 }
 
 
 - (void)incrementUploadSizeBy:(long long)length
 {
-	[ASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:[self queue] withObject:self amount:&length];
-	[ASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:[self uploadProgressDelegate] withObject:self amount:&length];
+	[OFASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:[self queue] withObject:self amount:&length];
+	[OFASIHTTPRequest performSelector:@selector(request:incrementUploadSizeBy:) onTarget:[self uploadProgressDelegate] withObject:self amount:&length];
 }
 
 
 -(void)removeUploadProgressSoFar
 {
 	long long progressToRemove = -[self totalBytesSent];
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self queue] withObject:self amount:&progressToRemove];
-	[ASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self uploadProgressDelegate] withObject:self amount:&progressToRemove];
-	[ASIHTTPRequest updateProgressIndicator:[self uploadProgressDelegate] withProgress:0 ofTotal:[self postLength]];
+	[OFASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self queue] withObject:self amount:&progressToRemove];
+	[OFASIHTTPRequest performSelector:@selector(request:didSendBytes:) onTarget:[self uploadProgressDelegate] withObject:self amount:&progressToRemove];
+	[OFASIHTTPRequest updateProgressIndicator:[self uploadProgressDelegate] withProgress:0 ofTotal:[self postLength]];
 }
 
 
@@ -1436,7 +1436,7 @@ static BOOL isiPhoneOS2;
 		float progressAmount;
 		SEL selector = @selector(setProgress:);
 		//Workaround for an issue with converting a long to a double on iPhone OS 2.2.1 with a base SDK >= 3.0
-		if ([ASIHTTPRequest isiPhoneOS2]) {
+		if ([OFASIHTTPRequest isiPhoneOS2]) {
 			progressAmount = [[NSNumber numberWithUnsignedLongLong:progress] floatValue]/[[NSNumber numberWithUnsignedLongLong:total] floatValue]; 
 		} else {
 			progressAmount = (progress*1.0f)/(total*1.0f);
@@ -1454,7 +1454,7 @@ static BOOL isiPhoneOS2;
 	
 	[progressLock lock];
 
-	[ASIHTTPRequest performSelector:selector onTarget:indicator withObject:nil amount:&progressAmount];
+	[OFASIHTTPRequest performSelector:selector onTarget:indicator withObject:nil amount:&progressAmount];
 	[progressLock unlock];
 }
 
@@ -1507,7 +1507,7 @@ static BOOL isiPhoneOS2;
 	}
 	// Let the delegate know we are done
 	if ([self didFinishSelector] && [[self delegate] respondsToSelector:[self didFinishSelector]]) {
-		[[self delegate] performSelectorOnMainThread:[self didFinishSelector] withObject:self waitUntilDone:[NSThread isMainThread]];		
+		[[self delegate] performSelectorOnMainThread:[self didFinishSelector] withObject:self waitUntilDone:[NSThread isMainThread]];
 	}
 	
 	// Let the queue know we are done
@@ -1527,7 +1527,7 @@ static BOOL isiPhoneOS2;
 	[self setComplete:YES];
 	
 	// Invalidate the current connection so subsequent requests don't attempt to reuse it
-	if (theError && [theError code] != ASIAuthenticationErrorType && [theError code] != ASITooMuchRedirectionErrorType) {
+	if (theError && [theError code] != OFASIAuthenticationErrorType && [theError code] != OFASITooMuchRedirectionErrorType) {
 		[connectionsLock lock];
 		#if DEBUG_PERSISTENT_CONNECTIONS
 		NSLog(@"Request #%@ failed and will invalidate connection #%@",[self requestID],[[self connectionInfo] objectForKey:@"id"]);
@@ -1547,9 +1547,9 @@ static BOOL isiPhoneOS2;
 	
 	[self setError:theError];
 	
-	ASIHTTPRequest *failedRequest = self;
+	OFASIHTTPRequest *failedRequest = self;
 	
-	// If this is a HEAD request created by an ASINetworkQueue or compatible queue delegate, make the main request fail
+	// If this is a HEAD request created by an OFASINetworkQueue or compatible queue delegate, make the main request fail
 	if ([self mainRequest]) {
 		failedRequest = [self mainRequest];
 		[failedRequest setError:theError];
@@ -1575,7 +1575,7 @@ static BOOL isiPhoneOS2;
 
 - (void)readResponseHeaders
 {
-	[self setAuthenticationNeeded:ASINoAuthenticationNeededYet];
+	[self setAuthenticationNeeded:OFASINoAuthenticationNeededYet];
 
 	CFHTTPMessageRef message = (CFHTTPMessageRef)CFReadStreamCopyProperty((CFReadStreamRef)[self readStream], kCFStreamPropertyHTTPResponseHeader);
 	if (!message) {
@@ -1602,11 +1602,12 @@ static BOOL isiPhoneOS2;
 	[self setResponseStatusMessage:[(NSString *)CFHTTPMessageCopyResponseStatusLine(message) autorelease]];
 
 	// Is the server response a challenge for credentials?
-	if ([self responseStatusCode] == 401) {
-		[self setAuthenticationNeeded:ASIHTTPAuthenticationNeeded];
-	} else if ([self responseStatusCode] == 407) {
-		[self setAuthenticationNeeded:ASIProxyAuthenticationNeeded];
-	}
+	// @OF - we handle this internally.
+//	if ([self responseStatusCode] == 401) {
+//		[self setAuthenticationNeeded:OFASIHTTPAuthenticationNeeded];
+//	} else if ([self responseStatusCode] == 407) {
+//		[self setAuthenticationNeeded:OFASIProxyAuthenticationNeeded];
+//	}
 		
 	// Authentication succeeded, or no authentication was required
 	if (![self authenticationNeeded]) {
@@ -1629,7 +1630,7 @@ static BOOL isiPhoneOS2;
 	
 	// See if we got a Content-length header
 	NSString *cLength = [responseHeaders valueForKey:@"Content-Length"];
-	ASIHTTPRequest *theRequest = self;
+	OFASIHTTPRequest *theRequest = self;
 	if ([self mainRequest]) {
 		theRequest = [self mainRequest];
 	}
@@ -1691,12 +1692,12 @@ static BOOL isiPhoneOS2;
 		// We also keep any cookies in the sessionCookies array, so that we have a reference to them if we need to remove them later
 		NSHTTPCookie *cookie;
 		for (cookie in newCookies) {
-			[ASIHTTPRequest addSessionCookie:cookie];
+			[OFASIHTTPRequest addSessionCookie:cookie];
 		}
 	}
 	
 	// Do we need to redirect?
-	// Note that ASIHTTPRequest does not currently support 305 Use Proxy
+	// Note that OFASIHTTPRequest does not currently support 305 Use Proxy
 	if ([self shouldRedirect] && [responseHeaders valueForKey:@"Location"]) {
 		if (([self responseStatusCode] > 300 && [self responseStatusCode] < 304) || [self responseStatusCode] == 307) {
 			
@@ -1787,7 +1788,7 @@ static BOOL isiPhoneOS2;
 {
 	NSURLCredential *authenticationCredentials = [NSURLCredential credentialWithUser:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationUsername] password:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationPassword] persistence:NSURLCredentialPersistencePermanent];
 	if (authenticationCredentials) {
-		[ASIHTTPRequest saveCredentials:authenticationCredentials forProxy:[self proxyHost] port:[self proxyPort] realm:[self proxyAuthenticationRealm]];
+		[OFASIHTTPRequest saveCredentials:authenticationCredentials forProxy:[self proxyHost] port:[self proxyPort] realm:[self proxyAuthenticationRealm]];
 	}	
 }
 
@@ -1797,7 +1798,7 @@ static BOOL isiPhoneOS2;
 	NSURLCredential *authenticationCredentials = [NSURLCredential credentialWithUser:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationUsername] password:[newCredentials objectForKey:(NSString *)kCFHTTPAuthenticationPassword] persistence:NSURLCredentialPersistencePermanent];
 	
 	if (authenticationCredentials) {
-		[ASIHTTPRequest saveCredentials:authenticationCredentials forHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
+		[OFASIHTTPRequest saveCredentials:authenticationCredentials forHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
 	}	
 }
 
@@ -1882,7 +1883,7 @@ static BOOL isiPhoneOS2;
 	NSString *pass = nil;
 	
 
-	// If this is a HEAD request generated by an ASINetworkQueue, we'll try to use the details from the main request
+	// If this is a HEAD request generated by an OFASINetworkQueue, we'll try to use the details from the main request
 	if ([self mainRequest] && [[self mainRequest] proxyUsername] && [[self mainRequest] proxyPassword]) {
 		user = [[self mainRequest] proxyUsername];
 		pass = [[self mainRequest] proxyPassword];
@@ -1897,7 +1898,7 @@ static BOOL isiPhoneOS2;
 	// Ok, that didn't work, let's try the keychain
 	// For authenticating proxies, we'll look in the keychain regardless of the value of useKeychainPersistence
 	if ((!user || !pass)) {
-		NSURLCredential *authenticationCredentials = [ASIHTTPRequest savedCredentialsForProxy:[self proxyHost] port:[self proxyPort] protocol:[[self url] scheme] realm:[self proxyAuthenticationRealm]];
+		NSURLCredential *authenticationCredentials = [OFASIHTTPRequest savedCredentialsForProxy:[self proxyHost] port:[self proxyPort] protocol:[[self url] scheme] realm:[self proxyAuthenticationRealm]];
 		if (authenticationCredentials) {
 			user = [authenticationCredentials user];
 			pass = [authenticationCredentials password];
@@ -1935,7 +1936,7 @@ static BOOL isiPhoneOS2;
 	// If the username and password weren't in the url
 	if (!user || !pass) {
 		
-		// If this is a HEAD request generated by an ASINetworkQueue, we'll try to use the details from the main request
+		// If this is a HEAD request generated by an OFASINetworkQueue, we'll try to use the details from the main request
 		if ([self mainRequest] && [[self mainRequest] username] && [[self mainRequest] password]) {
 			user = [[self mainRequest] username];
 			pass = [[self mainRequest] password];
@@ -1950,7 +1951,7 @@ static BOOL isiPhoneOS2;
 	
 	// Ok, that didn't work, let's try the keychain
 	if ((!user || !pass) && useKeychainPersistence) {
-		NSURLCredential *authenticationCredentials = [ASIHTTPRequest savedCredentialsForHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
+		NSURLCredential *authenticationCredentials = [OFASIHTTPRequest savedCredentialsForHost:[[self url] host] port:[[[self url] port] intValue] protocol:[[self url] scheme] realm:[self authenticationRealm]];
 		if (authenticationCredentials) {
 			user = [authenticationCredentials user];
 			pass = [authenticationCredentials password];
@@ -1977,7 +1978,7 @@ static BOOL isiPhoneOS2;
 // Called by delegate or authentication dialog to cancel authentication
 - (void)cancelAuthentication
 {
-	[self failWithError:ASIAuthenticationError];
+	[self failWithError:OFASIAuthenticationError];
 }
 
 - (BOOL)showProxyAuthenticationDialog
@@ -1985,7 +1986,7 @@ static BOOL isiPhoneOS2;
 // Mac authentication dialog coming soon!
 #if TARGET_OS_IPHONE
 	if ([self shouldPresentProxyAuthenticationDialog]) {
-		[ASIAuthenticationDialog performSelectorOnMainThread:@selector(presentProxyAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
+		[OFASIAuthenticationDialog performSelectorOnMainThread:@selector(presentProxyAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
 		return YES;
 	}
 	return NO;
@@ -2030,7 +2031,7 @@ static BOOL isiPhoneOS2;
 	// If we haven't got a CFHTTPAuthenticationRef by now, something is badly wrong, so we'll have to give up
 	if (!proxyAuthentication) {
 		[self cancelLoad];
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to get authentication object from response headers",NSLocalizedDescriptionKey,nil]]];
+		[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to get authentication object from response headers",NSLocalizedDescriptionKey,nil]]];
 		return;
 	}
 	
@@ -2090,7 +2091,7 @@ static BOOL isiPhoneOS2;
 			[delegateAuthenticationLock unlock];
 		}
 		[self cancelLoad];
-		[self failWithError:ASIAuthenticationError];
+		[self failWithError:OFASIAuthenticationError];
 		return;
 	}
 
@@ -2104,11 +2105,11 @@ static BOOL isiPhoneOS2;
 			
 		// We've failed NTLM authentication twice, we should assume our credentials are wrong
 		} else if ([self proxyAuthenticationScheme] == (NSString *)kCFHTTPAuthenticationSchemeNTLM && [self proxyAuthenticationRetryCount] == 2) {
-			[self failWithError:ASIAuthenticationError];
+			[self failWithError:OFASIAuthenticationError];
 			
 		// Something went wrong, we'll have to give up
 		} else {
-			[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply proxy credentials to request",NSLocalizedDescriptionKey,nil]]];
+			[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply proxy credentials to request",NSLocalizedDescriptionKey,nil]]];
 		}
 		
 	// Are a user name & password needed?
@@ -2143,7 +2144,7 @@ static BOOL isiPhoneOS2;
 				[self startRequest];
 			} else {
 				[delegateAuthenticationLock unlock];
-				[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply proxy credentials to request",NSLocalizedDescriptionKey,nil]]];
+				[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply proxy credentials to request",NSLocalizedDescriptionKey,nil]]];
 			}
 			
 			return;
@@ -2161,7 +2162,7 @@ static BOOL isiPhoneOS2;
 		[delegateAuthenticationLock unlock];
 		
 		// The delegate isn't interested and we aren't showing the authentication dialog, we'll have to give up
-		[self failWithError:ASIAuthenticationError];
+		[self failWithError:OFASIAuthenticationError];
 		return;
 	}
 	
@@ -2172,7 +2173,7 @@ static BOOL isiPhoneOS2;
 // Mac authentication dialog coming soon!
 #if TARGET_OS_IPHONE
 	if ([self shouldPresentAuthenticationDialog]) {
-		[ASIAuthenticationDialog performSelectorOnMainThread:@selector(presentAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
+		[OFASIAuthenticationDialog performSelectorOnMainThread:@selector(presentAuthenticationDialogForRequest:) withObject:self waitUntilDone:[NSThread isMainThread]];
 		return YES;
 	}
 	return NO;
@@ -2203,7 +2204,7 @@ static BOOL isiPhoneOS2;
 		return;
 	}
 	
-	if ([self authenticationNeeded] == ASIProxyAuthenticationNeeded) {
+	if ([self authenticationNeeded] == OFASIProxyAuthenticationNeeded) {
 		[self attemptToApplyProxyCredentialsAndResume];
 		return;
 	}
@@ -2218,7 +2219,7 @@ static BOOL isiPhoneOS2;
 	
 	if (!requestAuthentication) {
 		[self cancelLoad];
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to get authentication object from response headers",NSLocalizedDescriptionKey,nil]]];
+		[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to get authentication object from response headers",NSLocalizedDescriptionKey,nil]]];
 		return;
 	}
 	
@@ -2276,7 +2277,7 @@ static BOOL isiPhoneOS2;
 			[delegateAuthenticationLock unlock];
 		}
 		[self cancelLoad];
-		[self failWithError:ASIAuthenticationError];
+		[self failWithError:OFASIAuthenticationError];
 		return;
 	}
 	
@@ -2289,10 +2290,10 @@ static BOOL isiPhoneOS2;
 			
 			// We've failed NTLM authentication twice, we should assume our credentials are wrong
 		} else if ([self authenticationScheme] == (NSString *)kCFHTTPAuthenticationSchemeNTLM && [self authenticationRetryCount ] == 2) {
-			[self failWithError:ASIAuthenticationError];
+			[self failWithError:OFASIAuthenticationError];
 			
 		} else {
-			[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply credentials to request",NSLocalizedDescriptionKey,nil]]];
+			[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply credentials to request",NSLocalizedDescriptionKey,nil]]];
 		}
 		
 		// Are a user name & password needed?
@@ -2328,7 +2329,7 @@ static BOOL isiPhoneOS2;
 				[self startRequest];
 			} else {
 				[delegateAuthenticationLock unlock];
-				[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply credentials to request",NSLocalizedDescriptionKey,nil]]];
+				[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIInternalErrorWhileApplyingCredentialsType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Failed to apply credentials to request",NSLocalizedDescriptionKey,nil]]];
 			}
 			return;
 		}
@@ -2343,7 +2344,7 @@ static BOOL isiPhoneOS2;
 		}
 		[delegateAuthenticationLock unlock];
 		
-		[self failWithError:ASIAuthenticationError];
+		[self failWithError:OFASIAuthenticationError];
 
 		return;
 	}
@@ -2352,7 +2353,7 @@ static BOOL isiPhoneOS2;
 
 - (void)addBasicAuthenticationHeaderWithUsername:(NSString *)theUsername andPassword:(NSString *)thePassword
 {
-	[self addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[ASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@",theUsername,thePassword] dataUsingEncoding:NSUTF8StringEncoding]]]];	
+	[self addRequestHeader:@"Authorization" value:[NSString stringWithFormat:@"Basic %@",[OFASIHTTPRequest base64forData:[[NSString stringWithFormat:@"%@:%@",theUsername,thePassword] dataUsingEncoding:NSUTF8StringEncoding]]]];	
 }
 
 
@@ -2460,7 +2461,7 @@ static BOOL isiPhoneOS2;
 		[self setLastActivityTime:[NSDate date]];
 
 		// For bandwidth measurement / throttling
-		[ASIHTTPRequest incrementBandwidthUsedInLastSecond:bytesRead];
+		[OFASIHTTPRequest incrementBandwidthUsedInLastSecond:bytesRead];
 		
 		// If we need to redirect, and have automatic redirect on, and might be resuming a download, let's do nothing with the content
 		if ([self needsRedirect] && [self shouldRedirect] && [self allowResumeForFileDownloads]) {
@@ -2541,9 +2542,9 @@ static BOOL isiPhoneOS2;
 		
 		// Decompress the file (if necessary) directly to the destination path
 		} else if ([self isResponseCompressed]) {
-			int decompressionStatus = [ASIHTTPRequest uncompressZippedDataFromFile:[self temporaryFileDownloadPath] toFile:[self downloadDestinationPath]];
+			int decompressionStatus = [OFASIHTTPRequest uncompressZippedDataFromFile:[self temporaryFileDownloadPath] toFile:[self downloadDestinationPath]];
 			if (decompressionStatus != Z_OK) {
-				fileError = [NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Decompression of %@ failed with code %hi",[self temporaryFileDownloadPath],decompressionStatus],NSLocalizedDescriptionKey,nil]];
+				fileError = [NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Decompression of %@ failed with code %hi",[self temporaryFileDownloadPath],decompressionStatus],NSLocalizedDescriptionKey,nil]];
 			}
 			[self removeTemporaryDownloadFile];
 		} else {
@@ -2554,7 +2555,7 @@ static BOOL isiPhoneOS2;
 			if ([[NSFileManager defaultManager] fileExistsAtPath:[self downloadDestinationPath]]) {
 				[[NSFileManager defaultManager] removeItemAtPath:[self downloadDestinationPath] error:&moveError];
 				if (moveError) {
-					fileError = [NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Unable to remove file at path '%@'",[self downloadDestinationPath]],NSLocalizedDescriptionKey,moveError,NSUnderlyingErrorKey,nil]];
+					fileError = [NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Unable to remove file at path '%@'",[self downloadDestinationPath]],NSLocalizedDescriptionKey,moveError,NSUnderlyingErrorKey,nil]];
 				}
 			}
 					
@@ -2562,7 +2563,7 @@ static BOOL isiPhoneOS2;
 			if (!fileError) {
 				[[NSFileManager defaultManager] moveItemAtPath:[self temporaryFileDownloadPath] toPath:[self downloadDestinationPath] error:&moveError];
 				if (moveError) {
-					fileError = [NSError errorWithDomain:NetworkRequestErrorDomain code:ASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to move file from '%@' to '%@'",[self temporaryFileDownloadPath],[self downloadDestinationPath]],NSLocalizedDescriptionKey,moveError,NSUnderlyingErrorKey,nil]];
+					fileError = [NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIFileManagementError userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Failed to move file from '%@' to '%@'",[self temporaryFileDownloadPath],[self downloadDestinationPath]],NSLocalizedDescriptionKey,moveError,NSUnderlyingErrorKey,nil]];
 				}
 				[self setTemporaryFileDownloadPath:nil];
 			}
@@ -2660,7 +2661,7 @@ static BOOL isiPhoneOS2;
 			}
 		}
 		
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIConnectionFailureErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:reason,NSLocalizedDescriptionKey,underlyingError,NSUnderlyingErrorKey,nil]]];
+		[self failWithError:[NSError errorWithDomain:OFNetworkRequestErrorDomain code:OFASIConnectionFailureErrorType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:reason,NSLocalizedDescriptionKey,underlyingError,NSUnderlyingErrorKey,nil]]];
 	}
 	[self checkRequestStatus];
 }
@@ -2734,14 +2735,14 @@ static BOOL isiPhoneOS2;
 - (id)copyWithZone:(NSZone *)zone
 {
 	// Don't forget - this will return a retained copy!
-	ASIHTTPRequest *newRequest = [[[self class] alloc] initWithURL:[self url]];
+	OFASIHTTPRequest *newRequest = [[[self class] alloc] initWithURL:[self url]];
 	[newRequest setDelegate:[self delegate]];
 	[newRequest setRequestMethod:[self requestMethod]];
 	[newRequest setPostBody:[self postBody]];
 	[newRequest setShouldStreamPostDataFromDisk:[self shouldStreamPostDataFromDisk]];
 	[newRequest setPostBodyFilePath:[self postBodyFilePath]];
-	[newRequest setRequestHeaders:[[[self requestHeaders] copyWithZone:zone] autorelease]];
-	[newRequest setRequestCookies:[[[self requestCookies] copyWithZone:zone] autorelease]];
+	[newRequest setRequestHeaders:[[[self requestHeaders] mutableCopyWithZone:zone] autorelease]];
+	[newRequest setRequestCookies:[[[self requestCookies] mutableCopyWithZone:zone] autorelease]];
 	[newRequest setUseCookiePersistence:[self useCookiePersistence]];
 	[newRequest setUseKeychainPersistence:[self useKeychainPersistence]];
 	[newRequest setUseSessionPersistence:[self useSessionPersistence]];
@@ -2901,7 +2902,7 @@ static BOOL isiPhoneOS2;
 		NSURL *theURL = [theCredentials objectForKey:@"URL"];
 		
 		// Port can be nil!
-		if ([[theURL host] isEqualToString:[requestURL host]] && ([theURL port] == [requestURL port] || ([requestURL port] && [[theURL port] isEqualToNumber:[requestURL port]])) && [[theURL scheme] isEqualToString:[requestURL scheme]]) {
+		if ([[theURL host] isEqualToString:[requestURL host]] && ([theURL port] == [requestURL port] || [[theURL port] isEqualToNumber:[requestURL port]]) && [[theURL scheme] isEqualToString:[requestURL scheme]]) {
 			if (![self responseStatusCode] || (![theCredentials objectForKey:@"AuthenticationRealm"] || [[theCredentials objectForKey:@"AuthenticationRealm"] isEqualToString:[self authenticationRealm]])) {
 				[sessionCredentialsLock unlock];
 				return theCredentials;
@@ -2960,7 +2961,7 @@ static BOOL isiPhoneOS2;
 + (NSMutableArray *)sessionCookies
 {
 	if (!sessionCookies) {
-		[ASIHTTPRequest setSessionCookies:[[[NSMutableArray alloc] init] autorelease]];
+		[OFASIHTTPRequest setSessionCookies:[[[NSMutableArray alloc] init] autorelease]];
 	}
 	return sessionCookies;
 }
@@ -2982,15 +2983,15 @@ static BOOL isiPhoneOS2;
 	[sessionCookiesLock lock];
 	NSHTTPCookie *cookie;
 	NSUInteger i;
-	NSUInteger max = [[ASIHTTPRequest sessionCookies] count];
+	NSUInteger max = [[OFASIHTTPRequest sessionCookies] count];
 	for (i=0; i<max; i++) {
-		cookie = [[ASIHTTPRequest sessionCookies] objectAtIndex:i];
+		cookie = [[OFASIHTTPRequest sessionCookies] objectAtIndex:i];
 		if ([[cookie domain] isEqualToString:[newCookie domain]] && [[cookie path] isEqualToString:[newCookie path]] && [[cookie name] isEqualToString:[newCookie name]]) {
-			[[ASIHTTPRequest sessionCookies] removeObjectAtIndex:i];
+			[[OFASIHTTPRequest sessionCookies] removeObjectAtIndex:i];
 			break;
 		}
 	}
-	[[ASIHTTPRequest sessionCookies] addObject:newCookie];
+	[[OFASIHTTPRequest sessionCookies] addObject:newCookie];
 	[sessionCookiesLock unlock];
 }
 
@@ -3074,7 +3075,7 @@ static BOOL isiPhoneOS2;
 	
 	
 	// Uncompress data in source and save in destination
-	int status = [ASIHTTPRequest uncompressZippedDataFromSource:source toDestination:dest];
+	int status = [OFASIHTTPRequest uncompressZippedDataFromSource:source toDestination:dest];
 	
 	// Close the files
 	fclose(dest);
@@ -3209,7 +3210,7 @@ static BOOL isiPhoneOS2;
 	FILE *dest = fdopen([outputFileHandle fileDescriptor], "w");
 
 	// compress data in source and save in destination
-	int status = [ASIHTTPRequest compressDataFromSource:source toDestination:dest];
+	int status = [OFASIHTTPRequest compressDataFromSource:source toDestination:dest];
 
 	// Close the files
 	fclose(dest);
@@ -3286,7 +3287,7 @@ static BOOL isiPhoneOS2;
 	if (!appName) {
 		appName = [bundle objectForInfoDictionaryKey:@"CFBundleName"];	
 	}
-	// If we couldn't find one, we'll give up (and ASIHTTPRequest will use the standard CFNetwork user agent)
+	// If we couldn't find one, we'll give up (and OFASIHTTPRequest will use the standard CFNetwork user agent)
 	if (!appName) {
 		return nil;
 	}
@@ -3321,7 +3322,7 @@ static BOOL isiPhoneOS2;
 	OSName = @"Mac OS X";
 	
 	// From http://www.cocoadev.com/index.pl?DeterminingOSVersion
-	// We won't bother to check for systems prior to 10.4, since ASIHTTPRequest only works on 10.5+
+	// We won't bother to check for systems prior to 10.4, since OFASIHTTPRequest only works on 10.5+
     OSErr err;
     SInt32 versionMajor, versionMinor, versionBugFix;
 	err = Gestalt(gestaltSystemVersionMajor, &versionMajor);
@@ -3375,7 +3376,7 @@ static BOOL isiPhoneOS2;
 {
 	if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
 		return nil;
-	} else if ([ASIHTTPRequest isiPhoneOS2]) {
+	} else if ([OFASIHTTPRequest isiPhoneOS2]) {
 		return @"application/octet-stream";
 	}
 	// Borrowed from http://stackoverflow.com/questions/2439020/wheres-the-iphone-mime-type-database
@@ -3395,8 +3396,8 @@ static BOOL isiPhoneOS2;
 	if (![self readStream]) {
 		return;
 	}
-	[ASIHTTPRequest measureBandwidthUsage];
-	if ([ASIHTTPRequest isBandwidthThrottled]) {
+	[OFASIHTTPRequest measureBandwidthUsage];
+	if ([OFASIHTTPRequest isBandwidthThrottled]) {
 		[bandwidthThrottlingLock lock];
 		// Handle throttling
 		if (throttleWakeUpTime) {
@@ -3503,7 +3504,7 @@ static BOOL isiPhoneOS2;
 	[bandwidthThrottlingLock lock];
 
 	if (!bandwidthMeasurementDate || [bandwidthMeasurementDate timeIntervalSinceNow] < -0) {
-		[ASIHTTPRequest recordBandwidthUsage];
+		[OFASIHTTPRequest recordBandwidthUsage];
 	}
 	
 	// Are we performing bandwidth throttling?
@@ -3560,10 +3561,10 @@ static BOOL isiPhoneOS2;
 + (void)setShouldThrottleBandwidthForWWAN:(BOOL)throttle
 {
 	if (throttle) {
-		[ASIHTTPRequest throttleBandwidthForWWANUsingLimit:ASIWWANBandwidthThrottleAmount];
+		[OFASIHTTPRequest throttleBandwidthForWWANUsingLimit:OFASIWWANBandwidthThrottleAmount];
 	} else {
-		[ASIHTTPRequest unsubscribeFromNetworkReachabilityNotifications];
-		[ASIHTTPRequest setMaxBandwidthPerSecond:0];
+		[OFASIHTTPRequest unsubscribeFromNetworkReachabilityNotifications];
+		[OFASIHTTPRequest setMaxBandwidthPerSecond:0];
 		[bandwidthThrottlingLock lock];
 		isBandwidthThrottled = NO;
 		shouldThrottleBandwithForWWANOnly = NO;
@@ -3576,43 +3577,45 @@ static BOOL isiPhoneOS2;
 	[bandwidthThrottlingLock lock];
 	shouldThrottleBandwithForWWANOnly = YES;
 	maxBandwidthPerSecond = limit;
-	[ASIHTTPRequest registerForNetworkReachabilityNotifications];	
+	[OFASIHTTPRequest registerForNetworkReachabilityNotifications];	
 	[bandwidthThrottlingLock unlock];
-	[ASIHTTPRequest reachabilityChanged:nil];
+	[OFASIHTTPRequest reachabilityChanged:nil];
 }
 
 #pragma mark reachability
 
 + (void)registerForNetworkReachabilityNotifications
 {
-#if REACHABILITY_20_API
-	[[Reachability reachabilityForInternetConnection] startNotifer];
-#else
-	[[Reachability sharedReachability] setNetworkStatusNotificationsEnabled:YES];
-#endif
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:@"kNetworkReachabilityChangedNotification" object:nil];
+//#if REACHABILITY_20_API
+//	[[Reachability reachabilityForInternetConnection] startNotifer];
+//#else
+//	[[Reachability sharedReachability] setNetworkStatusNotificationsEnabled:YES];
+//#endif
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:@"kNetworkReachabilityChangedNotification" object:nil];
 }
 
 
 + (void)unsubscribeFromNetworkReachabilityNotifications
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"kNetworkReachabilityChangedNotification" object:nil];
+//	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"kNetworkReachabilityChangedNotification" object:nil];
 }
 
 + (BOOL)isNetworkReachableViaWWAN
 {
-#if REACHABILITY_20_API
-	return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN);	
-#else
-	return ([[Reachability sharedReachability] internetConnectionStatus] == ReachableViaCarrierDataNetwork);
-#endif
+	NSAssert(NO, @"Usage of this method should not be required");
+	return NO;
+//#if REACHABILITY_20_API
+//	return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN);	
+//#else
+//	return ([[Reachability sharedReachability] internetConnectionStatus] == ReachableViaCarrierDataNetwork);
+//#endif
 }
 
 + (void)reachabilityChanged:(NSNotification *)note
 {
-	[bandwidthThrottlingLock lock];
-	isBandwidthThrottled = [ASIHTTPRequest isNetworkReachableViaWWAN];
-	[bandwidthThrottlingLock unlock];
+//	[bandwidthThrottlingLock lock];
+//	isBandwidthThrottled = [ASIHTTPRequest isNetworkReachableViaWWAN];
+//	[bandwidthThrottlingLock unlock];
 }
 #endif
 

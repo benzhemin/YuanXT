@@ -1,5 +1,5 @@
 //
-//  ASIInputStream.h
+//  OFASIInputStream.h
 //  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
 //
 //  Created by Ben Copsey on 10/08/2009.
@@ -8,19 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@class ASIHTTPRequest;
+@class OFASIHTTPRequest;
 
 // This is a wrapper for NSInputStream that pretends to be an NSInputStream itself
 // Subclassing NSInputStream seems to be tricky, and may involve overriding undocumented methods, so we'll cheat instead.
 // It is used by ASIHTTPRequest whenever we have a request body, and handles measuring and throttling the bandwidth used for uploading
 
-@interface ASIInputStream : NSObject {
+@interface OFASIInputStream : NSObject {
 	NSInputStream *stream;
-	ASIHTTPRequest *request;
+	OFASIHTTPRequest *request;
 }
-+ (id)inputStreamWithFileAtPath:(NSString *)path request:(ASIHTTPRequest *)request;
-+ (id)inputStreamWithData:(NSData *)data request:(ASIHTTPRequest *)request;
++ (id)inputStreamWithFileAtPath:(NSString *)path request:(OFASIHTTPRequest *)request;
++ (id)inputStreamWithData:(NSData *)data request:(OFASIHTTPRequest *)request;
 
 @property (retain, nonatomic) NSInputStream *stream;
-@property (assign, nonatomic) ASIHTTPRequest *request;
+@property (assign, nonatomic) OFASIHTTPRequest *request;
 @end
