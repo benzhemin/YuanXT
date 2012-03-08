@@ -83,7 +83,7 @@ static int col_max = 0;
 }
 
 -(void)requestSeatService{
-    self.seatService = [[YXTSeatService alloc] init];
+    self.seatService = [[[YXTSeatService alloc] init] autorelease];
     seatService.showInfo = self.showInfo;
     seatService.delegateSeat = self;
     [seatService startToFetchSeatList];
@@ -110,7 +110,7 @@ static int col_max = 0;
     [self computeMaxRowCol];
     
     self.totalCounts = 0;
-    self.pickList = [[NSMutableArray alloc] initWithCapacity:4];
+    self.pickList = [[[NSMutableArray alloc] initWithCapacity:4] autorelease];
     self.seatSelLabel.text = @"";
     
     [self performSelector:@selector(layOutSeatScroll) withObject:nil afterDelay:0.2];
@@ -147,7 +147,7 @@ static int col_max = 0;
                                              SEAT_HEIGHT*row_max+ROW_SPACING*(row_max+1)+SCROLL_HEIGHT_SPAN);
     
     self.scrollview.contentSize = contentSize;
-    self.seatBackView = [[YXTSeatBackView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
+    self.seatBackView = [[[YXTSeatBackView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)] autorelease];
     seatBackView.tag = ZOOM_VIEW_TAG;
     
     //float minimumScale = [scrollview frame].size.width  / [seatBackView frame].size.width;
@@ -256,7 +256,7 @@ static int col_max = 0;
 
 -(IBAction)pressSubmitSeat:(id)sender{
     if ([pickList count] > 0) {
-        self.orderService = [[YXTOrderService alloc] init];
+        self.orderService = [[[YXTOrderService alloc] init] autorelease];
         orderService.delegateSeat = self;
         orderService.pickList = self.pickList;
         orderService.showSeqNo = showInfo.showSeqNo;

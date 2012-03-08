@@ -26,7 +26,6 @@
 @class YXTCinemaTabController;
 
 @interface YXTFilmTabController : YXTBasicTabController<UIScrollViewDelegate, ImageDownLoadDelegate>{
-	YXTCinemaTabController *cinemaController;
 	BOOL refreshFisrtTiem;
     
     YXTFilmInfo *curFilmInfo;
@@ -58,8 +57,6 @@
 	UILabel *areaLabel;
 	UILabel *ycTimeLabel;
 }
-
-@property (nonatomic, retain) YXTCinemaTabController *cinemaController;
 
 @property (nonatomic, retain) YXTFilmInfo *curFilmInfo;
 

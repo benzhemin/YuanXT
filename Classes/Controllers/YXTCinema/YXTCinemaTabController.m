@@ -60,7 +60,7 @@ enum TreeNodeLeafTag {
 		tableFrame.size.height = 396;
 		
 		self.hidesBottomBarWhenPushed = YES;
-		self.imageQueue = [[ASINetworkQueue alloc] init];
+		imageQueue = [[ASINetworkQueue alloc] init];
 		[imageQueue go];
 	}
 	return self;
@@ -72,7 +72,7 @@ enum TreeNodeLeafTag {
 		tableFrame = CGRectZero;
 		tableFrame.size.height = 360;
 		
-		self.imageQueue = [[ASINetworkQueue alloc] init];
+		imageQueue = [[ASINetworkQueue alloc] init];
 		[imageQueue go];
 	}
 	return self;
@@ -96,14 +96,14 @@ enum TreeNodeLeafTag {
 	[self.view addSubview:naviView];
 	[naviView release];
 	
-	self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 44, self.view.bounds.size.width, tableFrame.size.height)];
+	self.contentView = [[[UIView alloc] initWithFrame:CGRectMake(0, 44, self.view.bounds.size.width, tableFrame.size.height)] autorelease];
     [self.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:246.0/255.0 blue:248.0/255.0 alpha:1.0]];
 	[self.view addSubview:contentView];
 	
 	tableFrame.size.width = self.view.bounds.size.width;
 	
-	self.cinemaTableView = [[UITableView alloc] initWithFrame:tableFrame
-														style:UITableViewStylePlain];
+	self.cinemaTableView = [[[UITableView alloc] initWithFrame:tableFrame
+														style:UITableViewStylePlain] autorelease];
 	[self.cinemaTableView setDelegate:self];
 	[self.cinemaTableView setDataSource:self];
 	[self.cinemaTableView setBackgroundColor:[UIColor clearColor]];
@@ -131,7 +131,7 @@ enum TreeNodeLeafTag {
 		[self setUpUINavigationBarItem];
 	}
 	
-	self.cinimaService = [[YXTCinemaService alloc] init];
+	self.cinimaService = [[[YXTCinemaService alloc] init] autorelease];
 	if (self.filmInfo != nil) {
 		cinimaService.filmInfo = filmInfo;
 	}

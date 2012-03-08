@@ -29,7 +29,7 @@
 
 -(id)init{
 	if (self=[super init]) {
-		self.filmList = [[NSMutableArray alloc] initWithCapacity:20];
+		filmList = [[NSMutableArray alloc] initWithCapacity:20];
 	}
 	return self;
 }

@@ -67,7 +67,7 @@
 	NSString *errorCode = [bodyDict objectForKey:@"ERRORCODE"];
 	
 	if(responseCode == 200 && [errorCode isEqualToString:@"000000"]){
-		self.orderInfo = [[YXTOrderInfo alloc] init];
+		self.orderInfo = [[[YXTOrderInfo alloc] init] autorelease];
         orderInfo.subscriptId = [bodyDict objectForKey:@"SUBSCRIPTID"];
         orderInfo.productNo = [bodyDict objectForKey:@"PRODUCTNO"];
         orderInfo.partnerId = [bodyDict objectForKey:@"PARTNERID"];

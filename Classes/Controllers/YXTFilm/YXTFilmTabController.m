@@ -31,7 +31,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 @implementation YXTFilmTabController
 
-@synthesize cinemaController, curFilmInfo;
+@synthesize curFilmInfo;
 
 @synthesize location, hotFilm, filmList, imageQueue, filmImageList;
 
@@ -46,7 +46,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 	[location release];
 	[hotFilm release];
     
-    [cinemaController release];
     [curFilmInfo release];
 	
 	[filmList release];
@@ -91,8 +90,12 @@ static CGFloat begin_decelerate_offsetx = 0;
 -(void)viewDidLoad{
 	[self.navigationController setNavigationBarHidden:YES animated:NO];
 	
-	self.naviView = [[YXTNavigationBarView alloc] init];
-	naviView.delegateCtrl = self;
+    
+	YXTNavigationBarView *cusNaviView = [[YXTNavigationBarView alloc] init];
+	self.naviView = cusNaviView;
+    [cusNaviView release];
+    
+    naviView.delegateCtrl = self;
 	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
 	[naviView addCitySwitchIconToBar];
 	[naviView addTitleLabelToBar:@"正在热映"];
@@ -102,7 +105,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 	
 	refreshFisrtTiem = YES;
 
-	//viewDidLoad时，初始化3张图片，等获取到所有图片再重新layout
+	//initialize 3 pic, when fetch all pics relayout
 	int film_init_image = 3;
 	
 	filmScrollView.delegate = self;
@@ -133,8 +136,10 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(void)refreshHotFilmView{
-	self.hotFilm = [[YXTHotFilmService alloc] init];
-	[hotFilm setDelegateFilm:self];
+	YXTHotFilmService *cusHotFilm = [[YXTHotFilmService alloc] init];
+	self.hotFilm = cusHotFilm;
+    [cusHotFilm release];
+    [hotFilm setDelegateFilm:self];
 	[hotFilm setCityInfo:[YXTSettings instance].cityInfo];
 	
 	[hotFilm startToFetchFilmList];
@@ -151,8 +156,15 @@ static CGFloat begin_decelerate_offsetx = 0;
 	if (imageQueue) {
 		[imageQueue cancelAllOperations];
 	}
-	self.imageQueue = [[ASINetworkQueue alloc] init];
-	self.filmImageList = [[NSMutableArray alloc] initWithCapacity:20];
+    
+	ASINetworkQueue *cusImageQueue = [[ASINetworkQueue alloc] init];
+    self.imageQueue = cusImageQueue;
+    [cusImageQueue release];
+    
+    
+	NSMutableArray *cusFilmImageList = [[NSMutableArray alloc] initWithCapacity:20];
+    self.filmImageList = cusFilmImageList;
+    [cusFilmImageList release];
 	
 	int i=0;
 	for (YXTFilmInfo *filmInfo in filmList) {
@@ -193,7 +205,11 @@ static CGFloat begin_decelerate_offsetx = 0;
 	//为了有循环滑动效果，设置scrollview的宽度为3倍内容
 	
 	int film_init_image = [self.filmList count] * factor;
-	self.filmImageViewList = [[NSMutableArray alloc] initWithCapacity:film_init_image];
+    
+	NSMutableArray *cusFilmImgViewList = [[NSMutableArray alloc] initWithCapacity:film_init_image];
+    self.filmImageViewList = cusFilmImgViewList;
+    [cusFilmImgViewList release];
+    
 	filmScrollView.contentSize = CGSizeMake(startX + film_init_image*width + (film_init_image-1)*span + startX, height);	
 	
 	NSString *loadingImgName = [NSString stringWithFormat:@"bg_movie.png"];
@@ -332,21 +348,32 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(IBAction)pressCitySwitchBtn:(id)sender{
-	self.location = [[YXTLocationService alloc] init];
+    YXTLocationService *cusLocation = [[YXTLocationService alloc] init];
+	self.location = cusLocation;
+    [cusLocation release];
+    
 	[location setDelegateFilm:self];
 	[location startToFetchCityList];
 }
 
 -(void)popUpCityChangePicker:(NSMutableArray *)array{
-	self.citySheet = [[YXTActionSheet alloc] initWithHeight:234.0f WithSheetTitle:@"" delegateClass:self 
+	YXTActionSheet *cusCitySheet = [[YXTActionSheet alloc] initWithHeight:234.0f WithSheetTitle:@"" delegateClass:self 
 											   confirm:@selector(selectCityConfirm:) cancel:@selector(selectCityCancel:)];
-	
-	self.cityPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, citySheet.bounds.size.width, 225)];
+	self.citySheet = cusCitySheet;
+    [cusCitySheet release];
+    
+    CGRect pickFrame = CGRectMake(0, 0, citySheet.bounds.size.width, 225);
+    UIPickerView *cusPicker = [[UIPickerView alloc] initWithFrame:pickFrame];
+	self.cityPicker = cusPicker;
+    [cusPicker release];
 	
 	cityPicker.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	cityPicker.showsSelectionIndicator = YES;	// note this is default to NO
 	
-	self.cityPickerDelegate = [[YXTPickerDelegate alloc] init];
+    YXTPickerDelegate *cusDelegate = [[YXTPickerDelegate alloc] init];
+	self.cityPickerDelegate = cusDelegate;
+    [cusDelegate release];
+    
 	cityPickerDelegate.pickerDataArray = array;
 	cityPicker.dataSource = cityPickerDelegate;
 	cityPicker.delegate = cityPickerDelegate;
@@ -375,15 +402,21 @@ static CGFloat begin_decelerate_offsetx = 0;
 -(IBAction)pressFilmImgBtn:(id)sender{
 	int index = ((UIView *)sender).tag;
 	YXTFilmInfo *filmInfo = [self.filmList objectAtIndex:(index%[filmList count])];
-	self.cinemaController = [[YXTCinemaTabController alloc] init];
+	
+    YXTCinemaTabController *cinemaController = [[YXTCinemaTabController alloc] init];
+
 	cinemaController.filmInfo = filmInfo;
 	[self.navigationController pushViewController:cinemaController animated:YES];
+    [cinemaController release];
 }
 
 -(IBAction)pressBuyFilmTicket:(id)sender{
-    self.cinemaController = [[YXTCinemaTabController alloc] init];
+    
+    YXTCinemaTabController *cinemaController = [[YXTCinemaTabController alloc] init];
+
     cinemaController.filmInfo = self.curFilmInfo;
     [self.navigationController pushViewController:cinemaController animated:YES];
+    [cinemaController release];
 }
 
 -(void)updateFilmInfo:(YXTFilmInfo *)filmInfo{

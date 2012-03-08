@@ -100,13 +100,13 @@
 	selectDateStr = todayStr;
 	
 	CGRect dateSegFrame = CGRectMake(57, 75, 206, 31);
-	self.dateSegImgView = [[UIImageView alloc] initWithFrame:dateSegFrame];
+	dateSegImgView = [[UIImageView alloc] initWithFrame:dateSegFrame];
 	[dateSegImgView setUserInteractionEnabled:YES];
 	[dateSegImgView setImage:[UIImage imageNamed:@"tab1.png"]];
 	[self.contentView addSubview:dateSegImgView];
 	
 	CGRect todayFrame = CGRectMake(12, 2, 80, 25);
-	self.todayLabel = [[UILabel alloc] initWithFrame:todayFrame];
+	todayLabel = [[UILabel alloc] initWithFrame:todayFrame];
 	[todayLabel setBackgroundColor:[UIColor clearColor]];
 	todayLabel.font = [UIFont boldSystemFontOfSize:14];
 	todayLabel.textColor = [UIColor whiteColor];
@@ -114,7 +114,7 @@
 	[dateSegImgView addSubview:todayLabel];
 	
 	CGRect tomorrowFrame = CGRectMake(115, 2, 80, 25);
-	self.tomorrowLabel = [[UILabel alloc] initWithFrame:tomorrowFrame];
+	tomorrowLabel = [[UILabel alloc] initWithFrame:tomorrowFrame];
 	[tomorrowLabel setBackgroundColor:[UIColor clearColor]];
 	tomorrowLabel.font = [UIFont boldSystemFontOfSize:14];
 	tomorrowLabel.text = tomorrowStr;
@@ -122,7 +122,7 @@
 	
 	self.seatImg = [UIImage imageNamed:@"icon_zuowei.png"];
     
-	self.orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 110, 310, 280) style:UITableViewStyleGrouped];
+	orderTableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 110, 310, 280) style:UITableViewStyleGrouped];
 	[self.orderTableView setDelegate:self];
 	[self.orderTableView setDataSource:self];
 	[self.orderTableView setBackgroundColor:[UIColor clearColor]];
@@ -169,7 +169,7 @@
 }
 
 -(void)requestShowService{
-	self.showService = [[YXTShowService alloc] init];
+	self.showService = [[[YXTShowService alloc] init] autorelease];
 	showService.dateStr = selectDateStr;
 	showService.delegateFilm = self;
 	showService.cinemaInfo = self.cinemaInfo;
@@ -200,7 +200,7 @@
 }
 
 -(void)requestHasNoCount{
-	self.showList = [[NSMutableArray alloc] initWithCapacity:0];
+	self.showList = [[[NSMutableArray alloc] initWithCapacity:0] autorelease];
 	[self performSelectorOnMainThread:@selector(refreshFilmTableView) withObject:nil waitUntilDone:NO];
 }
 

@@ -67,7 +67,7 @@ enum Film_Table_Tag {
 		
 		dateTag = today_tag;
 		
-		self.imageQueue = [[ASINetworkQueue alloc] init];
+		imageQueue = [[ASINetworkQueue alloc] init];
 		[imageQueue go];
 	}
 	return self;
@@ -116,7 +116,7 @@ enum Film_Table_Tag {
 	
 	self.filmBgImg = [UIImage imageNamed:@"bg_movie.png"];
 	
-	self.filmTableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 90, 310, 300) style:UITableViewStyleGrouped];
+	filmTableView = [[UITableView alloc] initWithFrame:CGRectMake(5, 90, 310, 300) style:UITableViewStyleGrouped];
 	[self.filmTableView setDelegate:self];
 	[self.filmTableView setDataSource:self];
 	[self.filmTableView setBackgroundColor:[UIColor clearColor]];
@@ -124,13 +124,13 @@ enum Film_Table_Tag {
 	[self.contentView addSubview:filmTableView];
 	
 	CGRect dateSegFrame = CGRectMake(57, 60, 206, 31);
-	self.dateSegImgView = [[UIImageView alloc] initWithFrame:dateSegFrame];
+	dateSegImgView = [[UIImageView alloc] initWithFrame:dateSegFrame];
 	[dateSegImgView setUserInteractionEnabled:YES];
 	[dateSegImgView setImage:[UIImage imageNamed:@"tab1.png"]];
 	[self.contentView addSubview:dateSegImgView];
 	
 	CGRect todayFrame = CGRectMake(12, 2, 80, 25);
-	self.todayLabel = [[UILabel alloc] initWithFrame:todayFrame];
+	todayLabel = [[UILabel alloc] initWithFrame:todayFrame];
 	[todayLabel setBackgroundColor:[UIColor clearColor]];
 	todayLabel.font = [UIFont boldSystemFontOfSize:14];
 	todayLabel.textColor = [UIColor whiteColor];
@@ -138,7 +138,7 @@ enum Film_Table_Tag {
 	[dateSegImgView addSubview:todayLabel];
 	
 	CGRect tomorrowFrame = CGRectMake(115, 2, 80, 25);
-	self.tomorrowLabel = [[UILabel alloc] initWithFrame:tomorrowFrame];
+	tomorrowLabel = [[UILabel alloc] initWithFrame:tomorrowFrame];
 	[tomorrowLabel setBackgroundColor:[UIColor clearColor]];
 	tomorrowLabel.font = [UIFont boldSystemFontOfSize:14];
 	tomorrowLabel.text = tomorrowStr;
@@ -188,7 +188,10 @@ enum Film_Table_Tag {
 
 
 -(void)requestShowService{
-	self.showService = [[YXTShowService alloc] init];
+	YXTShowService *cusShowService = [[YXTShowService alloc] init];
+    self.showService = cusShowService;
+    [cusShowService release];
+    
 	showService.dateStr = selectDateStr;
 	showService.changeFlag = YES;
 	showService.delegateFilm = self;
@@ -211,7 +214,10 @@ enum Film_Table_Tag {
 		}
 	}
 	
-	self.hotFilmService = [[YXTHotFilmService alloc] init];
+	YXTHotFilmService *cusHotFilmService = [[YXTHotFilmService alloc] init];
+    self.hotFilmService = cusHotFilmService;
+    [cusHotFilmService release];
+    
 	hotFilmService.changeFlag = YES;
 	hotFilmService.filmIdSet = filmIdSet;
 	[hotFilmService setDelegateFilm:self];
@@ -225,7 +231,10 @@ enum Film_Table_Tag {
 	
 	[self performSelectorOnMainThread:@selector(refreshFilmTableView) withObject:nil waitUntilDone:NO];
 	
-	self.filmImageList = [[NSMutableArray alloc] initWithCapacity:20];
+	NSMutableArray *cusFilmImageList = [[NSMutableArray alloc] initWithCapacity:20];
+    self.filmImageList = cusFilmImageList;
+    [cusFilmImageList release];
+    
 	int filmIndex = 0;
 	for (YXTFilmInfo *filmInfo in self.filmList) {
 		
@@ -246,7 +255,10 @@ enum Film_Table_Tag {
 }
 
 -(void)requestHasNoCount{
-	self.filmList = [[NSMutableArray alloc] initWithCapacity:0];
+	NSMutableArray *cusFilmList = [[NSMutableArray alloc] initWithCapacity:0];
+    self.filmList = cusFilmList;
+    [cusFilmList release];
+    
 	[self performSelectorOnMainThread:@selector(refreshFilmTableView) withObject:nil waitUntilDone:NO];
 }
 

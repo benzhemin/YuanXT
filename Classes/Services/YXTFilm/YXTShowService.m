@@ -32,7 +32,7 @@
 
 -(id)init{
 	if (self=[super init]) {
-		self.showList = [[NSMutableArray alloc] initWithCapacity:20];
+		showList = [[NSMutableArray alloc] initWithCapacity:20];
 	}
 	return self;
 }

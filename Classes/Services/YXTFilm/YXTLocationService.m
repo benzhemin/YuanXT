@@ -45,7 +45,7 @@
 
 -(id)init{
 	if (self=[super init]) {
-		self.cityList = [[NSMutableArray alloc] initWithCapacity:20];
+		cityList = [[NSMutableArray alloc] initWithCapacity:20];
 	}
 	return self;
 }

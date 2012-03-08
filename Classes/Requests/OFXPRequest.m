@@ -410,7 +410,7 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 }
 
 - (void)retry{
-	self.request = [mRequest copy];
+	self.request = [[mRequest copy] autorelease];
     [self execute];
 }
 

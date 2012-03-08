@@ -20,7 +20,7 @@
 
 -(void)addAnimateLoadingImage{
 	if (!self.spiner) {
-		self.spiner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
+		self.spiner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite] autorelease];
 		spiner.bounds = CGRectMake(0, 0, 50, 50);
 		spiner.center = self.center;
 		[self addSubview:spiner];

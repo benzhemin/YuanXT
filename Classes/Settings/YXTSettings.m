@@ -49,7 +49,7 @@ static YXTSettings* sInstance = nil;
 		[self setDefaultTag:@"mobile-number" value:@"18918828387"];
 		[self setDefaultTag:@"sign-code" value:@"e96e260410b4ea1a9cd227fae1041e30"];
 		
-		self.cityInfo = [[YXTCityInfo alloc] init];
+		cityInfo = [[YXTCityInfo alloc] init];
 		[cityInfo setProvinceId:@"310000"];
 		[cityInfo setCityId:@"310000"];
 		[cityInfo setCityName:@"上海市"];

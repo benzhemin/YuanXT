@@ -20,7 +20,7 @@
 
 -(id)init{
     if (self=[super init]) {
-        self.seatList = [[NSMutableArray alloc] initWithCapacity:100];
+        seatList = [[NSMutableArray alloc] initWithCapacity:100];
     }
     return self;
 }

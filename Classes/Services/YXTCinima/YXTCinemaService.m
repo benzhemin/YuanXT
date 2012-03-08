@@ -26,8 +26,8 @@
 
 -(id)init{
 	if (self=[super init]) {
-		self.rawCinemaList = [[NSMutableArray alloc] initWithCapacity:20];
-		self.cinemaDistrictList = [[NSMutableArray alloc] initWithCapacity:20];
+		rawCinemaList = [[NSMutableArray alloc] initWithCapacity:20];
+		cinemaDistrictList = [[NSMutableArray alloc] initWithCapacity:20];
 	}
 	return self;
 }
@@ -154,7 +154,7 @@
 
 -(id)init{
 	if (self=[super init]) {
-		self.cinemaList = [[NSMutableArray alloc] initWithCapacity:10];
+		cinemaList = [[NSMutableArray alloc] initWithCapacity:10];
 		isExpand = NO;
 	}
 	return self;

@@ -28,9 +28,9 @@
 -(id)init{
 	if (self = [super init]) {
 		[self setUseNetworkActivity:YES];
-		self.useBezelStyle = YES;
+		useBezelStyle = YES;
 		//self.coverNavBar = YES;
-		self.waitingWidth = 150.0;
+		waitingWidth = 150.0;
 	
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(displayRequestFailedActivityView) 
