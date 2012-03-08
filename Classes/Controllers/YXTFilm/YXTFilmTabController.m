@@ -89,11 +89,7 @@ static CGFloat begin_decelerate_offsetx = 0;
 -(void)viewDidLoad{
 	[self.navigationController setNavigationBarHidden:YES animated:NO];
 	
-    
-	YXTNavigationBarView *cusNaviView = [[YXTNavigationBarView alloc] init];
-	self.naviView = cusNaviView;
-    [cusNaviView release];
-    
+	self.naviView = [[[YXTNavigationBarView alloc] init] autorelease];
     naviView.delegateCtrl = self;
 	[naviView addBackIconToBar:[UIImage imageNamed:@"btn_back.png"]];
 	[naviView addCitySwitchIconToBar];
@@ -156,14 +152,9 @@ static CGFloat begin_decelerate_offsetx = 0;
 		[imageQueue cancelAllOperations];
 	}
     
-	ASINetworkQueue *cusImageQueue = [[ASINetworkQueue alloc] init];
-    self.imageQueue = cusImageQueue;
-    [cusImageQueue release];
+    self.imageQueue = [[[ASINetworkQueue alloc] init] autorelease];
     
-    
-	NSMutableArray *cusFilmImageList = [[NSMutableArray alloc] initWithCapacity:20];
-    self.filmImageList = cusFilmImageList;
-    [cusFilmImageList release];
+    self.filmImageList = [[[NSMutableArray alloc] initWithCapacity:20] autorelease];
 	
 	int i=0;
 	for (YXTFilmInfo *filmInfo in filmList) {
@@ -201,13 +192,11 @@ static CGFloat begin_decelerate_offsetx = 0;
 		[view removeFromSuperview];
 	}
 	
-	//为了有循环滑动效果，设置scrollview的宽度为3倍内容
+	//for the propose of cycle animation effect
 	
 	int film_init_image = [self.filmList count] * factor;
     
-	NSMutableArray *cusFilmImgViewList = [[NSMutableArray alloc] initWithCapacity:film_init_image];
-    self.filmImageViewList = cusFilmImgViewList;
-    [cusFilmImgViewList release];
+    self.filmImageViewList = [[[NSMutableArray alloc] initWithCapacity:film_init_image] autorelease];
     
 	filmScrollView.contentSize = CGSizeMake(startX + film_init_image*width + (film_init_image-1)*span + startX, height);	
 	

@@ -142,7 +142,7 @@ enum TreeNodeLeafTag {
 -(void)fetchCinemaDistrictListSucceed:(NSMutableArray *)districtList{
 	self.cinemaDistrictList = districtList;
 	
-	//默认树的第一个节点为展开
+	//as default, expand first tree node
 	YXTDistrict *district = [cinemaDistrictList objectAtIndex:0];
 	district.isExpand = YES;
 	
@@ -231,7 +231,7 @@ enum TreeNodeLeafTag {
 
 #pragma mark UITableViewDelegate delegates
 
-//judge index is node or leaf
+//index is node or leaf
 -(bool)isIndexNode:(int)index districtIndex:(int *)distIndexParam cinemaIndex:(int *)cinemaIndexParam{
 	int distIndex = 0;
 	int cur = 0;
