@@ -35,11 +35,16 @@
 		
 		[dict setValue:@"seat" forKey:@"METHOD"];
 		
-		[dict setValue:showInfo.showSeqNo forKey:@"SHOWSEQNO"];
-		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
-		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
         
-        NSLog(@"%@", dict);
+        NSMutableString *signParam = [NSMutableString string];
+        
+		[dict setValue:showInfo.showSeqNo forKey:@"SHOWSEQNO"];
+        [signParam appendFormat:@"%@", showInfo.showSeqNo];
+        
+		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
+        [signParam appendFormat:@"%@", [[YXTSettings instance] getSetting:@"mobile-number"]];
+        
+		[dict setValue:[self md5:signParam] forKey:@"SIGN"];
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];

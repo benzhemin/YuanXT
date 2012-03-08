@@ -11,8 +11,9 @@
 #import "YXTBasicViewController.h"
 #import "BasicInfo.h"
 #import "YXTHotFilmService.h"
+#import "YXTBasicService.h"
 
-@interface YXTCinemaService : NSObject <OFXPResponseJSON>{
+@interface YXTCinemaService : YXTBasicService <OFXPResponseJSON>{
 	YXTBasicViewController *delegateCinema;
 	OFXPRequest *mReq;
 	YXTFilmInfo *filmInfo;

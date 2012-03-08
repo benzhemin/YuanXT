@@ -42,19 +42,28 @@
 		
 		[dict setValue:@"cinema" forKey:@"METHOD"];
 		
-		[dict setValue:[[[YXTSettings instance] cityInfo] cityId] forKey:@"CITYID"];
+		NSMutableString *signParam = [NSMutableString string];
+        
+        [dict setValue:[[[YXTSettings instance] cityInfo] cityId] forKey:@"CITYID"];
+        [signParam appendFormat:@"%@", [[[YXTSettings instance] cityInfo] cityId]];
+        
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
-		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
+        [signParam appendFormat:@"%@", [[YXTSettings instance] getSetting:@"mobile-number"]];
 		
 		if (self.filmInfo) {
 			[dict setValue:filmInfo.filmId forKey:@"FILMID"];
+            [signParam appendFormat:@"%@", filmInfo.filmId];
             
             NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
             [formatter setDateFormat:@"yyyy-MM-dd"];
             NSDate *todayDate = [NSDate date];
             NSString *todayStr = [NSString stringWithFormat:@"%@", [formatter stringFromDate:todayDate]];
+            
             [dict setValue:todayStr forKey:@"SHOWDATE"];
+            [signParam appendFormat:@"%@", todayStr];
 		}
+        
+        [dict setValue:[self md5:signParam] forKey:@"SIGN"];
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];
