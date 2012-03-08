@@ -49,14 +49,20 @@
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 		
 		[dict setValue:@"hotfilm" forKey:@"METHOD"];
+        
+        NSMutableString *signParam = [NSMutableString string];
 		
 		[dict setValue:[[[YXTSettings instance] cityInfo] cityId] forKey:@"CITYID"];
+        [signParam appendFormat:@"%@", [[[YXTSettings instance] cityInfo] cityId]];
+        
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
-		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
+        [signParam appendFormat:@"%@", [[YXTSettings instance] getSetting:@"mobile-number"]];
 		
 		if (self.filmIdSet) {
 			[dict setValue:filmIdSet forKey:@"FILMIDSET"];
+            [signParam appendFormat:@"%@", filmIdSet];
 		}
+        [dict setValue:[self md5:signParam] forKey:@"SIGN"];
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];

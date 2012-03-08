@@ -59,9 +59,13 @@
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
 		[dict setValue:@"miscinfo" forKey:@"METHOD"];
+        
+        NSMutableString *signParam = [NSMutableString string];
+        
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
-		[dict setValue:[[YXTSettings instance] getSetting:@"sign-code"] forKey:@"SIGN"];
-
+        [signParam appendFormat:@"%@", [[YXTSettings instance] getSetting:@"mobile-number"]];
+        
+		[dict setValue:[self md5:signParam] forKey:@"SIGN"];
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];

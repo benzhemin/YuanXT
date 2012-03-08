@@ -37,6 +37,8 @@
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 		
 		[dict setValue:@"order" forKey:@"METHOD"];
+        
+        NSMutableString *signParam = [NSMutableString string];
 		
         NSMutableString *seatStr = [NSMutableString string];
         for (YXTSeatInfo *seatInfo in pickList) {
@@ -44,9 +46,15 @@
         }
         
         [dict setValue:seatStr forKey:@"SEATLIST"];
+        [signParam appendFormat:@"%@", seatStr];
+        
 		[dict setValue:showSeqNo forKey:@"SHOWSEQNO"];
+        [signParam appendFormat:@"%@", showSeqNo];
+        
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
-		[dict setValue:@"a6126169c99301f105e742b57df63fb9" forKey:@"SIGN"];
+        [signParam appendFormat:@"%@", [[YXTSettings instance] getSetting:@"mobile-number"]];
+        
+		[dict setValue:[self md5:signParam] forKey:@"SIGN"];
 		
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];

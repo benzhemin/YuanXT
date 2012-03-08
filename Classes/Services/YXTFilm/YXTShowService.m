@@ -46,17 +46,26 @@
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 		
 		[dict setValue:@"show" forKey:@"METHOD"];
+        
+        NSMutableString *signParam = [NSMutableString string];
+        
 		[dict setValue:[[YXTSettings instance] getSetting:@"mobile-number"] forKey:@"USERPHONE"];
-		[dict setValue:[[YXTSettings instance] getSetting:@"sign-code"] forKey:@"SIGN"];
+		[signParam appendFormat:@"%@", [[YXTSettings instance] getSetting:@"mobile-number"]];
+        
 		
 		if (self.filmInfo) {
 			[dict setValue:filmInfo.filmId forKey:@"FILMID"];
+            [signParam appendFormat:@"%@", filmInfo.filmId];
 		}
 		
 		[dict setValue:cinemaInfo.cinemaId forKey:@"CINEMAID"];
+        [signParam appendFormat:@"%@", cinemaInfo.cinemaId];
 		
 		[dict setValue:dateStr forKey:@"SHOWDATE"];
+        [signParam appendFormat:@"%@", dateStr];
 		
+        [dict setValue:[self md5:signParam] forKey:@"SIGN"];
+        
 		OFXPRequest *req = [OFXPRequest postRequestWithPath:url andBody:dict];
 		[req onRespondJSON:self];
 		[req execute];

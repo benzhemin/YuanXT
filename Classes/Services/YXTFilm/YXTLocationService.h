@@ -10,8 +10,9 @@
 #import "OFXPRequest.h"
 #import "YXTBasicViewController.h"
 #import "BasicInfo.h"
+#import "YXTBasicService.h"
 
-@interface YXTLocationService : NSObject <OFXPResponseJSON>{
+@interface YXTLocationService : YXTBasicService <OFXPResponseJSON>{
 	YXTBasicViewController *delegateFilm;
 	OFXPRequest *mReq;
 	NSMutableArray *cityList;

@@ -10,10 +10,11 @@
 #import "OFXPRequest.h"
 #import "YXTBasicViewController.h"
 #import "BasicInfo.h"
+#import "YXTBasicService.h"
 
 @class YXTOrderInfo;
 
-@interface YXTOrderService : NSObject<OFXPResponseJSON>{
+@interface YXTOrderService : YXTBasicService<OFXPResponseJSON>{
     YXTBasicViewController *delegateSeat;
 	OFXPRequest *mReq;
     

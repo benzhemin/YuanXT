@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "OFXPRequest.h"
+#import "YXTBasicService.h"
 
 @class YXTCinemaInfo;
 @class YXTFilmInfo;
 @class YXTBasicViewController;
 
-@interface YXTShowService : NSObject<OFXPResponseJSON> {
+@interface YXTShowService : YXTBasicService<OFXPResponseJSON> {
 	YXTCinemaInfo *cinemaInfo;
 	YXTFilmInfo *filmInfo;
 	YXTBasicViewController *delegateFilm;
