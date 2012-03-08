@@ -81,7 +81,6 @@ static CGFloat begin_decelerate_offsetx = 0;
 
 -(id)initWithTab{
 	if (self=[super initWithTab]){
-		//self.navigationController.navigationBarHidden = YES;
 		
 	}
 	return self;
