@@ -76,7 +76,8 @@
 
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
 	OFSafeRelease(mReq);
-	
+	[filmList removeAllObjects];
+    
 	NSDictionary *bodyDict = (NSDictionary *)body;
 	NSString *errorCode = [bodyDict objectForKey:@"ERRORCODE"];
 	

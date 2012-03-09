@@ -39,7 +39,7 @@
 
 -(void)dealloc{
 	[mReq release];
-	self.cityList = nil;
+	[cityList release];
 	[super dealloc];
 }
 
@@ -80,6 +80,8 @@
 - (void)onResponseJSON:(id)body withResponseCode:(unsigned int)responseCode{
 	
     OFSafeRelease(mReq);
+    
+    [cityList removeAllObjects];
 	
 	NSDictionary *bodyDict = (NSDictionary *)body;
 	NSString *errorCode = [bodyDict objectForKey:@"ERRORCODE"];

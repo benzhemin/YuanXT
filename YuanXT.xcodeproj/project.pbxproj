@@ -12,6 +12,7 @@
 		0F21760714FF5D30009C6256 /* YXTOrderShowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F21760514FF5D30009C6256 /* YXTOrderShowController.m */; };
 		0F21769215006C50009C6256 /* icon_zuowei.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F21769015006C50009C6256 /* icon_zuowei.png */; };
 		0F21769315006C50009C6256 /* icon_zuowei@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F21769115006C50009C6256 /* icon_zuowei@2x.png */; };
+		0F2B233E150A01C70071861B /* YXTBasicService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2B233D150A01C70071861B /* YXTBasicService.m */; };
 		0F2E945214E4CE6E00F091A4 /* OFReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945114E4CE6E00F091A4 /* OFReachability.m */; };
 		0F2E945B14E4CEF000F091A4 /* YXTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945A14E4CEF000F091A4 /* YXTSettings.m */; };
 		0F2E967914E50D5500F091A4 /* YXTBasicTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E967814E50D5500F091A4 /* YXTBasicTabController.m */; };
@@ -160,6 +161,8 @@
 		0F21760514FF5D30009C6256 /* YXTOrderShowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTOrderShowController.m; sourceTree = "<group>"; };
 		0F21769015006C50009C6256 /* icon_zuowei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zuowei.png; sourceTree = "<group>"; };
 		0F21769115006C50009C6256 /* icon_zuowei@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_zuowei@2x.png"; sourceTree = "<group>"; };
+		0F2B233C150A01C70071861B /* YXTBasicService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YXTBasicService.h; path = ../../../../../../Users/benzhemin/Desktop/YuanXT/Classes/Services/YXTBasicService.h; sourceTree = "<group>"; };
+		0F2B233D150A01C70071861B /* YXTBasicService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YXTBasicService.m; path = ../../../../../../Users/benzhemin/Desktop/YuanXT/Classes/Services/YXTBasicService.m; sourceTree = "<group>"; };
 		0F2E945014E4CE6E00F091A4 /* OFReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFReachability.h; sourceTree = "<group>"; };
 		0F2E945114E4CE6E00F091A4 /* OFReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OFReachability.m; sourceTree = "<group>"; };
 		0F2E945914E4CEF000F091A4 /* YXTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSettings.h; sourceTree = "<group>"; };
@@ -451,6 +454,8 @@
 		0F2E9DEC14E7AEED00F091A4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0F2B233C150A01C70071861B /* YXTBasicService.h */,
+				0F2B233D150A01C70071861B /* YXTBasicService.m */,
 				0F2E9DED14E7AF2E00F091A4 /* YXTFilm */,
 				0F3CDE1F14F23F240010A1EF /* YXTCinima */,
 				CE1CFE6314E9F24800E1AE6F /* BasicInfo.h */,
@@ -1012,6 +1017,7 @@
 				0FE8922C1505B32E00F8AFF7 /* YXTTicketController.m in Sources */,
 				0FE892351505DC7400F8AFF7 /* YXTOrderService.m in Sources */,
 				0FD68E7D1507084300EA86F1 /* YXTSeatBackView.m in Sources */,
+				0F2B233E150A01C70071861B /* YXTBasicService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
