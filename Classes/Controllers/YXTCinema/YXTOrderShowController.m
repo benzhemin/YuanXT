@@ -25,7 +25,9 @@
 @synthesize dateSegImgView, selectDateStr, todayStr, tomorrowStr;
 @synthesize todayLabel, tomorrowLabel;
 
+
 -(void)dealloc{
+	
 	[cinemaInfo release];
 	[filmInfo release];
 	
@@ -49,6 +51,7 @@
 	
 	[super dealloc];
 }
+
 
 -(id)init{
 	if (self=[super init]) {
@@ -97,7 +100,7 @@
     filmDetailBtn.center = CGPointMake(280, filmLabel.center.y);
     [self.contentView addSubview:filmDetailBtn];
 	
-	selectDateStr = todayStr;
+	self.selectDateStr = todayStr;
 	
 	CGRect dateSegFrame = CGRectMake(57, 75, 206, 31);
 	dateSegImgView = [[UIImageView alloc] initWithFrame:dateSegFrame];

@@ -21,6 +21,7 @@
 @synthesize changeFlag;
 
 -(void)dealloc{
+	
 	[cinemaInfo release];
 	[filmInfo release];
 	[showList release];
@@ -61,7 +62,8 @@
 		[dict setValue:cinemaInfo.cinemaId forKey:@"CINEMAID"];
         [signParam appendFormat:@"%@", cinemaInfo.cinemaId];
 		
-		[dict setValue:dateStr forKey:@"SHOWDATE"];
+		[dict setValue:self.dateStr forKey:@"SHOWDATE"];
+		NSLog(@"%@", dateStr);
         [signParam appendFormat:@"%@", dateStr];
 		
         [dict setValue:[self md5:signParam] forKey:@"SIGN"];
@@ -160,6 +162,6 @@
 	[cityId release];
 	[super dealloc];
 }
-
+ 
 @end
 

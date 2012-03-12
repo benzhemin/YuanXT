@@ -193,8 +193,17 @@ static void buildRoot(id<ArgBuilder> builder, NSDictionary* body) {
 
 - (void)dealloc
 {	
+    self.responseText = nil;
+    self.responseJSON = nil;
+    self.responseData = nil;
+    
+	self.responseAsString = nil;
+	self.responseAsJson = nil;
+	self.responseAsData = nil;
+    
     self.path = nil;
 	self.request = nil;	
+    
 	[super dealloc];
 }
 

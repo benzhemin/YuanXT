@@ -113,6 +113,7 @@
 -(void)dealloc{
     [rowId release];
     [columnId release];
+	
     [damageFlag release];
     [seatId release];
     [sectionId release];

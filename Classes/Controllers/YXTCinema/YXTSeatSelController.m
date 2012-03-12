@@ -2,7 +2,7 @@
 //  YXTSeatSelController.m
 //  YuanXT
 //
-//  Created by zhe zhang on 12-3-5.
+//  Created by benzhemin on 12-3-5.
 //  Copyright (c) 2012年 Ideal Information Industry. All rights reserved.
 //
 
@@ -147,7 +147,8 @@ static int col_max = 0;
                                              SEAT_HEIGHT*row_max+ROW_SPACING*(row_max+1)+SCROLL_HEIGHT_SPAN);
     
     self.scrollview.contentSize = contentSize;
-    self.seatBackView = [[[YXTSeatBackView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)] autorelease];
+    self.seatBackView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)] autorelease];
+	self.seatBackView.userInteractionEnabled = YES;
     seatBackView.tag = ZOOM_VIEW_TAG;
     
     //float minimumScale = [scrollview frame].size.width  / [seatBackView frame].size.width;
@@ -171,13 +172,13 @@ static int col_max = 0;
                 [rowLabel release];
             }
         
-            YXTSeatButton *seatBtn = [[YXTSeatButton alloc] initStatus:seatInfo.statusType];
+            YXTSeatButton *seatBtn = [[[YXTSeatButton alloc] initStatus:seatInfo.statusType] autorelease];
             seatBtn.seatInfo = seatInfo;
             seatBtn.delegateSeat = self;
             seatBtn.frame = CGRectMake(INDEX_OFFSET+colnum*COL_SPACING+(colnum-1)*SEAT_WIDTH, 
                                        rownum*ROW_SPACING+(rownum-1)*SEAT_HEIGHT, SEAT_WIDTH, SEAT_HEIGHT);
             [self.seatBackView addSubview:seatBtn];
-            [seatBtn release];
+            //[seatBtn release];
         }
     }
     

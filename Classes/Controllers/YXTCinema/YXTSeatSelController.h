@@ -28,7 +28,7 @@
     NSMutableArray *pickList;
     
 	UIView *contentView;
-    YXTSeatBackView *seatBackView;
+    UIView *seatBackView;
 	
 	UILabel *cinemaNameLabel;
 	UILabel *hallNameLabel;

@@ -274,7 +274,7 @@ enum TreeNodeLeafTag {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *cellTreeNodeIdentifier = @"Tree_Node";
-	static NSString *cellTreeLeafIdentifier = @"Tree_Leaf";
+	//static NSString *cellTreeLeafIdentifier = @"Tree_Leaf";
 	static NSString *supportOnline = @"支持在线选座";
 	static NSString *notSupportOnline = @"不支持在线选座";
 	
@@ -283,16 +283,17 @@ enum TreeNodeLeafTag {
 	int index = indexPath.row;
 	
 	UITableViewCell* cell;
+	cell = [tableView dequeueReusableCellWithIdentifier:cellTreeNodeIdentifier];
+	if (!cell) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellTreeNodeIdentifier] autorelease];
+	}
+	
+	for (UIView *unitview in [cell.contentView subviews]) {
+		[unitview removeFromSuperview];
+	}
+	
 	if ([self isIndexNode:index districtIndex:&distIndex cinemaIndex:&cinemaIndex]) {
-		cell = [tableView dequeueReusableCellWithIdentifier:cellTreeNodeIdentifier];
-		if (!cell) {
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellTreeNodeIdentifier] autorelease];
-		}
-		
-		for (UIView *unitview in [cell.contentView subviews]) {
-			[unitview removeFromSuperview];
-		}
-		
+	
 		CGRect bgFrame = CGRectZero;
 		bgFrame.size.width = nodeBgImage.size.width;
 		bgFrame.size.height = nodeBgImage.size.height;
@@ -339,13 +340,6 @@ enum TreeNodeLeafTag {
 		[rightImgView release];
 		
 	}else {
-		cell = [tableView dequeueReusableCellWithIdentifier:cellTreeLeafIdentifier];
-		if (!cell) {
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellTreeNodeIdentifier] autorelease];
-		}
-		for (UIView *unitview in [cell.contentView subviews]) {
-			[unitview removeFromSuperview];
-		}
 	
 		YXTDistrict *district = [self.cinemaDistrictList objectAtIndex:distIndex];
 		YXTCinemaInfo *cinemaInfo = [district.cinemaList objectAtIndex:cinemaIndex];

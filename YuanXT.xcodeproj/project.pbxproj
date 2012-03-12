@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F04B490150D987B00A82C92 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F04B48F150D987B00A82C92 /* libz.1.2.3.dylib */; };
 		0F0A46181504528E009CADE7 /* YXTSeatSelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0A46161504528C009CADE7 /* YXTSeatSelController.m */; };
 		0F0A46191504528E009CADE7 /* YXTSeatSelController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F0A46171504528D009CADE7 /* YXTSeatSelController.xib */; };
 		0F21760714FF5D30009C6256 /* YXTOrderShowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F21760514FF5D30009C6256 /* YXTOrderShowController.m */; };
 		0F21769215006C50009C6256 /* icon_zuowei.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F21769015006C50009C6256 /* icon_zuowei.png */; };
 		0F21769315006C50009C6256 /* icon_zuowei@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F21769115006C50009C6256 /* icon_zuowei@2x.png */; };
+		0F2B2361150A0E7D0071861B /* YXTBasicService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2B2360150A0E7D0071861B /* YXTBasicService.m */; };
 		0F2E945214E4CE6E00F091A4 /* OFReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945114E4CE6E00F091A4 /* OFReachability.m */; };
 		0F2E945B14E4CEF000F091A4 /* YXTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E945A14E4CEF000F091A4 /* YXTSettings.m */; };
 		0F2E967914E50D5500F091A4 /* YXTBasicTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E967814E50D5500F091A4 /* YXTBasicTabController.m */; };
@@ -103,7 +105,6 @@
 		0F87731715087CE200ED7A58 /* OFASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F87730E15087CE200ED7A58 /* OFASINetworkQueue.m */; };
 		0F87731815087CE200ED7A58 /* OFASINSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F87731015087CE200ED7A58 /* OFASINSStringAdditions.m */; };
 		0FD68E7D1507084300EA86F1 /* YXTSeatBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD68E7C1507084300EA86F1 /* YXTSeatBackView.m */; };
-		0FD68E8415073E4500EA86F1 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FD68E8315073E4500EA86F1 /* libz.1.2.5.dylib */; };
 		0FE8922315046DBF00F8AFF7 /* YXTSeatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE8922215046DBF00F8AFF7 /* YXTSeatService.m */; };
 		0FE892281504AC2600F8AFF7 /* YXTSeatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE892271504AC2600F8AFF7 /* YXTSeatButton.m */; };
 		0FE8922C1505B32E00F8AFF7 /* YXTTicketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE8922A1505B32C00F8AFF7 /* YXTTicketController.m */; };
@@ -153,6 +154,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F04B48F150D987B00A82C92 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		0F0A46151504528B009CADE7 /* YXTSeatSelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSeatSelController.h; sourceTree = "<group>"; };
 		0F0A46161504528C009CADE7 /* YXTSeatSelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTSeatSelController.m; sourceTree = "<group>"; };
 		0F0A46171504528D009CADE7 /* YXTSeatSelController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YXTSeatSelController.xib; sourceTree = "<group>"; };
@@ -160,6 +162,8 @@
 		0F21760514FF5D30009C6256 /* YXTOrderShowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTOrderShowController.m; sourceTree = "<group>"; };
 		0F21769015006C50009C6256 /* icon_zuowei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zuowei.png; sourceTree = "<group>"; };
 		0F21769115006C50009C6256 /* icon_zuowei@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_zuowei@2x.png"; sourceTree = "<group>"; };
+		0F2B235F150A0E7D0071861B /* YXTBasicService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YXTBasicService.h; path = ../../../../../../Users/benzhemin/Desktop/YuanXT/Classes/Services/YXTBasicService.h; sourceTree = "<group>"; };
+		0F2B2360150A0E7D0071861B /* YXTBasicService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YXTBasicService.m; path = ../../../../../../Users/benzhemin/Desktop/YuanXT/Classes/Services/YXTBasicService.m; sourceTree = "<group>"; };
 		0F2E945014E4CE6E00F091A4 /* OFReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFReachability.h; sourceTree = "<group>"; };
 		0F2E945114E4CE6E00F091A4 /* OFReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OFReachability.m; sourceTree = "<group>"; };
 		0F2E945914E4CEF000F091A4 /* YXTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSettings.h; sourceTree = "<group>"; };
@@ -280,7 +284,6 @@
 		0F87731115087CE200ED7A58 /* OFASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFASIProgressDelegate.h; sourceTree = "<group>"; };
 		0FD68E7B1507084300EA86F1 /* YXTSeatBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSeatBackView.h; sourceTree = "<group>"; };
 		0FD68E7C1507084300EA86F1 /* YXTSeatBackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTSeatBackView.m; sourceTree = "<group>"; };
-		0FD68E8315073E4500EA86F1 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		0FE8922115046DBF00F8AFF7 /* YXTSeatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSeatService.h; sourceTree = "<group>"; };
 		0FE8922215046DBF00F8AFF7 /* YXTSeatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXTSeatService.m; sourceTree = "<group>"; };
 		0FE892261504AC2600F8AFF7 /* YXTSeatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXTSeatButton.h; sourceTree = "<group>"; };
@@ -356,7 +359,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FD68E8415073E4500EA86F1 /* libz.1.2.5.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -367,6 +369,7 @@
 				CE82371214E39BA200412576 /* SystemConfiguration.framework in Frameworks */,
 				CE82371414E39BAA00412576 /* MobileCoreServices.framework in Frameworks */,
 				CE82379914E39FCA00412576 /* Security.framework in Frameworks */,
+				0F04B490150D987B00A82C92 /* libz.1.2.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +453,8 @@
 		0F2E9DEC14E7AEED00F091A4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				0F2B235F150A0E7D0071861B /* YXTBasicService.h */,
+				0F2B2360150A0E7D0071861B /* YXTBasicService.m */,
 				0F2E9DED14E7AF2E00F091A4 /* YXTFilm */,
 				0F3CDE1F14F23F240010A1EF /* YXTCinima */,
 				CE1CFE6314E9F24800E1AE6F /* BasicInfo.h */,
@@ -684,7 +689,7 @@
 				CE82371114E39BA200412576 /* SystemConfiguration.framework */,
 				CE82371314E39BAA00412576 /* MobileCoreServices.framework */,
 				CE82379814E39FCA00412576 /* Security.framework */,
-				0FD68E8315073E4500EA86F1 /* libz.1.2.5.dylib */,
+				0F04B48F150D987B00A82C92 /* libz.1.2.3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1010,6 +1015,7 @@
 				0F87731615087CE200ED7A58 /* OFASIInputStream.m in Sources */,
 				0F87731715087CE200ED7A58 /* OFASINetworkQueue.m in Sources */,
 				0F87731815087CE200ED7A58 /* OFASINSStringAdditions.m in Sources */,
+				0F2B2361150A0E7D0071861B /* YXTBasicService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,7 +1035,7 @@
 				INFOPLIST_FILE = "YuanXT-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = YuanXT;
-				SDKROOT = iphoneos5.0;
+				SDKROOT = iphoneos4.2;
 			};
 			name = Debug;
 		};
@@ -1052,12 +1058,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aiming Jia (R47265F4JC)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB06AE7E-4BEC-49F3-AB53-62679F601833";
 				SDKROOT = iphoneos4.2;
 			};
 			name = Debug;

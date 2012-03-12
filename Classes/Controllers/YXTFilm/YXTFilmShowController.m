@@ -100,7 +100,7 @@ enum Film_Table_Tag {
     
     [self.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:246.0/255.0 blue:248.0/255.0 alpha:1.0]];
 	
-	selectDateStr = todayStr;
+	self.selectDateStr = todayStr;
 	
 	UIImage *cinemaPicImg = [UIImage imageNamed:@"cinema_pic.png"];
 	if (cinemaInfo!=nil && cinemaInfo.cinemaImage!=nil) {

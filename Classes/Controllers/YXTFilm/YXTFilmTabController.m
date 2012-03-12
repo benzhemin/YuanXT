@@ -131,9 +131,9 @@ static CGFloat begin_decelerate_offsetx = 0;
 }
 
 -(void)refreshHotFilmView{
-	YXTHotFilmService *cusHotFilm = [[YXTHotFilmService alloc] init];
-	self.hotFilm = cusHotFilm;
-    [cusHotFilm release];
+	
+	self.hotFilm = [[[YXTHotFilmService alloc] init] autorelease];
+
     [hotFilm setDelegateFilm:self];
 	[hotFilm setCityInfo:[YXTSettings instance].cityInfo];
 	

@@ -9,6 +9,7 @@
 #import "YuanXTAppDelegate.h"
 #import "YXTTabBarController.h"
 #import "OFReachability.h"
+#import "DSActivityView.h"
 
 
 @implementation YuanXTAppDelegate
@@ -72,6 +73,7 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    [DSActivityView removeView];
     /*
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
