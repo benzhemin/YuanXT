@@ -49,7 +49,7 @@
 @property (nonatomic, assign) int totalCounts;
 
 @property (nonatomic, retain) IBOutlet UIView *contentView;
-@property (nonatomic, retain) YXTSeatBackView *seatBackView;
+@property (nonatomic, retain) UIView *seatBackView;
 
 @property (nonatomic, retain) IBOutlet UILabel *cinemaNameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *hallNameLabel;
